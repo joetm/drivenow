@@ -1,0 +1,19 @@
+{
+    "endpoint": "https://api2.drive-now.com/cities/6099?expand=full",
+
+    "hostname": "api2.drive-now.com",
+    "path": "/cities/6099?expand=full",
+    "port": 443,
+    "method": "GET",
+    "headers": {
+      "accept": "application/json;v=1.8",
+      "accept-Language": "en-US,en;q=0.8,de;q=0.6",
+      "host": "api2.drive-now.com",
+      "origin": "https://de.drive-now.com",
+      "referer": "https://de.drive-now.com/en/",
+      "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36",
+      "X-Api-Key": "adf51226795afbc4e7575ccc124face7",
+      "X-Language": "en"
+    }
+
+}

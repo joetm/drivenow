@@ -53,8 +53,8 @@ var run_scrape = function () {
             // persist the car types
             var carTypes = json.carTypes.items;
             if (carTypes) {
-              carTypes.forEach(function(cartype){
-                  models.CarTypes.findOrCreate({where: cartype})
+              carTypes.forEach(function(ct){
+                  models.CarType.findOrCreate({where: ct})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created cartype' + model.modelName);
@@ -68,7 +68,11 @@ var run_scrape = function () {
 
 
             // persist the full scrape data
-            models.Scrape.create(json)
+            var scrapeInfo = {
+                id: timestamp,
+                data: JSON.stringify(json)
+            };
+            models.Scrape.create(scrapeInfo)
                          .then(function(data) {
                              log.info('Scrape saved to db.');
                          }).catch(function(error) {
