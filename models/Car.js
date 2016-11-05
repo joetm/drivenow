@@ -1,5 +1,9 @@
 "use strict";
 
+const Sequelize = require('sequelize');
+
+const CarType = require('./CarType');
+
 // Sample:
 /*
     {
@@ -61,6 +65,11 @@ module.exports = function(sequelize, DataTypes) {
 			primaryKey: true,
 			autoIncrement: false
 		},
+        // foreign key (hasOne) relation to CarType
+        modelIdentifier: {
+            type: Sequelize.STRING,
+            references: {key: "modelIdentifier", model: CarType}
+        },
 		data: {type: Sequelize.STRING}
 	});
 };

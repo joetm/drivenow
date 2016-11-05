@@ -20,6 +20,8 @@
     "jscs": "jscs ."
   },
   "dependencies": {
+    "async": "^2.1.2",
+    "async-waterfall": "^0.1.5",
     "babel-cli": "^6.4.0",
     "node-fetch": "^1.6.3",
     "react": "^0.14.3",
