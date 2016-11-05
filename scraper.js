@@ -1,39 +1,67 @@
 /* eslint no-console: 0 */
 
-const path = require('path');
-const apiconf = require('./api-config.js');
-
-const https = require('https');
 const fs = require('fs');
+const fetch = require('node-fetch');
+const path = require('path');
+const https = require('https');
 
-var callback = function(res) {
+const apiconf = require('./config/api.json');
+const models = require('./models');
 
-  // var str = '';
+const interval = 5 * 60 * 1000;
+var refreshIntervalId;
+const start_date = new Date();
+const stop_after_milliseconds = 0.5 * 60 * 60 * 1000;
 
-  // //another chunk of data has been recieved, so append it to `str`
-  // res.on('data', function (chunk) {
-  //   str += chunk;
-  // });
 
-  // //the whole response has been recieved, so we just print it out here
-  // res.on('end', function () {
-  //   console.log(str);
-  // });
+var fetch_api = function () {
 
-  console.log('statusCode:', res.statusCode);
-  console.log('headers:', res.headers);
+    // abort condition
+    var date_now = new Date();
+    var timeDiff = Math.abs(date_now.getTime() - start_date.getTime());
+    if (timeDiff > stop_after_milliseconds) {
+        clearInterval(refreshIntervalId);
+        return;
+    }
 
-  res.on('data', (d) => {
-    process.stdout.write(d);
-  });
+    fetch(apiconf.endpoint, {headers: apiconf.headers})
+        .then(function(res) {
+            console.log("Scrape", res.statusText, "("+res.status+")");
+            // console.log(res.headers.raw());
+            // console.log(res.headers.get('content-type'));
+            return res.json();
+        }).then(function(json) {
+            // console.log(json);
+            // -1-----------------------
+            // save scraped data to disk
+            var timestamp = ""+Math.floor(Date.now() / 1000);
+            fs.writeFile(path.join('scrapes', timestamp + '.json'), JSON.stringify(json, null, 4), function(err) {
+              if (err) throw err;
+              console.log('Scrape saved to disk.');
+            });
+            // -2-----------------------
+            // save data to db
+            var scrapeinfo = {
+                cartypes: json.carTypes.items,
+                cars: json.cars.items,
+                timestamp: timestamp
+            }
+            models.Scrape.create(scrapeinfo)
+                         .then(function(data) {
+                             console.log('Scrape saved to db.');
+                         }).catch(function(error) {
+                             console.log(error);
+                         });
 
-  console.log(' ');
+        }).catch(function(err) {
+            console.log(err);
+        });
+};
 
-}
+var run_scrape = function () {
 
-// make periodical requests and store the results
+  refreshIntervalId = setInterval(fetch_api, interval);
 
-https.get(apiconf.options, callback).on('error', (e) => {
-  console.error(e);
-});
+};
 
+models.sequelize.sync().then(run_scrape);
