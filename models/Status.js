@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
         innerCleanliness: {type: DataTypes.STRING},
         isCharging: {type: DataTypes.BOOLEAN},
         isInParkingSpace: {type: DataTypes.BOOLEAN},
+        parkingSpaceId: {
+            type: DataTypes.STRING,
+            references: {key: "id", model: "parkingspaces"}
+        },
         isPreheatable: {type: DataTypes.BOOLEAN},
         fuelLevel: {type: DataTypes.FLOAT},
         fuelLevelInPercent: {type: DataTypes.INTEGER},

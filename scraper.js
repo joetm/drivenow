@@ -34,6 +34,9 @@ function clone(obj) {
 
 var run_scrape = function () {
 
+    // console.log(json);
+    log.info("Running scrape...");
+
     // abort condition
     var date_now = new Date();
     var timeDiff = Math.abs(date_now.getTime() - start_date.getTime());
@@ -49,8 +52,6 @@ var run_scrape = function () {
             // console.log(res.headers.get('content-type'));
             return res.json();
         }).then(function(json) {
-
-            // console.log(json);
 
             // -1-----------------------
             // save scraped raw data to disk
@@ -71,8 +72,8 @@ var run_scrape = function () {
 
             // persist the car types
             // -------------------------
-            var carTypes = clone(json.carTypes.items);
-            fns.push.apply(fns, carTypes.map(function (ct) {
+            // var carTypes = clone(json.carTypes.items);
+            fns.push.apply(fns, json.carTypes.items.map(function (ct) {
                 return function(callback) {
                     models.CarType.findOrCreate({where: ct})
                     .spread(function(model, created) {
@@ -80,6 +81,58 @@ var run_scrape = function () {
                             log.info('Created cartype: ' + model.modelName);
                         // } else {
                         //     log.info('Cartype ' + model.modelName + ' already exists');
+                        }
+                        callback(null);
+                    });
+                };
+            }));
+
+            // persist the charging stations
+            // -------------------------
+            // var chargingstations = clone(json.chargingStations.items);
+            fns.push.apply(fns, json.chargingStations.items.map(function (cs) {
+                return function(callback) {
+                    models.ChargingStation.findOrCreate({where: cs})
+                    .spread(function(model, created) {
+                        if (created && model) {
+                            log.info('Created charging station: ' + model.name);
+                        // } else {
+                        //     log.info('Charging station ' + model.name + ' already exists');
+                        }
+                        callback(null);
+                    });
+                };
+            }));
+            // persist the petrol stations
+            // -------------------------
+            // var petrolstations = clone(json.petrolStations.items);
+            fns.push.apply(fns, json.petrolStations.items.map(function (ps) {
+                return function(callback) {
+                    models.PetrolStation.findOrCreate({where: ps})
+                    .spread(function(model, created) {
+                        if (created && model) {
+                            log.info('Created petrol station: ' + model.name);
+                        // } else {
+                        //     log.info('Petrol station ' + model.name + ' already exists');
+                        }
+                        callback(null);
+                    });
+                };
+            }));
+            // persist the parkingspaces
+            // -------------------------
+            // var parkingspaces = clone(json.parkingSpaces);
+            fns.push.apply(fns, json.parkingSpaces.map(function (ps) {
+                delete ps.items;
+                delete ps.count;
+                delete ps.openingHours;
+                return function(callback) {
+                    models.ParkingSpace.findOrCreate({where: pspace})
+                    .spread(function(model, created) {
+                        if (created && model) {
+                            log.info('Created parking space: ' + model.name);
+                        // } else {
+                        //     log.info('Parking space ' + model.name + ' already exists');
                         }
                         callback(null);
                     });
@@ -138,6 +191,7 @@ var run_scrape = function () {
                     'innerCleanliness',
                     'isCharging',
                     'isInParkingSpace',
+                    'parkingSpaceId',
                     'isPreheatable',
                     'fuelLevel',
                     'fuelLevelInPercent',
@@ -152,7 +206,7 @@ var run_scrape = function () {
                 return car_status;
             });
             fns.push.apply(fns, statii.map(function (car_status) {
-                console.log(car_status);
+                // console.log(car_status);
                 return function(callback) {
                     // save the new status
                     models.Status.create(car_status)
@@ -219,10 +273,6 @@ var run_scrape = function () {
 
             log.info("# DB actions: " + fns.length);
 
-            fns.push.apply(fns, function () {
-                log.info("Finished Scrape. Next scrape in " + interval/1000/60 + " minutes.");
-            });
-
             // execute the series of database tasks
             // -------------------------
             series(fns);
@@ -243,7 +293,10 @@ var start_scrape = function () {
 
 // start app
 // this will create the database tables on the first run
-models.sequelize.sync({ force: true }).then(start_scrape);
+models.sequelize.sync({
+    force: true,
+    pool: false
+}).then(start_scrape);
 
 
 // (optional:) allow re-use of scrape function

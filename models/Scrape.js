@@ -7,6 +7,10 @@ module.exports = function(sequelize, DataTypes) {
 			primaryKey: true,
 			autoIncrement: false
 		},
+		area_code: {type: DataTypes.INTEGER},
+		latitude: {type: DataTypes.FLOAT},
+		longitude: {type: DataTypes.FLOAT},
+		name: {type: DataTypes.STRING},
 	    data: {type: DataTypes.STRING}
     });
 };
