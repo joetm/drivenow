@@ -3,7 +3,7 @@
 // const Car = require('./Car');
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define("Status", {
+    return sequelize.define("Status", {
         car_id: {
             type: DataTypes.STRING,
             references: {key: "id", model: "cars"}
@@ -19,6 +19,6 @@ module.exports = function(sequelize, DataTypes) {
         fuelLevel: {type: DataTypes.FLOAT},
         fuelLevelInPercent: {type: DataTypes.INTEGER},
         estimatedRange: {type: DataTypes.INTEGER}
-	});
+    });
 };
 

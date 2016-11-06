@@ -1,7 +1,5 @@
 "use strict";
 
-const Sequelize = require('sequelize');
-
 // Sample:
 // "carImageUrl": "https://prod.drive-now-content.com/fileadmin/user_upload_global/assets/cars/mini_3-tuerer/midnight_black_metallic/{density}/car.png",
 // "group": "MINI",
@@ -14,17 +12,17 @@ const Sequelize = require('sequelize');
 
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define("CarType", {
-		modelIdentifier: {
-			type: DataTypes.STRING,
-			primaryKey: true,
-			autoIncrement: false
-		},
-		carImageUrl: {type: DataTypes.STRING},
-		group: {type: DataTypes.STRING},
-		make: {type: DataTypes.STRING},
-		modelName: {type: DataTypes.STRING},
-		routingModelName: {type: DataTypes.STRING},
-		series: {type: DataTypes.STRING},
-		variant: {type: DataTypes.STRING}
+        modelIdentifier: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+            autoIncrement: false
+        },
+        carImageUrl: {type: DataTypes.STRING},
+        group: {type: DataTypes.STRING},
+        make: {type: DataTypes.STRING},
+        modelName: {type: DataTypes.STRING},
+        routingModelName: {type: DataTypes.STRING},
+        series: {type: DataTypes.STRING},
+        variant: {type: DataTypes.STRING}
     });
 };

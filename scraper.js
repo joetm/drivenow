@@ -3,7 +3,6 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const path = require('path');
-const https = require('https');
 const series = require('async/series');
 
 const apiconf = require('./config/api.json');
@@ -13,13 +12,13 @@ const log = require('./app/logger');
 // scrape configuration
 // ----------------------------------------------------
 const interval = 5 * 60 * 1000;
-const stop_after_milliseconds = 7 * 24 * 60 * 60 * 1000;
-var intervalId;
-const start_date = new Date();
+const stopAfterMilliseconds = 7 * 24 * 60 * 60 * 1000;
+let intervalId;
+const startDate = new Date();
 // ----------------------------------------------------
 
-function remove_obj_keys(items, obj) {
-    items.forEach(function (item) {
+function removeObjKeys(items, obj) {
+    items.forEach(function(item) {
         if (obj.hasOwnProperty(item)) {
             delete obj[item];
         }
@@ -32,30 +31,31 @@ function clone(obj) {
 }
 
 
-var run_scrape = function () {
-
+function runScrape() {
+    //
     // console.log(json);
     log.info("Running scrape...");
+    //
 
     // abort condition
-    var date_now = new Date();
-    var timeDiff = Math.abs(date_now.getTime() - start_date.getTime());
-    if (timeDiff > stop_after_milliseconds) {
+    const dateNow = new Date();
+    const timeDiff = Math.abs(dateNow.getTime() - startDate.getTime());
+    if (timeDiff > stopAfterMilliseconds) {
         clearInterval(intervalId);
         return;
     }
 
     fetch(apiconf.endpoint, {headers: apiconf.headers})
         .then(function(res) {
-            log.info("Scrape", res.statusText, "("+res.status+")");
+            log.info("Scrape", res.statusText, "(" + res.status + ")");
             // console.log(res.headers.raw());
             // console.log(res.headers.get('content-type'));
             return res.json();
         }).then(function(json) {
-
+            //
             // -1-----------------------
             // save scraped raw data to disk
-            var timestamp = Math.floor(Date.now());
+            const timestamp = Math.floor(Date.now());
             fs.writeFile(path.join('scrapes', timestamp / 1000 + '.json'), JSON.stringify(json, null, 4), function(err) {
                 if (err) {
                     throw err;
@@ -68,12 +68,12 @@ var run_scrape = function () {
             // sqlite only allows one operation at a time
             // hence: operations are executed in series
 
-            var fns = [];
+            let fns = [];
 
             // persist the car types
             // -------------------------
             // var carTypes = clone(json.carTypes.items);
-            fns.push.apply(fns, json.carTypes.items.map(function (ct) {
+            fns.push.apply(fns, json.carTypes.items.map(function(ct) {
                 return function(callback) {
                     models.CarType.findOrCreate({where: ct})
                     .spread(function(model, created) {
@@ -92,7 +92,7 @@ var run_scrape = function () {
             // persist the charging stations
             // -------------------------
             // var chargingstations = clone(json.chargingStations.items);
-            fns.push.apply(fns, json.chargingStations.items.map(function (cs) {
+            fns.push.apply(fns, json.chargingStations.items.map(function(cs) {
                 cs.address = cs.address[0]; // string conversion
                 return function(callback) {
                     models.ChargingStation.findOrCreate({where: cs})
@@ -111,7 +111,7 @@ var run_scrape = function () {
             // persist the petrol stations
             // -------------------------
             // var petrolstations = clone(json.petrolStations.items);
-            fns.push.apply(fns, json.petrolStations.items.map(function (ps) {
+            fns.push.apply(fns, json.petrolStations.items.map(function(ps) {
                 ps.address = ps.address[0]; // string conversion
                 return function(callback) {
                     models.PetrolStation.findOrCreate({where: ps})
@@ -130,7 +130,7 @@ var run_scrape = function () {
             // persist the parkingspaces
             // -------------------------
             // var parkingspaces = clone(json.parkingSpaces);
-            fns.push.apply(fns, json.parkingSpaces.items.map(function (ps) {
+            fns.push.apply(fns, json.parkingSpaces.items.map(function(ps) {
                 delete ps.cars; // dupe
                 delete ps.count;
                 delete ps.openingHours;
@@ -151,10 +151,10 @@ var run_scrape = function () {
 
             // persist the cars
             // -------------------------
-            var cars = clone(json.cars.items);
-            cars = cars.map(function (c) {
+            let cars = clone(json.cars.items);
+            cars = cars.map(function(c) {
                 // remove dynamic data
-                var filtered_car = remove_obj_keys([
+                const filteredCar = removeObjKeys([
                     'innerCleanliness',
                     'isCharging',
                     'isInParkingSpace',
@@ -170,13 +170,13 @@ var run_scrape = function () {
                     id: c.id,
                     name: c.name,
                     modelIdentifier: c.modelIdentifier,
-                    data: JSON.stringify(filtered_car)
+                    data: JSON.stringify(filteredCar)
                 };
             });
-            fns.push.apply(fns, cars.map(function (c) {
+            fns.push.apply(fns, cars.map(function(c) {
                 return function(callback) {
                     // console.log('saving car');
-                    //save the car
+                    // save the car
                     models.Car.findOrCreate({where: c})
                     .spread(function(model, created) {
                         if (created && model) {
@@ -191,12 +191,12 @@ var run_scrape = function () {
 
             // persist the status of the car in separate table
             // -------------------------
-            var statii = clone(json.cars.items);
-            statii = statii.map(function (car) {
+            let statii = clone(json.cars.items);
+            statii = statii.map(function(car) {
                 // console.log('STATII');
                 // console.log(car);
                 // console.log('STATII');
-                var car_status = {};
+                let carStatus = {};
                 [
                     'innerCleanliness',
                     'isCharging',
@@ -206,21 +206,21 @@ var run_scrape = function () {
                     'fuelLevel',
                     'fuelLevelInPercent',
                     'estimatedRange'
-                ].forEach(function (item) {
+                ].forEach(function(item) {
                     // if (car.hasOwnProperty(item)) {
-                        car_status[item] = car[item];
+                    carStatus[item] = car[item];
                     // }
                 });
                 // foreign key
-                car_status.car_id = car.id;
-                return car_status;
+                carStatus.car_id = car.id;
+                return carStatus;
             });
-            fns.push.apply(fns, statii.map(function (car_status) {
-                // console.log(car_status);
+            fns.push.apply(fns, statii.map(function(carStatus) {
+                // console.log(carStatus);
                 return function(callback) {
                     // save the new status
-                    models.Status.create(car_status)
-                    .then(function(data) {
+                    models.Status.create(carStatus)
+                    .then(function() {
                         // log.info('Status saved to db.');
                         callback(null);
                     }).catch(function(error) {
@@ -231,9 +231,9 @@ var run_scrape = function () {
 
             // persist the positions
             // -------------------------
-            var positions = clone(json.cars.items);
-            positions = positions.map(function (car) {
-                var pos = {
+            let positions = clone(json.cars.items);
+            positions = positions.map(function(car) {
+                const pos = {
                     car_id: car.id,
                     latitude: car.latitude,
                     longitude: car.longitude
@@ -248,11 +248,11 @@ var run_scrape = function () {
                 }
                 return pos;
             });
-            fns.push.apply(fns, positions.map(function (pos) {
+            fns.push.apply(fns, positions.map(function(pos) {
                 return function(callback) {
                     // save the new status
                     models.Position.create(pos)
-                    .then(function(data) {
+                    .then(function() {
                         // log.info('Position saved to db.');
                         callback(null);
                     }).catch(function(error) {
@@ -274,7 +274,7 @@ var run_scrape = function () {
                         longitude: json.longitude,
                         data: JSON.stringify(json)
                     })
-                    .then(function(data) {
+                    .then(function() {
                         // log.info('Scrape saved to db.');
                         callback(null);
                     }).catch(function(error) {
@@ -286,26 +286,26 @@ var run_scrape = function () {
             log.info("# DB actions: " + fns.length);
 
             fns.push(function(callback) {
-                log.info("Running next scrape in " + interval/1000/60 + " minutes.");
+                log.info("Running next scrape in " + interval / 1000 / 60 + " minutes.");
                 callback(null);
             });
 
             // execute the series of database tasks
             // -------------------------
             series(fns);
-
+            //
         }).catch(function(err) {
             log.error(err);
         });
-};
+}
 
 
-var start_scrape = function () {
+function startScrape() {
     // start immediately
-    run_scrape();
+    runScrape();
     // continue to run in intervals
-    intervalId = setInterval(run_scrape, interval);
-};
+    intervalId = setInterval(runScrape, interval);
+}
 
 
 // start app
@@ -313,8 +313,8 @@ var start_scrape = function () {
 models.sequelize.sync({
     force: true,
     pool: false
-}).then(start_scrape);
+}).then(startScrape);
 
 
 // (optional:) allow re-use of scrape function
-module.exports = run_scrape;
+module.exports = runScrape;

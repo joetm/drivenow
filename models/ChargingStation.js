@@ -1,7 +1,5 @@
 "use strict";
 
-const Sequelize = require('sequelize');
-
 // Sample:
 // {
 //     "address": [
@@ -15,10 +13,10 @@ const Sequelize = require('sequelize');
 
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define("ChargingStation", {
-    	address: {type: DataTypes.STRING},
-		latitude: {type: DataTypes.FLOAT},
-		longitude: {type: DataTypes.FLOAT},
-		name: {type: DataTypes.STRING},
-		organisation: {type: DataTypes.STRING}
+        address: {type: DataTypes.STRING},
+        latitude: {type: DataTypes.FLOAT},
+        longitude: {type: DataTypes.FLOAT},
+        name: {type: DataTypes.STRING},
+        organisation: {type: DataTypes.STRING}
     });
 };

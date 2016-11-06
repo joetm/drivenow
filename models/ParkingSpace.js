@@ -1,7 +1,5 @@
 "use strict";
 
-const Sequelize = require('sequelize');
-
 // Sample:
 // {
 // "cars": items: [
@@ -17,14 +15,14 @@ const Sequelize = require('sequelize');
 
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define("ParkingSpace", {
-		id: {
-			type: DataTypes.STRING,
-			primaryKey: true,
-			autoIncrement: false
-		},
-    	fullStreet: {type: DataTypes.STRING},
-		latitude: {type: DataTypes.FLOAT},
-		longitude: {type: DataTypes.FLOAT},
-		name: {type: DataTypes.STRING}
+        id: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+            autoIncrement: false
+        },
+        fullStreet: {type: DataTypes.STRING},
+        latitude: {type: DataTypes.FLOAT},
+        longitude: {type: DataTypes.FLOAT},
+        name: {type: DataTypes.STRING}
     });
 };

@@ -1,7 +1,5 @@
 "use strict";
 
-const CarType = require('./CarType');
-
 // Sample:
 /*
     {
@@ -57,12 +55,12 @@ const CarType = require('./CarType');
 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define("Car", {
-		id: {
-			type: DataTypes.STRING,
-			primaryKey: true,
-			autoIncrement: false
-		},
+    return sequelize.define("Car", {
+        id: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+            autoIncrement: false
+        },
         // foreign key (hasOne) relation to CarType
         // modelIdentifier: {type: DataTypes.STRING},
         // modelIdentifier: {
@@ -74,8 +72,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             references: {key: "modelIdentifier", model: 'cartypes'}
         },
-		data: {type: DataTypes.STRING}
-	});
+        data: {type: DataTypes.STRING}
+    });
 };
 
 // ------------
