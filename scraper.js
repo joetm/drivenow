@@ -268,6 +268,10 @@ var run_scrape = function () {
                     // save the scrape
                     models.Scrape.create({
                         id: timestamp,
+                        name: json.name,
+                        area_code: json.id,
+                        latitude: json.latitude,
+                        longitude: json.longitude,
                         data: JSON.stringify(json)
                     })
                     .then(function(data) {

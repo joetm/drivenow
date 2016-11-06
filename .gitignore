@@ -6,6 +6,7 @@ dist
 coverage
 .idea
 npm-debug.log
+scrape.log
 migrations/*
 seeders/*
 scrapes/*
