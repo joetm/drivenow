@@ -1,13 +1,13 @@
 node_modules
+BAK
 API-details.txt
 .DS_Store
-dist
 *.log
 coverage
 .idea
 npm-debug.log
 scrape.log
 migrations/*
-seeders/*
+seeders/*.json
 scrapes/*
 database.sqlite

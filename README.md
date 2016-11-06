@@ -1,6 +1,6 @@
 # Who called the Clean-up Crew?
 
-Visualisation of DriveNow car movements
+Visualization of DriveNow car movements
 
 ## Install and Running
 

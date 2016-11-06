@@ -199,6 +199,8 @@ function runScrape() {
                 let carStatus = {};
                 [
                     'innerCleanliness',
+                    'latitude',
+                    'longitude',
                     'isCharging',
                     'isInParkingSpace',
                     'parkingSpaceId',

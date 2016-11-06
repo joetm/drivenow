@@ -1,0 +1,25 @@
+html, body {
+	margin:0;
+	padding:0;
+	height:100%;
+    overflow:hidden;
+}
+#wrap{
+    margin:0;
+    padding:0;
+    height:80%;
+}
+#wrap #footer{
+    margin:0;
+    padding:0;
+    height:20%;
+}
+#map{
+    margin:0;
+    padding:0;
+    background-color:#E0E0E0;
+	height:100%;
+    width:100%;
+    border: 1px solid #999999;
+    overflow:hidden;
+}

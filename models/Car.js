@@ -61,12 +61,6 @@ module.exports = function(sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: false
         },
-        // foreign key (hasOne) relation to CarType
-        // modelIdentifier: {type: DataTypes.STRING},
-        // modelIdentifier: {
-        //     type: DataTypes.STRING,
-        //     references: {key: "modelIdentifier", model: CarType}
-        // },
         name: {type: DataTypes.STRING},
         modelIdentifier: {
             type: DataTypes.STRING,

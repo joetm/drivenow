@@ -8,6 +8,8 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             references: {key: "id", model: "cars"}
         },
+        latitude: {type: DataTypes.STRING},
+        longitude: {type: DataTypes.STRING},
         innerCleanliness: {type: DataTypes.STRING},
         isCharging: {type: DataTypes.BOOLEAN},
         isInParkingSpace: {type: DataTypes.BOOLEAN},
