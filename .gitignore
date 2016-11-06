@@ -1,4 +1,5 @@
 node_modules
+API-details.txt
 .DS_Store
 dist
 *.log

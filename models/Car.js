@@ -1,7 +1,5 @@
 "use strict";
 
-const Sequelize = require('sequelize');
-
 const CarType = require('./CarType');
 
 // Sample:
@@ -61,15 +59,27 @@ const CarType = require('./CarType');
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define("Car", {
 		id: {
-			type: Sequelize.STRING,
+			type: DataTypes.STRING,
 			primaryKey: true,
 			autoIncrement: false
 		},
         // foreign key (hasOne) relation to CarType
+        // modelIdentifier: {type: DataTypes.STRING},
+        // modelIdentifier: {
+        //     type: DataTypes.STRING,
+        //     references: {key: "modelIdentifier", model: CarType}
+        // },
         modelIdentifier: {
-            type: Sequelize.STRING,
-            references: {key: "modelIdentifier", model: CarType}
+            type: DataTypes.STRING,
+            references: {key: "modelIdentifier", model: 'cartypes'}
         },
-		data: {type: Sequelize.STRING}
+		data: {type: DataTypes.STRING}
 	});
 };
+
+// ------------
+// Associations
+// ------------
+// Car.hasOne(CarType, {foreignKey: 'modelIdentifier'})
+// Car.hasOne(Status, {foreignKey: 'id'})
+// Car.hasOne(Position, {foreignKey: 'id'})

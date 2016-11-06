@@ -15,16 +15,16 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define("CarType", {
 		modelIdentifier: {
-			type: Sequelize.STRING,
+			type: DataTypes.STRING,
 			primaryKey: true,
 			autoIncrement: false
 		},
-		carImageUrl: {type: Sequelize.STRING},
-		group: {type: Sequelize.STRING},
-		make: {type: Sequelize.STRING},
-		modelName: {type: Sequelize.STRING},
-		routingModelName: {type: Sequelize.STRING},
-		series: {type: Sequelize.STRING},
-		variant: {type: Sequelize.STRING}
+		carImageUrl: {type: DataTypes.STRING},
+		group: {type: DataTypes.STRING},
+		make: {type: DataTypes.STRING},
+		modelName: {type: DataTypes.STRING},
+		routingModelName: {type: DataTypes.STRING},
+		series: {type: DataTypes.STRING},
+		variant: {type: DataTypes.STRING}
     });
 };

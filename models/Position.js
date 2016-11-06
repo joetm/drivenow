@@ -1,19 +1,22 @@
 "use strict";
 
-const Sequelize = require('sequelize');
-
 const Car = require('./Car');
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define("Position", {
         // foreign key (hasOne) relation to the Car
+        // car_id: {type: DataTypes.STRING},
+        // car_id: {
+        //     type: DataTypes.STRING,
+        //     references: {key: "id", model: Car}
+        // },
         car_id: {
-            type: Sequelize.STRING,
-            references: {key: "id", model: Car}
+            type: DataTypes.STRING,
+            references: {key: "id", model: 'cars'}
         },
-		latitude: {type: Sequelize.FLOAT},
-        longitude: {type: Sequelize.FLOAT},
-        street: {type: Sequelize.STRING},
-        city: {type: Sequelize.STRING}
+		latitude: {type: DataTypes.FLOAT},
+        longitude: {type: DataTypes.FLOAT},
+        street: {type: DataTypes.STRING},
+        city: {type: DataTypes.STRING}
 	});
 };

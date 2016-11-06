@@ -10,7 +10,6 @@ const apiconf = require('./config/api.json');
 const models = require('./models');
 const log = require('./app/logger');
 
-
 // scrape configuration
 // ----------------------------------------------------
 const interval = 5 * 60 * 1000;
@@ -26,6 +25,10 @@ function remove_obj_keys(items, obj) {
         }
     });
     return obj;
+}
+
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
 }
 
 
@@ -61,17 +64,22 @@ var run_scrape = function () {
 
             // -2-----------------------
             // save data to db
+            // sqlite only allows one operation at a time
+            // hence: operations are executed in series
 
             var fns = [];
 
             // persist the car types
-            fns.push(function (callback) {log.info('Creating car types'); callback(null);});
-            fns.push.apply(fns, json.carTypes.items.map(function (ct) {
+            // -------------------------
+            var carTypes = clone(json.carTypes.items);
+            fns.push.apply(fns, carTypes.map(function (ct) {
                 return function(callback) {
                     models.CarType.findOrCreate({where: ct})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created cartype: ' + model.modelName);
+                        // } else {
+                        //     log.info('Cartype ' + model.modelName + ' already exists');
                         }
                         callback(null);
                     });
@@ -79,11 +87,11 @@ var run_scrape = function () {
             }));
 
             // persist the cars
-            fns.push(function (callback) {log.info('Creating cars'); callback(null);});
-            var cars = json.cars.items.map(function (car) {
-                var filtered_car = car;
+            // -------------------------
+            var cars = clone(json.cars.items);
+            cars = cars.map(function (c) {
                 // remove dynamic data
-                filtered_car = remove_obj_keys([
+                var filtered_car = remove_obj_keys([
                     'innerCleanliness',
                     'isCharging',
                     'isInParkingSpace',
@@ -94,32 +102,39 @@ var run_scrape = function () {
                     'latitude',
                     'longitude',
                     'address'
-                ], filtered_car);
+                ], c);
                 return {
-                    id: car.id,
-                    modelIdentifier: car.modelIdentifier,
+                    id: c.id,
+                    modelIdentifier: c.modelIdentifier,
                     data: JSON.stringify(filtered_car)
                 };
             });
             fns.push.apply(fns, cars.map(function (c) {
                 return function(callback) {
+                    // console.log('saving car');
                     //save the car
                     models.Car.findOrCreate({where: c})
                     .spread(function(model, created) {
                         if (created && model) {
-                            log.info('Created car: ' + model.name);
+                            log.info('Created car.');
                         }
                         callback(null);
+                    }).catch(function(error) {
+                        // console.log(error);
+                        throw error;
                     });
                 };
             }));
 
             // persist the status of the car in separate table
-            fns.push(function (callback) {log.info('Saving car statii'); callback(null);});
-            var statii = json.cars.items.map(function (car) {
+            // -------------------------
+            var statii = clone(json.cars.items);
+            statii = statii.map(function (car) {
+                // console.log('STATII');
+                // console.log(car);
+                // console.log('STATII');
                 var car_status = {};
                 [
-                    'id',
                     'innerCleanliness',
                     'isCharging',
                     'isInParkingSpace',
@@ -128,24 +143,33 @@ var run_scrape = function () {
                     'fuelLevelInPercent',
                     'estimatedRange'
                 ].forEach(function (item) {
-                    car_status[item] = car[item];
+                    // if (car.hasOwnProperty(item)) {
+                        car_status[item] = car[item];
+                    // }
                 });
+                // foreign key
+                car_status.car_id = car.id;
+                return car_status;
+            });
+            fns.push.apply(fns, statii.map(function (car_status) {
+                console.log(car_status);
                 return function(callback) {
+                    // save the new status
                     models.Status.create(car_status)
                     .then(function(data) {
-                        log.info('Status saved to db.');
+                        // log.info('Status saved to db.');
                         callback(null);
                     }).catch(function(error) {
                         // console.log(error);
                         throw error;
                     });
                 };
-            });
-            fns.push.apply(fns, statii);
+            }));
 
             // persist the positions
-            fns.push(function (callback) {log.info('Saving car positions'); callback(null);});
-            var positions = json.cars.items.map(function (car) {
+            // -------------------------
+            var positions = clone(json.cars.items);
+            positions = positions.map(function (car) {
                 var pos = {
                     car_id: car.id,
                     latitude: car.latitude,
@@ -159,28 +183,33 @@ var run_scrape = function () {
                         pos.city = car.address[1];
                     }
                 }
+                return pos;
+            });
+            fns.push.apply(fns, positions.map(function (pos) {
                 return function(callback) {
+                    // save the new status
                     models.Position.create(pos)
                     .then(function(data) {
-                        log.info('Position saved to db.');
+                        // log.info('Position saved to db.');
                         callback(null);
                     }).catch(function(error) {
                         // console.log(error);
                         throw error;
                     });
                 };
-            });
-            fns.push.apply(fns, positions);
+            }));
 
             // persist the full scrape data
+            // -------------------------
             fns.push(
                 function(callback) {
+                    // save the scrape
                     models.Scrape.create({
                         id: timestamp,
                         data: JSON.stringify(json)
                     })
                     .then(function(data) {
-                        log.info('Scrape saved to db.');
+                        // log.info('Scrape saved to db.');
                         callback(null);
                     }).catch(function(error) {
                         throw error;
@@ -188,11 +217,13 @@ var run_scrape = function () {
                 }
             );
 
+            log.info("# DB actions: " + fns.length);
+
             // execute the series of database tasks
+            // -------------------------
             series(fns);
 
         }).catch(function(err) {
-            // console.log(err);
             log.error(err);
         });
 };
@@ -208,7 +239,7 @@ var start_scrape = function () {
 
 // start app
 // this will create the database tables on the first run
-models.sequelize.sync().then(start_scrape);
+models.sequelize.sync({ force: true }).then(start_scrape);
 
 
 // (optional:) allow re-use of scrape function
