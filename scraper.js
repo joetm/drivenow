@@ -219,6 +219,10 @@ var run_scrape = function () {
 
             log.info("# DB actions: " + fns.length);
 
+            fns.push.apply(fns, function () {
+                log.info("Finished Scrape. Next scrape in " + interval/1000/60 + " minutes.");
+            });
+
             // execute the series of database tasks
             // -------------------------
             series(fns);
