@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './App.css';
 
+import Map from './Map.jsx';
+
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -9,8 +11,8 @@ export default class App extends React.Component {
     render() {
         return (
             <div className={styles.app}>
-                bar
+                <Map />
             </div>
         );
     }
-}
+};
