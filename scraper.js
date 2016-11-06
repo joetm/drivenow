@@ -83,6 +83,8 @@ var run_scrape = function () {
                         //     log.info('Cartype ' + model.modelName + ' already exists');
                         }
                         callback(null);
+                    }).catch(function(error) {
+                        throw error;
                     });
                 };
             }));
@@ -91,6 +93,7 @@ var run_scrape = function () {
             // -------------------------
             // var chargingstations = clone(json.chargingStations.items);
             fns.push.apply(fns, json.chargingStations.items.map(function (cs) {
+                cs.address = cs.address[0]; // string conversion
                 return function(callback) {
                     models.ChargingStation.findOrCreate({where: cs})
                     .spread(function(model, created) {
@@ -100,6 +103,8 @@ var run_scrape = function () {
                         //     log.info('Charging station ' + model.name + ' already exists');
                         }
                         callback(null);
+                    }).catch(function(error) {
+                        throw error;
                     });
                 };
             }));
@@ -107,6 +112,7 @@ var run_scrape = function () {
             // -------------------------
             // var petrolstations = clone(json.petrolStations.items);
             fns.push.apply(fns, json.petrolStations.items.map(function (ps) {
+                ps.address = ps.address[0]; // string conversion
                 return function(callback) {
                     models.PetrolStation.findOrCreate({where: ps})
                     .spread(function(model, created) {
@@ -116,18 +122,20 @@ var run_scrape = function () {
                         //     log.info('Petrol station ' + model.name + ' already exists');
                         }
                         callback(null);
+                    }).catch(function(error) {
+                        throw error;
                     });
                 };
             }));
             // persist the parkingspaces
             // -------------------------
             // var parkingspaces = clone(json.parkingSpaces);
-            fns.push.apply(fns, json.parkingSpaces.map(function (ps) {
-                delete ps.items;
+            fns.push.apply(fns, json.parkingSpaces.items.map(function (ps) {
+                delete ps.cars; // dupe
                 delete ps.count;
                 delete ps.openingHours;
                 return function(callback) {
-                    models.ParkingSpace.findOrCreate({where: pspace})
+                    models.ParkingSpace.findOrCreate({where: ps})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created parking space: ' + model.name);
@@ -135,6 +143,8 @@ var run_scrape = function () {
                         //     log.info('Parking space ' + model.name + ' already exists');
                         }
                         callback(null);
+                    }).catch(function(error) {
+                        throw error;
                     });
                 };
             }));
@@ -158,6 +168,7 @@ var run_scrape = function () {
                 ], c);
                 return {
                     id: c.id,
+                    name: c.name,
                     modelIdentifier: c.modelIdentifier,
                     data: JSON.stringify(filtered_car)
                 };
@@ -169,11 +180,10 @@ var run_scrape = function () {
                     models.Car.findOrCreate({where: c})
                     .spread(function(model, created) {
                         if (created && model) {
-                            log.info('Created car.');
+                            log.info('Created car ' + model.name);
                         }
                         callback(null);
                     }).catch(function(error) {
-                        // console.log(error);
                         throw error;
                     });
                 };
@@ -214,7 +224,6 @@ var run_scrape = function () {
                         // log.info('Status saved to db.');
                         callback(null);
                     }).catch(function(error) {
-                        // console.log(error);
                         throw error;
                     });
                 };
@@ -247,7 +256,6 @@ var run_scrape = function () {
                         // log.info('Position saved to db.');
                         callback(null);
                     }).catch(function(error) {
-                        // console.log(error);
                         throw error;
                     });
                 };
@@ -272,6 +280,11 @@ var run_scrape = function () {
             );
 
             log.info("# DB actions: " + fns.length);
+
+            fns.push(function(callback) {
+                log.info("Running next scrape in " + interval/1000/60 + " minutes.");
+                callback(null);
+            });
 
             // execute the series of database tasks
             // -------------------------

@@ -69,6 +69,7 @@ module.exports = function(sequelize, DataTypes) {
         //     type: DataTypes.STRING,
         //     references: {key: "modelIdentifier", model: CarType}
         // },
+        name: {type: DataTypes.STRING},
         modelIdentifier: {
             type: DataTypes.STRING,
             references: {key: "modelIdentifier", model: 'cartypes'}
