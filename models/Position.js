@@ -1,13 +1,10 @@
 "use strict";
 
+const models = require("./index");
+
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define("Position", {
-        // foreign key (hasOne) relation to the Car
-        // car_id: {type: DataTypes.STRING},
-        // car_id: {
-        //     type: DataTypes.STRING,
-        //     references: {key: "id", model: Car}
-        // },
+    const Position = sequelize.define("Position", {
+        timestamp: {type: DataTypes.INTEGER},
         car_id: {
             type: DataTypes.STRING,
             references: {key: "id", model: 'cars'}
@@ -16,5 +13,12 @@ module.exports = function(sequelize, DataTypes) {
         longitude: {type: DataTypes.FLOAT},
         street: {type: DataTypes.STRING},
         city: {type: DataTypes.STRING}
+    }, {
+        classMethods: {
+          associate: function (models) {
+            Position.belongsTo(models.Car);
+          }
+        }
     });
+    return Position;
 };

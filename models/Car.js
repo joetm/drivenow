@@ -55,7 +55,7 @@
 */
 
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define("Car", {
+    const Car = sequelize.define("Car", {
         id: {
             type: DataTypes.STRING,
             primaryKey: true,
@@ -67,12 +67,12 @@ module.exports = function(sequelize, DataTypes) {
             references: {key: "modelIdentifier", model: 'cartypes'}
         },
         data: {type: DataTypes.STRING}
+    }, {
+        classMethods: {
+          associate: function (models) {
+            Car.belongsTo(models.CarType);
+          }
+        }
     });
+    return Car;
 };
-
-// ------------
-// Associations
-// ------------
-// Car.hasOne(CarType, {foreignKey: 'modelIdentifier'})
-// Car.hasOne(Status, {foreignKey: 'id'})
-// Car.hasOne(Position, {foreignKey: 'id'})

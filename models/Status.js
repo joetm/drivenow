@@ -1,15 +1,14 @@
 "use strict";
 
-// const Car = require('./Car');
-
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define("Status", {
+    const Status = sequelize.define("Status", {
+        timestamp: {type: DataTypes.INTEGER},
         car_id: {
             type: DataTypes.STRING,
             references: {key: "id", model: "cars"}
         },
-        latitude: {type: DataTypes.STRING},
-        longitude: {type: DataTypes.STRING},
+        latitude: {type: DataTypes.STRING}, // dupes
+        longitude: {type: DataTypes.STRING}, // dupes
         innerCleanliness: {type: DataTypes.STRING},
         isCharging: {type: DataTypes.BOOLEAN},
         isInParkingSpace: {type: DataTypes.BOOLEAN},
@@ -21,6 +20,13 @@ module.exports = function(sequelize, DataTypes) {
         fuelLevel: {type: DataTypes.FLOAT},
         fuelLevelInPercent: {type: DataTypes.INTEGER},
         estimatedRange: {type: DataTypes.INTEGER}
+    }, {
+        classMethods: {
+          associate: function (models) {
+            Status.belongsTo(models.Car);
+            Status.belongsTo(models.Position);
+          }
+        }
     });
+    return Status;
 };
-

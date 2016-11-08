@@ -15,6 +15,7 @@ const interval = 5 * 60 * 1000;
 const stopAfterMilliseconds = 7 * 24 * 60 * 60 * 1000;
 let intervalId;
 const startDate = new Date();
+const timestamp = Math.floor(Date.now());
 // ----------------------------------------------------
 
 function removeObjKeys(items, obj) {
@@ -55,7 +56,6 @@ function runScrape() {
             //
             // -1-----------------------
             // save scraped raw data to disk
-            const timestamp = Math.floor(Date.now());
             fs.writeFile(path.join('scrapes', timestamp / 1000 + '.json'), JSON.stringify(json, null, 4), function(err) {
                 if (err) {
                     throw err;
@@ -158,7 +158,7 @@ function runScrape() {
                     'innerCleanliness',
                     'isCharging',
                     'isInParkingSpace',
-                    'isPreheatable',
+                    'parkingSpaceId',
                     'fuelLevel',
                     'fuelLevelInPercent',
                     'estimatedRange',
@@ -213,6 +213,7 @@ function runScrape() {
                     carStatus[item] = car[item];
                     // }
                 });
+                carStatus.timestamp = timestamp;
                 // foreign key
                 carStatus.car_id = car.id;
                 return carStatus;
@@ -236,6 +237,7 @@ function runScrape() {
             let positions = clone(json.cars.items);
             positions = positions.map(function(car) {
                 const pos = {
+                    timestamp: timestamp,
                     car_id: car.id,
                     latitude: car.latitude,
                     longitude: car.longitude
@@ -319,4 +321,6 @@ models.sequelize.sync({
 
 
 // (optional:) allow re-use of scrape function
-module.exports = runScrape;
+// module.exports = runScrape;
+
+module.exports = timestamp;
