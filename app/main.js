@@ -33,7 +33,6 @@ fetch('/cars')
 
 
 
-
 		// cleanliness: ["REGULAR", "CLEAN", "VERY_CLEAN", "POOR"]
         // marker colors
         let marker_colors = {
@@ -42,10 +41,16 @@ fetch('/cars')
             "REGULAR": '#F39C12',
             "POOR": '#FF5733'
         }
+        let marker_intensities = {
+            "VERY_CLEAN": 0.1,
+            "CLEAN": 0.3,
+            "REGULAR": 0.6,
+            "POOR": 1
+        }
+        let intensities = [];
 
         // let carMarkers = [];
         all.top(Infinity).forEach(function(car){
-
             let marker = L.circleMarker([car.latitude, car.longitude], {
                     radius: 2,
                     color: marker_colors[car.innerCleanliness],
@@ -53,8 +58,19 @@ fetch('/cars')
                 })
                 .bindPopup("Id: " + car.car_id + "<br />" + "Cleanliness: " + car.innerCleanliness)
                 .addTo(map);
+
+            intensities.push([car.latitude, car.longitude, marker_intensities[car.innerCleanliness]]);
+
             // carMarkers.push(marker);
         });
+
+        // heat map
+        var heat = L.heatLayer(intensities, {
+            radius: 70,
+            maxZoom: 18,
+            blur: 35,
+            gradient: {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'}
+        }).addTo(map);
 
         // let markerLayer = L.LayerGroup(carMarkers)
         //     .addTo(map);
