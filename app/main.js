@@ -81,21 +81,6 @@ fetch('/cars')
         });
 
 
-        // k-means clusters
-        var clusters = getClusters(clusterdata, {numberOfClusters: 5});
-        console.log(clusters);
-        $.each(clusters, function (key, item) {
-            if (!item.mean[0] || !item.mean[1]) {
-                return;
-            }
-            let marker = L.circleMarker([item.mean[0], item.mean[1]], {
-                    radius: 20,
-                    color: '#999999',
-                    fillColor: '#999999'
-                })
-                .addTo(map);
-        });
-
         // heat map
         // let heatmap = {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'};
         // var heat = L.heatLayer(intensities, {
