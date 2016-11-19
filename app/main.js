@@ -34,10 +34,23 @@ fetch('/cars')
 
 
 
+		// cleanliness: ["REGULAR", "CLEAN", "VERY_CLEAN", "POOR"]
+        // marker colors
+        let marker_colors = {
+            "VERY_CLEAN": '#ABEBC6',
+            "CLEAN": '#58D68D',
+            "REGULAR": '#F39C12',
+            "POOR": '#FF5733'
+        }
 
         // let carMarkers = [];
         all.top(Infinity).forEach(function(car){
-            let marker = L.marker([car.latitude, car.longitude])
+
+            let marker = L.circleMarker([car.latitude, car.longitude], {
+                    radius: 2,
+                    color: marker_colors[car.innerCleanliness],
+                    fillColor: marker_colors[car.innerCleanliness]
+                })
                 .bindPopup("Id: " + car.car_id + "<br />" + "Cleanliness: " + car.innerCleanliness)
                 .addTo(map);
             // carMarkers.push(marker);

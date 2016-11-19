@@ -79,8 +79,6 @@ function runScrape() {
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created cartype: ' + model.modelName);
-                        // } else {
-                        //     log.info('Cartype ' + model.modelName + ' already exists');
                         }
                         callback(null);
                     }).catch(function(error) {
@@ -99,8 +97,6 @@ function runScrape() {
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created charging station: ' + model.name);
-                        // } else {
-                        //     log.info('Charging station ' + model.name + ' already exists');
                         }
                         callback(null);
                     }).catch(function(error) {
@@ -118,8 +114,6 @@ function runScrape() {
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created petrol station: ' + model.name);
-                        // } else {
-                        //     log.info('Petrol station ' + model.name + ' already exists');
                         }
                         callback(null);
                     }).catch(function(error) {
@@ -139,8 +133,6 @@ function runScrape() {
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created parking space: ' + model.name);
-                        // } else {
-                        //     log.info('Parking space ' + model.name + ' already exists');
                         }
                         callback(null);
                     }).catch(function(error) {
@@ -175,11 +167,9 @@ function runScrape() {
             });
             fns.push.apply(fns, cars.map(function(c) {
                 return function(callback) {
-                    // console.log('saving car');
-                    // save the car
                     models.Car.findOrCreate({where: c})
                     .spread(function(model, created) {
-                        if (created && model) {
+                        if (model && created) {
                             log.info('Created car ' + model.name);
                         }
                         callback(null);
@@ -193,9 +183,6 @@ function runScrape() {
             // -------------------------
             let statii = clone(json.cars.items);
             statii = statii.map(function(car) {
-                // console.log('STATII');
-                // console.log(car);
-                // console.log('STATII');
                 let carStatus = {};
                 [
                     'innerCleanliness',
@@ -209,9 +196,7 @@ function runScrape() {
                     'fuelLevelInPercent',
                     'estimatedRange'
                 ].forEach(function(item) {
-                    // if (car.hasOwnProperty(item)) {
                     carStatus[item] = car[item];
-                    // }
                 });
                 carStatus.timestamp = timestamp;
                 // foreign key
@@ -267,25 +252,25 @@ function runScrape() {
 
             // persist the full scrape data
             // -------------------------
-            fns.push(
-                function(callback) {
-                    // save the scrape
-                    models.Scrape.create({
-                        id: timestamp,
-                        name: json.name,
-                        area_code: json.id,
-                        latitude: json.latitude,
-                        longitude: json.longitude,
-                        data: JSON.stringify(json)
-                    })
-                    .then(function() {
-                        // log.info('Scrape saved to db.');
-                        callback(null);
-                    }).catch(function(error) {
-                        throw error;
-                    });
-                }
-            );
+            // fns.push(
+            //     function(callback) {
+            //         // save the scrape
+            //         models.Scrape.create({
+            //             id: timestamp,
+            //             name: json.name,
+            //             area_code: json.id,
+            //             latitude: json.latitude,
+            //             longitude: json.longitude,
+            //             data: JSON.stringify(json)
+            //         })
+            //         .then(function() {
+            //             // log.info('Scrape saved to db.');
+            //             callback(null);
+            //         }).catch(function(error) {
+            //             throw error;
+            //         });
+            //     }
+            // );
 
             log.info("# DB actions: " + fns.length);
 
@@ -315,7 +300,7 @@ function startScrape() {
 // start app
 // this will create the database tables on the first run
 models.sequelize.sync({
-    force: true,
+    force: false, // do not start fresh
     pool: false
 }).then(startScrape);
 
