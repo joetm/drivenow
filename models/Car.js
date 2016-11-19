@@ -72,7 +72,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
           associate: function (models) {
-            Car.belongsTo(models.CarType);
+            Car.belongsTo(models.CarType, {targetKey: 'modelIdentifier'});
           }
         }
     });

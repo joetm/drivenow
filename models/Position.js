@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
           associate: function (models) {
-            Position.belongsTo(models.Car);
+            Position.belongsTo(models.Car, {targetKey: 'id'});
           }
         }
     });
