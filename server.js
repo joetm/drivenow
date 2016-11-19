@@ -15,6 +15,8 @@ app.use('/app', express.static(path.join(__dirname, 'app')));
 app.use('/node_modules/whatwg-fetch', express.static(path.join(__dirname, 'node_modules/whatwg-fetch')));
 app.use('/node_modules/crossfilter', express.static(path.join(__dirname, 'node_modules/crossfilter')));
 app.use('/node_modules/leaflet.heat/dist', express.static(path.join(__dirname, 'node_modules/leaflet.heat/dist')));
+app.use('/node_modules/materialize-css/dist', express.static(path.join(__dirname, '/node_modules/materialize-css/dist')));
+app.use('/node_modules/jquery/dist', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 
 // routes
 app.get('/', function response(req, res) {

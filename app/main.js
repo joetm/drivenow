@@ -15,6 +15,33 @@ fetch('/cars')
 		// console.log('parsed json', cars[0])
         // let markers = [];
 
+
+        // cleanliness: ["REGULAR", "CLEAN", "VERY_CLEAN", "POOR"]
+        // marker colors
+        let marker_colors = {
+            "VERY_CLEAN": '#ABEBC6',
+            "CLEAN": '#58D68D',
+            "REGULAR": '#F39C12',
+            "POOR": '#FF5733'
+        }
+        let marker_intensities = {
+            "VERY_CLEAN": 0.1,
+            "CLEAN": 0.3,
+            "REGULAR": 0.6,
+            "POOR": 1
+        }
+        let intensities = [];
+
+
+
+        let tpl = '';
+        $.each(marker_colors, function (key, item) {
+            tpl += '<div><div class="chip" style="background-color:' + item + '">' + key + '</div></div>';
+        });
+        $('#legend_cleanliness').html(tpl);
+
+
+
         let cars = crossfilter(json);
 
         // dimensions
@@ -32,22 +59,6 @@ fetch('/cars')
         // const maxDate = dateDim.top(1)[0]["timestamp"];
 
 
-
-		// cleanliness: ["REGULAR", "CLEAN", "VERY_CLEAN", "POOR"]
-        // marker colors
-        let marker_colors = {
-            "VERY_CLEAN": '#ABEBC6',
-            "CLEAN": '#58D68D',
-            "REGULAR": '#F39C12',
-            "POOR": '#FF5733'
-        }
-        let marker_intensities = {
-            "VERY_CLEAN": 0.1,
-            "CLEAN": 0.3,
-            "REGULAR": 0.6,
-            "POOR": 1
-        }
-        let intensities = [];
 
         // let carMarkers = [];
         all.top(Infinity).forEach(function(car){

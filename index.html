@@ -7,9 +7,21 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="/node_modules/materialize-css/dist/css/materialize.min.css" />
     <link href="/app/style.css" media="all" rel="stylesheet">
   </head>
   <body>
+
+    <div id="legend">
+            <div class="card darken-1">
+              <div class="card-content black-text">
+                <span class="card-title">Cleanliness</span>
+                <p id="legend_cleanliness">
+                </p>
+              </div>
+            </div>
+    </div>
+
     <div id="wrap">
         <div id="map"></div>
         <div id="footer">
@@ -22,6 +34,9 @@
     <script src="/node_modules/crossfilter/crossfilter.min.js"></script>
 
 	<script src="/node_modules/leaflet.heat/dist/leaflet-heat.js"></script>
+
+	<script src="/node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="/node_modules/materialize-css/dist/js/materialize.min.js"></script>
 
     <script src="/app/main.js"></script>
   </body>
