@@ -38,3 +38,6 @@ html, body {
     margin-top:0;
     padding-top:0;
 }
+svg path.blurCircle {
+    filter: blur(50px);
+}

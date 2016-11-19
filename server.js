@@ -17,7 +17,6 @@ app.use('/node_modules/crossfilter', express.static(path.join(__dirname, 'node_m
 app.use('/node_modules/leaflet.heat/dist', express.static(path.join(__dirname, 'node_modules/leaflet.heat/dist')));
 app.use('/node_modules/materialize-css/dist', express.static(path.join(__dirname, '/node_modules/materialize-css/dist')));
 app.use('/node_modules/jquery/dist', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
-app.use('/node_modules/dimas-kmeans', express.static(path.join(__dirname, 'node_modules/dimas-kmeans')));
 
 // routes
 app.get('/', function response(req, res) {
