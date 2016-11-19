@@ -24,14 +24,13 @@ fetch('/cars')
             "REGULAR": '#F39C12',
             "POOR": '#FF5733'
         }
-        let marker_intensities = {
-            "VERY_CLEAN": 0.1,
-            "CLEAN": 0.3,
-            "REGULAR": 0.6,
-            "POOR": 1
-        }
-        let intensities = [];
-
+        // let marker_intensities = {
+        //     "VERY_CLEAN": 0.1,
+        //     "CLEAN": 0.3,
+        //     "REGULAR": 0.6,
+        //     "POOR": 1
+        // }
+        // let intensities = [];
 
 
         let tpl = '';
@@ -39,7 +38,6 @@ fetch('/cars')
             tpl += '<div><div class="chip" style="background-color:' + item + '">' + key + '</div></div>';
         });
         $('#legend_cleanliness').html(tpl);
-
 
 
         let cars = crossfilter(json);
@@ -54,9 +52,14 @@ fetch('/cars')
         let locationGroup = location.group();
         let allGroup = all.groupAll();
 
+
         // TODO
         // const minDate = dateDim.bottom(1)[0]["timestamp"];
         // const maxDate = dateDim.top(1)[0]["timestamp"];
+
+        let clusterdata = [];
+
+
 
 
 
@@ -70,18 +73,37 @@ fetch('/cars')
                 .bindPopup("Id: " + car.car_id + "<br />" + "Cleanliness: " + car.innerCleanliness)
                 .addTo(map);
 
-            intensities.push([car.latitude, car.longitude, marker_intensities[car.innerCleanliness]]);
+            // intensities.push([car.latitude, car.longitude, marker_intensities[car.innerCleanliness]]);
+
+            clusterdata.push([parseFloat(car.latitude), parseFloat(car.longitude)]);
 
             // carMarkers.push(marker);
         });
 
+
+        // k-means clusters
+        var clusters = getClusters(clusterdata, {numberOfClusters: 5});
+        console.log(clusters);
+        $.each(clusters, function (key, item) {
+            if (!item.mean[0] || !item.mean[1]) {
+                return;
+            }
+            let marker = L.circleMarker([item.mean[0], item.mean[1]], {
+                    radius: 20,
+                    color: '#999999',
+                    fillColor: '#999999'
+                })
+                .addTo(map);
+        });
+
         // heat map
-        var heat = L.heatLayer(intensities, {
-            radius: 70,
-            maxZoom: 18,
-            blur: 35,
-            gradient: {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'}
-        }).addTo(map);
+        // let heatmap = {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'};
+        // var heat = L.heatLayer(intensities, {
+        //     radius: 70,
+        //     maxZoom: 18,
+        //     blur: 35,
+        //     gradient: heatmap
+        // }).addTo(map);
 
         // let markerLayer = L.LayerGroup(carMarkers)
         //     .addTo(map);
