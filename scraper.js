@@ -23,7 +23,6 @@ const interval = 3 * minutes;
 const stopAfter = 7 * 24 * hours;
 let intervalId;
 const startDate = new Date();
-const timestamp = Math.floor(Date.now());
 // ----------------------------------------------------
 
 function removeObjKeys(items, obj) {
@@ -41,6 +40,9 @@ function clone(obj) {
 
 
 function runScrape() {
+
+    let timestamp = Math.floor(Date.now());
+
     //
     // console.log(json);
     log.info("Running scrape...");
@@ -83,7 +85,7 @@ function runScrape() {
             // var carTypes = clone(json.carTypes.items);
             fns.push.apply(fns, json.carTypes.items.map(function(ct) {
                 return function(callback) {
-                    CarType.findOrCreate({where: ct})
+                    models.CarType.findOrCreate({where: ct})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created cartype: ' + model.modelName);
@@ -101,7 +103,7 @@ function runScrape() {
             fns.push.apply(fns, json.chargingStations.items.map(function(cs) {
                 cs.address = cs.address[0]; // string conversion
                 return function(callback) {
-                    ChargingStation.findOrCreate({where: cs})
+                    models.ChargingStation.findOrCreate({where: cs})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created charging station: ' + model.name);
@@ -118,7 +120,7 @@ function runScrape() {
             fns.push.apply(fns, json.petrolStations.items.map(function(ps) {
                 ps.address = ps.address[0]; // string conversion
                 return function(callback) {
-                    PetrolStation.findOrCreate({where: ps})
+                    models.PetrolStation.findOrCreate({where: ps})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created petrol station: ' + model.name);
@@ -137,7 +139,7 @@ function runScrape() {
                 delete ps.count;
                 delete ps.openingHours;
                 return function(callback) {
-                    ParkingSpace.findOrCreate({where: ps})
+                    models.ParkingSpace.findOrCreate({where: ps})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created parking space: ' + model.name);
@@ -175,7 +177,7 @@ function runScrape() {
             });
             fns.push.apply(fns, cars.map(function(c) {
                 return function(callback) {
-                    Car.findOrCreate({where: c})
+                    models.Car.findOrCreate({where: c})
                     .spread(function(model, created) {
                         if (model && created) {
                             log.info('Created car ' + model.name);
@@ -215,7 +217,7 @@ function runScrape() {
                 // console.log(carStatus);
                 return function(callback) {
                     // save the new status
-                    Status.create(carStatus)
+                    models.Status.create(carStatus)
                     .then(function() {
                         // log.info('Status saved to db.');
                         callback(null);
@@ -248,7 +250,7 @@ function runScrape() {
             fns.push.apply(fns, positions.map(function(pos) {
                 return function(callback) {
                     // save the new status
-                    Position.create(pos)
+                    models.Position.create(pos)
                     .then(function() {
                         // log.info('Position saved to db.');
                         callback(null);
@@ -314,6 +316,4 @@ models.sequelize.sync({
 
 
 // (optional:) allow re-use of scrape function
-// module.exports = runScrape;
-
-module.exports = timestamp;
+module.exports = runScrape;
