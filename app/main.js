@@ -2,28 +2,98 @@
 let map = L.map('map').setView([52.5072111,13.1459675], 10);
 
 
-function draw(timestampDim, marker_colors, intensities, timestamps) {
+let layers = {};
+let timestamps = [];
+
+let cars;
+
+// dimensions
+let cleanlinessDim;
+let carIdDim;
+let locationDim;
+let timestampDim;
+let allDim;
+// ---
+let cleanlinessGroup;
+let carIdGroup;
+let locationGroup;
+let timestampGroup;
+let allGroup;
+
+
+
+// cleanliness: ["REGULAR", "CLEAN", "VERY_CLEAN", "POOR"]
+// marker colors
+const marker_colors = {
+    "VERY_CLEAN": '#ABEBC6',
+    "CLEAN": '#58D68D',
+    "REGULAR": '#F39C12',
+    "POOR": '#FF5733'
+}
+
+// build the legend
+$(function() {
+    tpl = '';
+    $.each(marker_colors, function (key, item) {
+        tpl += `<div><div class="chip ${key}" style="background-color:${item}">${key}</div></div>`;
+    });
+    $('#legend_cleanliness').html(tpl);
+});
+
+
+function bindClick(e) {
+    //     if (e.target.options.carId === undefined) {
+    //         return;
+    //     }
+    //     console.log('car id: ', e.target.options.carId);
+    //     // query data
+    //     fetch('/cars')
+    //         .then(function(response) {
+    //             return response.json();
+    //         }).then(function(json) {
+    //         // let cars = crossfilter(json);
+    //         layers.cars = draw(timestampDim, timestamps);
+    //     });
+
+    // filter the data by the dimension
+    carIdDim.filter(e.target.options.carId);
+    // redraw with filtered car data
+    layers.cars = draw(carIdDim, timestamps);
+}
+
+
+function draw(timestampDim) {
+
+    if (layers.cars) {
+        // clear map
+        map.removeLayer(layers.cars);
+    }
 
     let markers = [];
 
+    // let marker_intensities = {
+    //     "VERY_CLEAN": 0.1,
+    //     "CLEAN": 0.3,
+    //     "REGULAR": 0.6,
+    //     "POOR": 1
+    // }
+
+    // heatmap intensities
+    let intensities = [];
+
     timestampDim.top(Infinity).forEach(function(car){
 
-        if (timestamps.indexOf(car.timestamp) === -1) {
-            timestamps.push(car.timestamp);
+        // build an array of possible timestamp values (once)
+        if (!timestamps.length) {
+            if (timestamps.indexOf(car.timestamp) === -1) {
+                timestamps.push(car.timestamp);
+            }
         }
 
         let popup = '';
         $.each(car, function(key, val) {
             popup += `${key}: ${val}<br />`;
         });
-
-        // marker in the center
-        let marker = L.circleMarker([car.latitude, car.longitude], {
-                radius: 2,
-                color: marker_colors[car.innerCleanliness],
-                fillColor: marker_colors[car.innerCleanliness]
-            })
-            // .addTo(map);
 
         // blurred circle
         let blurmarker = L.circleMarker([car.latitude, car.longitude], {
@@ -32,10 +102,19 @@ function draw(timestampDim, marker_colors, intensities, timestamps) {
                 fill: true,
                 fillOpacity: 0.2,
                 className: 'blurCircle',
+                carId: car.id,
                 fillColor: marker_colors[car.innerCleanliness]
             })
-            .bindPopup(popup)
-            // .addTo(map);
+            .on('click', bindClick)
+
+        // marker in the center
+        let marker = L.circleMarker([car.latitude, car.longitude], {
+                radius: 2,
+                carId: car.id,
+                color: marker_colors[car.innerCleanliness],
+                fillColor: marker_colors[car.innerCleanliness]
+            })
+            // .bindPopup(popup)
 
         markers.push(marker);
         markers.push(blurmarker);
@@ -49,7 +128,21 @@ function draw(timestampDim, marker_colors, intensities, timestamps) {
     // to change the circle size on zoom event
     let circleGroup = L.featureGroup(markers);
 
+    // add the layer to the map
     map.addLayer(circleGroup);
+
+    // heat map (experimental)
+    // let heatmap = {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'};
+    let heatmap = {0: '#0000ff', 1: '#0000DD'};
+    if (layers.heat !== undefined) {
+        map.removeLayer(layers.heat);
+    }
+    layers.heat = L.heatLayer(intensities, {
+        radius: 40,
+        maxZoom: 20,
+        blur: 60,
+        gradient: heatmap
+    }).addTo(map);
 
     return circleGroup;
 }
@@ -70,47 +163,21 @@ fetch('/cars')
         let layer;
 
 
-        // cleanliness: ["REGULAR", "CLEAN", "VERY_CLEAN", "POOR"]
-        // marker colors
-        let marker_colors = {
-            "VERY_CLEAN": '#ABEBC6',
-            "CLEAN": '#58D68D',
-            "REGULAR": '#F39C12',
-            "POOR": '#FF5733'
-        }
-
-        // let marker_intensities = {
-        //     "VERY_CLEAN": 0.1,
-        //     "CLEAN": 0.3,
-        //     "REGULAR": 0.6,
-        //     "POOR": 1
-        // }
-        let intensities = [];
-
-        let timestamps = [];
-
-
-        // build the legend
-        tpl = '';
-        $.each(marker_colors, function (key, item) {
-            tpl += `<div><div class="chip ${key}" style="background-color:${item}">${key}</div></div>`;
-        });
-        $('#legend_cleanliness').html(tpl);
-
-
-        let cars = crossfilter(json);
+        cars = crossfilter(json);
 
         // dimensions
-        let cleanlinessDim = cars.dimension(d => d["innerCleanliness"]);
-        let locationDim = cars.dimension(d => [d["latitude"], d["longitude"]]);
-        let timestampDim = cars.dimension(d => d["timestamp"]);
-        let allDim = cars.dimension(d => d);
+        cleanlinessDim = cars.dimension(d => d["innerCleanliness"]);
+        locationDim = cars.dimension(d => [d["latitude"], d["longitude"]]);
+        timestampDim = cars.dimension(d => d["timestamp"]);
+        carIdDim = cars.dimension(d => d["id"]);
+        allDim = cars.dimension(d => d);
 
         // groups
-        let cleanlinessGroup = cleanlinessDim.group();
-        let locationGroup = locationDim.group();
-        let timestampGroup = timestampDim.group();
-        let allGroup = allDim.groupAll();
+        cleanlinessGroup = cleanlinessDim.group();
+        locationGroup = locationDim.group();
+        timestampGroup = timestampDim.group();
+        carIdGroup = carIdDim.group();
+        allGroup = allDim.groupAll();
 
 
         // TODO
@@ -119,11 +186,8 @@ fetch('/cars')
 
 
 
-        layer = draw(timestampDim, marker_colors, intensities, timestamps);
-        console.log('layer', layer);
-
-
-
+        layers.cars = draw(timestampDim, timestamps);
+        console.log('layer', layers.cars);
 
 
 
@@ -144,29 +208,14 @@ fetch('/cars')
             let timestamp = +$(this).text();
             // alert('Filtering for timestamp: '+timestamp);
             timestampDim.filter(timestamp);
-
-            // clear map
-            map.removeLayer(layer);
             // redraw with filtered data
-            layer = draw(timestampDim, marker_colors, intensities, timestamps);
-
-
-
+            layers.cars = draw(timestampDim, timestamps);
         });
 
 
 
 
 
-        // heat map (experimental)
-        // let heatmap = {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'};
-        let heatmap = {0: '#0000ff', 1: '#0000DD'};
-        var heat = L.heatLayer(intensities, {
-            radius: 40,
-            maxZoom: 20,
-            blur: 60,
-            gradient: heatmap
-        }).addTo(map);
 
 
 

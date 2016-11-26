@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
     const Status = sequelize.define("Status", {
         timestamp: {type: DataTypes.INTEGER},
-        car_id: {
+        carId: {
             type: DataTypes.STRING,
             references: {key: "id", model: "cars"}
         },

@@ -23,17 +23,35 @@ app.use('/node_modules/jquery/dist', express.static(path.join(__dirname, 'node_m
 app.get('/', function response(req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
-app.get('/cars', function response(req, res) {
-	// get the car statii
-	models.Status.findAll({
-        // include: [
-        //     {
-        //         model: models.Car
-        //     }
-        // ]
-	}).then(function (carStatii) {
-		res.status(200).json(carStatii);
-	});
+app.get('/cars/:car', function response(req, res) {
+	// return all cars
+	if (req.params.car === undefined) {
+		// get the car statii
+		models.Status.findAll({
+	        // include: [
+	        //     {
+	        //         model: models.Car
+	        //     }
+	        // ]
+		}).then(function (carStatii) {
+			// return all
+			res.status(200).json(carStatii);
+		});
+	// return single car
+	} else {
+		// get the car statii
+		models.Status.findAll({
+	        where: {
+                car_id: req.params.car // TODO: change key to carId
+            },
+		    order: [
+				['timestamp', 'ASC']
+			]
+        }).then(function (carStatii) {
+			// return all
+			res.status(200).json(carStatii);
+		});
+	}
 });
 
 function startServer() {
