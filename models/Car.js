@@ -1,6 +1,6 @@
 "use strict";
 
-let models = require("./index");
+// let models = require("./index");
 
 // Sample:
 /*
@@ -69,12 +69,12 @@ module.exports = function(sequelize, DataTypes) {
             references: {key: "modelIdentifier", model: 'cartypes'}
         },
         data: {type: DataTypes.STRING}
-    }, {
-        classMethods: {
-          associate: function (models) {
-            Car.belongsTo(models.CarType, {targetKey: 'modelIdentifier'});
-          }
-        }
+    // }, {
+    //     classMethods: {
+    //       associate: function (models) {
+    //         Car.belongsTo(models.CarType, {targetKey: 'modelIdentifier'});
+    //       }
+    //     }
     });
     return Car;
 };

@@ -6,13 +6,134 @@ const path = require('path');
 const series = require('async/series');
 
 const apiconf = require('./config/api.json');
-const models = require('./models');
 const log = require('./app/logger');
+
+// sequelize is annoying
+const Sequelize = require('sequelize');
+const env       = process.env.NODE_ENV || 'development';
+const config    = require(path.join(__dirname, 'config/config.json'))[env];
+let sequelize;
+if (config.use_env_variable) {
+    sequelize = new Sequelize(process.env[config.use_env_variable]);
+} else {
+    sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
+
+// only prototype
+// const models = require('./models/db');
+// const models = require('./models');
+// load the models
+let Car = sequelize.define("Car", {
+        id: {
+            type: Sequelize.STRING,
+            primaryKey: true,
+            autoIncrement: false
+        },
+        name: {type: Sequelize.STRING},
+        modelIdentifier: {
+            type: Sequelize.STRING
+            // references: {key: "modelIdentifier", model: 'cartypes'}
+        },
+        data: {type: Sequelize.STRING}
+    });
+let CarType = sequelize.define("CarType", {
+        modelIdentifier: {
+            type: Sequelize.STRING,
+            primaryKey: true,
+            autoIncrement: false
+        },
+        carImageUrl: {type: Sequelize.STRING},
+        group: {type: Sequelize.STRING},
+        make: {type: Sequelize.STRING},
+        modelName: {type: Sequelize.STRING},
+        routingModelName: {type: Sequelize.STRING},
+        series: {type: Sequelize.STRING},
+        variant: {type: Sequelize.STRING}
+    });
+let ChargingStation = sequelize.define("ChargingStation", {
+        address: {type: Sequelize.STRING},
+        latitude: {type: Sequelize.FLOAT},
+        longitude: {type: Sequelize.FLOAT},
+        name: {type: Sequelize.STRING},
+        organisation: {type: Sequelize.STRING}
+    });
+let ParkingSpace = sequelize.define("ParkingSpace", {
+        id: {
+            type: Sequelize.STRING,
+            primaryKey: true,
+            autoIncrement: false
+        },
+        fullStreet: {type: Sequelize.STRING},
+        latitude: {type: Sequelize.FLOAT},
+        longitude: {type: Sequelize.FLOAT},
+        name: {type: Sequelize.STRING}
+    });
+let PetrolStation = sequelize.define("PetrolStation", {
+        address: {type: Sequelize.STRING},
+        latitude: {type: Sequelize.FLOAT},
+        longitude: {type: Sequelize.FLOAT},
+        name: {type: Sequelize.STRING},
+        organisation: {type: Sequelize.STRING}
+    });
+let Position = sequelize.define("Position", {
+        timestamp: {type: Sequelize.INTEGER},
+        carId: {
+            type: Sequelize.STRING
+            // references: {key: "id", model: 'cars'}
+        },
+        latitude: {type: Sequelize.FLOAT},
+        longitude: {type: Sequelize.FLOAT},
+        street: {type: Sequelize.STRING},
+        city: {type: Sequelize.STRING}
+    });
+let Scrape = sequelize.define("Scrape", {
+        id: {
+            type: Sequelize.STRING,
+            primaryKey: true,
+            autoIncrement: false
+        },
+        carId: {type: Sequelize.STRING},
+        areaCode: {type: Sequelize.INTEGER},
+        latitude: {type: Sequelize.FLOAT},
+        longitude: {type: Sequelize.FLOAT},
+        name: {type: Sequelize.STRING},
+        data: {type: Sequelize.STRING}
+    });
+let Status = sequelize.define("Status", {
+        timestamp: {type: Sequelize.INTEGER},
+        carId: {
+            type: Sequelize.STRING
+            // references: {key: "id", model: "cars"}
+        },
+        latitude: {type: Sequelize.STRING}, // dupes
+        longitude: {type: Sequelize.STRING}, // dupes
+        innerCleanliness: {type: Sequelize.STRING},
+        isCharging: {type: Sequelize.BOOLEAN},
+        isInParkingSpace: {type: Sequelize.BOOLEAN},
+        parkingSpaceId: {
+            type: Sequelize.STRING
+            // references: {key: "id", model: "parkingspaces"}
+        },
+        isPreheatable: {type: Sequelize.BOOLEAN},
+        fuelLevel: {type: Sequelize.FLOAT},
+        fuelLevelInPercent: {type: Sequelize.INTEGER},
+        estimatedRange: {type: Sequelize.INTEGER}
+    });
+// associate models
+// CarType.hasOne(Car, {as: 'type', foreignKey: 'modelIdentifier'});
+Car.belongsTo(CarType, {as: 'carType', foreignKey: 'modelIdentifier'});
+Position.belongsTo(Car, {foreignKey: 'id'});
+Status.belongsTo(Car, {foreignKey: 'id'});
+Status.belongsTo(Position, {foreignKey: 'id'});
+
+
 
 // scrape configuration
 // ----------------------------------------------------
-const interval = 5 * 60 * 1000;
-const stopAfterMilliseconds = 7 * 24 * 60 * 60 * 1000;
+const minutes = 60 * 1000;
+const hours = 60 * minutes;
+const interval = 3 * minutes;
+const stopAfter = 7 * 24 * hours;
 let intervalId;
 const startDate = new Date();
 const timestamp = Math.floor(Date.now());
@@ -41,7 +162,7 @@ function runScrape() {
     // abort condition
     const dateNow = new Date();
     const timeDiff = Math.abs(dateNow.getTime() - startDate.getTime());
-    if (timeDiff > stopAfterMilliseconds) {
+    if (timeDiff > stopAfter) {
         clearInterval(intervalId);
         return;
     }
@@ -75,7 +196,7 @@ function runScrape() {
             // var carTypes = clone(json.carTypes.items);
             fns.push.apply(fns, json.carTypes.items.map(function(ct) {
                 return function(callback) {
-                    models.CarType.findOrCreate({where: ct})
+                    CarType.findOrCreate({where: ct})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created cartype: ' + model.modelName);
@@ -93,7 +214,7 @@ function runScrape() {
             fns.push.apply(fns, json.chargingStations.items.map(function(cs) {
                 cs.address = cs.address[0]; // string conversion
                 return function(callback) {
-                    models.ChargingStation.findOrCreate({where: cs})
+                    ChargingStation.findOrCreate({where: cs})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created charging station: ' + model.name);
@@ -110,7 +231,7 @@ function runScrape() {
             fns.push.apply(fns, json.petrolStations.items.map(function(ps) {
                 ps.address = ps.address[0]; // string conversion
                 return function(callback) {
-                    models.PetrolStation.findOrCreate({where: ps})
+                    PetrolStation.findOrCreate({where: ps})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created petrol station: ' + model.name);
@@ -129,7 +250,7 @@ function runScrape() {
                 delete ps.count;
                 delete ps.openingHours;
                 return function(callback) {
-                    models.ParkingSpace.findOrCreate({where: ps})
+                    ParkingSpace.findOrCreate({where: ps})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created parking space: ' + model.name);
@@ -167,7 +288,7 @@ function runScrape() {
             });
             fns.push.apply(fns, cars.map(function(c) {
                 return function(callback) {
-                    models.Car.findOrCreate({where: c})
+                    Car.findOrCreate({where: c})
                     .spread(function(model, created) {
                         if (model && created) {
                             log.info('Created car ' + model.name);
@@ -200,14 +321,14 @@ function runScrape() {
                 });
                 carStatus.timestamp = timestamp;
                 // foreign key
-                carStatus.car_id = car.id;
+                carStatus.carId = car.id;
                 return carStatus;
             });
             fns.push.apply(fns, statii.map(function(carStatus) {
                 // console.log(carStatus);
                 return function(callback) {
                     // save the new status
-                    models.Status.create(carStatus)
+                    Status.create(carStatus)
                     .then(function() {
                         // log.info('Status saved to db.');
                         callback(null);
@@ -223,7 +344,7 @@ function runScrape() {
             positions = positions.map(function(car) {
                 const pos = {
                     timestamp: timestamp,
-                    car_id: car.id,
+                    carId: car.id,
                     latitude: car.latitude,
                     longitude: car.longitude
                 };
@@ -240,7 +361,7 @@ function runScrape() {
             fns.push.apply(fns, positions.map(function(pos) {
                 return function(callback) {
                     // save the new status
-                    models.Position.create(pos)
+                    Position.create(pos)
                     .then(function() {
                         // log.info('Position saved to db.');
                         callback(null);
@@ -255,10 +376,10 @@ function runScrape() {
             // fns.push(
             //     function(callback) {
             //         // save the scrape
-            //         models.Scrape.create({
+            //         Scrape.create({
             //             id: timestamp,
             //             name: json.name,
-            //             area_code: json.id,
+            //             areaCode: json.id,
             //             latitude: json.latitude,
             //             longitude: json.longitude,
             //             data: JSON.stringify(json)
@@ -299,7 +420,7 @@ function startScrape() {
 
 // start app
 // this will create the database tables on the first run
-models.sequelize.sync({
+sequelize.sync({
     force: false, // do not start fresh
     pool: false
 }).then(startScrape);

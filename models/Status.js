@@ -20,13 +20,13 @@ module.exports = function(sequelize, DataTypes) {
         fuelLevel: {type: DataTypes.FLOAT},
         fuelLevelInPercent: {type: DataTypes.INTEGER},
         estimatedRange: {type: DataTypes.INTEGER}
-    }, {
-        classMethods: {
-          associate: function (models) {
-            Status.belongsTo(models.Car, {targetKey: 'id'});
-            Status.belongsTo(models.Position);
-          }
-        }
+    // }, {
+    //     classMethods: {
+    //       associate: function (models) {
+    //         Status.belongsTo(models.Car, {targetKey: 'id'});
+    //         Status.belongsTo(models.Position);
+    //       }
+    //     }
     });
     return Status;
 };

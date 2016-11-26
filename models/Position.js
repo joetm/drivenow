@@ -13,12 +13,12 @@ module.exports = function(sequelize, DataTypes) {
         longitude: {type: DataTypes.FLOAT},
         street: {type: DataTypes.STRING},
         city: {type: DataTypes.STRING}
-    }, {
-        classMethods: {
-          associate: function (models) {
-            Position.belongsTo(models.Car, {targetKey: 'id'});
-          }
-        }
+    // }, {
+    //     classMethods: {
+    //       associate: function (models) {
+    //         Position.belongsTo(models.Car, {targetKey: 'id'});
+    //       }
+    //     }
     });
     return Position;
 };
