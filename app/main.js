@@ -21,13 +21,14 @@ fetch('/cars')
             "REGULAR": '#F39C12',
             "POOR": '#FF5733'
         }
+
         // let marker_intensities = {
         //     "VERY_CLEAN": 0.1,
         //     "CLEAN": 0.3,
         //     "REGULAR": 0.6,
         //     "POOR": 1
         // }
-        // let intensities = [];
+        let intensities = [];
 
 
         let tpl = '';
@@ -87,7 +88,7 @@ fetch('/cars')
 
             circleMarkers.push(blurmarker);
 
-            // intensities.push([car.latitude, car.longitude, marker_intensities[car.innerCleanliness]]);
+            intensities.push([car.latitude, car.longitude]); // marker_intensities[car.innerCleanliness]
 
             // carMarkers.push(marker);
         });
@@ -104,12 +105,15 @@ fetch('/cars')
 
         // heat map
         // let heatmap = {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'};
-        // var heat = L.heatLayer(intensities, {
-        //     radius: 70,
-        //     maxZoom: 18,
-        //     blur: 35,
-        //     gradient: heatmap
-        // }).addTo(map);
+        let heatmap = {0: '#0000ff', 1: '#0000DD'};
+        var heat = L.heatLayer(intensities, {
+            radius: 40,
+            maxZoom: 20,
+            blur: 60,
+            gradient: heatmap
+        }).addTo(map);
+
+
 
         // let markerLayer = L.LayerGroup(carMarkers)
         //     .addTo(map);

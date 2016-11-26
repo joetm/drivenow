@@ -3,12 +3,13 @@
 const path = require('path');
 const express = require('express');
 
-const models = require('./models');
+const models = require('./models/models');
 
-const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3000 : process.env.PORT;
+const isDevMode = process.env.NODE_ENV !== 'production';
+const port = isDevMode ? 3000 : process.env.PORT;
 
 const app = express();
+
 
 // static files
 app.use('/app', express.static(path.join(__dirname, 'app')));

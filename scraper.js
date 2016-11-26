@@ -8,123 +8,10 @@ const series = require('async/series');
 const apiconf = require('./config/api.json');
 const log = require('./app/logger');
 
-// sequelize is annoying
-const Sequelize = require('sequelize');
-const env       = process.env.NODE_ENV || 'development';
-const config    = require(path.join(__dirname, 'config/config.json'))[env];
-let sequelize;
-if (config.use_env_variable) {
-    sequelize = new Sequelize(process.env[config.use_env_variable]);
-} else {
-    sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
 
-// only prototype
-// const models = require('./models/db');
-// const models = require('./models');
-// load the models
-let Car = sequelize.define("Car", {
-        id: {
-            type: Sequelize.STRING,
-            primaryKey: true,
-            autoIncrement: false
-        },
-        name: {type: Sequelize.STRING},
-        modelIdentifier: {
-            type: Sequelize.STRING
-            // references: {key: "modelIdentifier", model: 'cartypes'}
-        },
-        data: {type: Sequelize.STRING}
-    });
-let CarType = sequelize.define("CarType", {
-        modelIdentifier: {
-            type: Sequelize.STRING,
-            primaryKey: true,
-            autoIncrement: false
-        },
-        carImageUrl: {type: Sequelize.STRING},
-        group: {type: Sequelize.STRING},
-        make: {type: Sequelize.STRING},
-        modelName: {type: Sequelize.STRING},
-        routingModelName: {type: Sequelize.STRING},
-        series: {type: Sequelize.STRING},
-        variant: {type: Sequelize.STRING}
-    });
-let ChargingStation = sequelize.define("ChargingStation", {
-        address: {type: Sequelize.STRING},
-        latitude: {type: Sequelize.FLOAT},
-        longitude: {type: Sequelize.FLOAT},
-        name: {type: Sequelize.STRING},
-        organisation: {type: Sequelize.STRING}
-    });
-let ParkingSpace = sequelize.define("ParkingSpace", {
-        id: {
-            type: Sequelize.STRING,
-            primaryKey: true,
-            autoIncrement: false
-        },
-        fullStreet: {type: Sequelize.STRING},
-        latitude: {type: Sequelize.FLOAT},
-        longitude: {type: Sequelize.FLOAT},
-        name: {type: Sequelize.STRING}
-    });
-let PetrolStation = sequelize.define("PetrolStation", {
-        address: {type: Sequelize.STRING},
-        latitude: {type: Sequelize.FLOAT},
-        longitude: {type: Sequelize.FLOAT},
-        name: {type: Sequelize.STRING},
-        organisation: {type: Sequelize.STRING}
-    });
-let Position = sequelize.define("Position", {
-        timestamp: {type: Sequelize.INTEGER},
-        carId: {
-            type: Sequelize.STRING
-            // references: {key: "id", model: 'cars'}
-        },
-        latitude: {type: Sequelize.FLOAT},
-        longitude: {type: Sequelize.FLOAT},
-        street: {type: Sequelize.STRING},
-        city: {type: Sequelize.STRING}
-    });
-let Scrape = sequelize.define("Scrape", {
-        id: {
-            type: Sequelize.STRING,
-            primaryKey: true,
-            autoIncrement: false
-        },
-        carId: {type: Sequelize.STRING},
-        areaCode: {type: Sequelize.INTEGER},
-        latitude: {type: Sequelize.FLOAT},
-        longitude: {type: Sequelize.FLOAT},
-        name: {type: Sequelize.STRING},
-        data: {type: Sequelize.STRING}
-    });
-let Status = sequelize.define("Status", {
-        timestamp: {type: Sequelize.INTEGER},
-        carId: {
-            type: Sequelize.STRING
-            // references: {key: "id", model: "cars"}
-        },
-        latitude: {type: Sequelize.STRING}, // dupes
-        longitude: {type: Sequelize.STRING}, // dupes
-        innerCleanliness: {type: Sequelize.STRING},
-        isCharging: {type: Sequelize.BOOLEAN},
-        isInParkingSpace: {type: Sequelize.BOOLEAN},
-        parkingSpaceId: {
-            type: Sequelize.STRING
-            // references: {key: "id", model: "parkingspaces"}
-        },
-        isPreheatable: {type: Sequelize.BOOLEAN},
-        fuelLevel: {type: Sequelize.FLOAT},
-        fuelLevelInPercent: {type: Sequelize.INTEGER},
-        estimatedRange: {type: Sequelize.INTEGER}
-    });
-// associate models
-// CarType.hasOne(Car, {as: 'type', foreignKey: 'modelIdentifier'});
-Car.belongsTo(CarType, {as: 'carType', foreignKey: 'modelIdentifier'});
-Position.belongsTo(Car, {foreignKey: 'id'});
-Status.belongsTo(Car, {foreignKey: 'id'});
-Status.belongsTo(Position, {foreignKey: 'id'});
+
+const models = require('./models/models');
+
 
 
 
@@ -420,7 +307,7 @@ function startScrape() {
 
 // start app
 // this will create the database tables on the first run
-sequelize.sync({
+models.sequelize.sync({
     force: false, // do not start fresh
     pool: false
 }).then(startScrape);
