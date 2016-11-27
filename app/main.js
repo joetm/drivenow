@@ -43,6 +43,7 @@ $(function() {
 
 // Initialize the details side-nav
 $(function() {
+
     $("#slide-out-btn").sideNav({
       // menuWidth: 300, // Default is 240
       edge: 'right',
@@ -50,6 +51,8 @@ $(function() {
       draggable: false // for touch screens
     });
     let $slideout = $('#slide-out');
+
+    // close button click in sidenav
     $slideout.find("#slide-out-btn").click(function () {
         // console.log('sidenav-open', $slideout.data('sidenav-open'));
         if (!$slideout.data('sidenav-open')) {
@@ -67,33 +70,31 @@ $(function() {
             if (selectedTimestamp) {
                 timestampDim.filter(selectedTimestamp);
             }
+            // reselect the timestamp button
+            // TODO
+
+
+
             // redraw with filtered car data
-            layers.cars = draw(carIdDim);
+            layers.cars = draw(timestampDim);
         }
     });
+
 });
 
-function bindClick(e) {
-    //     if (e.target.options.carId === undefined) {
-    //         return;
-    //     }
-    //     console.log('car id: ', e.target.options.carId);
-    //     // query data
-    //     fetch('/cars')
-    //         .then(function(response) {
-    //             return response.json();
-    //         }).then(function(json) {
-    //         // let cars = crossfilter(json);
-    //         layers.cars = draw(timestampDim, timestamps);
-    //     });
+function carClick(e) {
 
     let carId = e.target.options.carId;
 
-    // reset the timestamp filter
+    // reset the filters
     timestampDim.filterAll();
+    carIdDim.filterAll();
 
-    // filter the data by the dimension
+    // filter the data by the carId
+    // console.log('carIdDim:', carIdDim.top(Infinity));
     carIdDim.filter(carId);
+    console.log('carIdDim.filter('+carId+'):', carIdDim.top(Infinity));
+
     // redraw with filtered car data
     layers.cars = draw(carIdDim); // TODO: replace this manual re-draw with d3
 
@@ -150,47 +151,52 @@ let heatmap = {
 
 function draw(dimension) {
 
+    let markers = [];
+
+    // map reset
     if (layers.cars) {
         // clear map
         map.removeLayer(layers.cars);
     }
-
-    let markers = [];
-
     // reset heatmap;
     heatmap.reset();
 
 
+
     dimension.top(Infinity).forEach(function(car){
 
-        let popup = '';
-        $.each(car, function(key, val) {
-            popup += `${key}: ${val}<br />`;
-        });
+        // let popup = '';
+        // $.each(car, function(key, val) {
+        //     popup += `${key}: ${val}<br />`;
+        // });
 
         // blurred circle
-        let blurmarker = L.circleMarker([car.latitude, car.longitude], {
-                radius: 10,
-                stroke: false,
-                fill: true,
-                fillOpacity: 0.2,
-                className: 'blurCircle',
-                carId: car.id,
-                fillColor: marker_colors[car.innerCleanliness]
-            })
-            .on('click', bindClick)
+        // let blurmarker = L.circleMarker([car.latitude, car.longitude], {
+        //         radius: 10,
+        //         stroke: false,
+        //         fill: true,
+        //         fillOpacity: 0.2,
+        //         className: 'blurCircle',
+        //         carId: car.carId,
+        //         fillColor: marker_colors[car.innerCleanliness]
+        //     })
 
         // marker in the center
         let marker = L.circleMarker([car.latitude, car.longitude], {
-                radius: 2,
-                carId: car.id,
+                radius: 6,
+                fill: true,
+                fillOpacity: 0.8,
+                stroke: false,
+                carId: car.carId,
+                // className: 'blurCircle',
                 color: marker_colors[car.innerCleanliness],
                 fillColor: marker_colors[car.innerCleanliness]
             })
+            .on('click', carClick)
             // .bindPopup(popup)
 
         markers.push(marker);
-        markers.push(blurmarker);
+        // markers.push(blurmarker);
 
         heatmap.intensities.push([car.latitude, car.longitude]); // marker_intensities[car.innerCleanliness]
 
@@ -236,12 +242,12 @@ $(function() {
         cleanlinessDim = cars.dimension(d => d["innerCleanliness"]);
         locationDim = cars.dimension(d => [d["latitude"], d["longitude"]]);
         timestampDim = cars.dimension(d => d["timestamp"]);
-        carIdDim = cars.dimension(d => d["id"]);
+        carIdDim = cars.dimension(d => d["carId"]);
         allDim = cars.dimension(d => d);
 
         // groupings of values
-        locationGroup = locationDim.group(function (location) {return [ Math.round(location.latitude / 100), Math.round(location.longitude / 1000) ];});
-        timestampGroup = timestampDim.group(function (timestamp) {return Math.round(timestamp / 1000);});
+        locationGroup = locationDim.group(location => [ Math.round(location.latitude / 100), Math.round(location.longitude / 1000) ]);
+        timestampGroup = timestampDim.group(timestamp => Math.round(timestamp / 1000));
         allGroup = allDim.groupAll();
 
 
@@ -269,6 +275,8 @@ $(function() {
             timestampButtons.push(`<div class="btn btn-${item} waves-effect waves-light" style="float:left;margin-left:10px;">${item}</div>`);
         });
         $('#footer #buttons').html(timestampButtons);
+        // disable the first button
+        $('#footer .btn').first().attr('disabled', true);
 
 
         // only show the cars from the first timestamp
