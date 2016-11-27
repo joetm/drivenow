@@ -40,10 +40,21 @@ $(function() {
     $('#legend_cleanliness').html(tpl);
 });
 
-function closeDetails(e) {
-    // e.preventDefault();
-    $('#details').hide('fast');
-}
+// function closeDetails(e) {
+//     // e.preventDefault();
+//     $('#details').hide('fast');
+// }
+
+
+// Initialize the details side-nav
+$(function() {
+    $("#slide-out-btn").sideNav({
+      // menuWidth: 300, // Default is 240
+      edge: 'right',
+      closeOnClick: true,
+      draggable: false // for touch screens
+    });
+});
 
 function bindClick(e) {
     //     if (e.target.options.carId === undefined) {
@@ -66,15 +77,16 @@ function bindClick(e) {
     // redraw with filtered car data
     layers.cars = draw(carIdDim);
 
-    // update the details box
-    let $details = $('#details');
-    let $table = $details.find('table#values');
-    $table.html('');
+    // update the details box contents
+
+    $detailsList = $('ul#details');
+
+    $detailsList.html('');
 
     let values = carIdDim.top(Infinity);
-    console.log('values', values);
+    // console.log('values', values);
 
-    let tableContent = [];
+    let detailsContent = [];
     if (values.length > 0) {
         $.each(values[0], function(key, val) {
             // skip some of the key-value pairs
@@ -82,12 +94,13 @@ function bindClick(e) {
             // if (['carId'].indexOf(key) === -1) {
             //     return true; // continue
             // }
-            tableContent.push(`<tr><td>${key}:</td><td>${val}</td></tr>`);
+            detailsContent.push(`<li>${key}: ${val}</li>`);
         });
     }
-    $table.append(tableContent);
+    $detailsList.append(detailsContent);
 
-    $details.show('fast');
+    // show the side-nav
+    $('#slide-out-btn').sideNav('show');
 }
 
 

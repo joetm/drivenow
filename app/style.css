@@ -59,17 +59,23 @@ svg path.blurCircle {
     overflow:auto;
 }
 
-#details {
-    display:none;
-    position:absolute;
-    top:10px;
-    right:10px;
-    z-index:999;
-}
-#details .close-btn {
+#slide-out-btn {
     float:right;
     cursor:pointer;
 }
-#details table tr td {
+.side-nav {
+    z-index:1001;
+    margin:0;
+    padding: 0 0 0 20px;
+}
+.side-nav ul li {
+    padding:0;
+    margin:0;
+    line-height:24px;
+}
+.side-nav ul li {
     padding: 2px 0 0 0;
+}
+#sidenav-overlay {
+    display:none;
 }
