@@ -6,28 +6,37 @@
     <title>Who called the clean-up crew?</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="/node_modules/materialize-css/dist/css/materialize.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css">
+    <link rel="stylesheet" href="/node_modules/materialize-css/dist/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/app/style.css" media="all" rel="stylesheet">
   </head>
   <body>
 
-    <div id="legend">
-            <div class="card darken-1">
-              <div class="card-content black-text">
-                <span class="card-title">Cleanliness</span>
-                <p id="legend_cleanliness">
-                </p>
-              </div>
-            </div>
-    </div>
-
     <div id="wrap">
         <div id="map"></div>
+        <div id="details">
+            <div class="card darken-1">
+              <div class="card-content black-text">
+                <span class="close-btn material-icons" onclick="closeDetails();">close</span>
+                <span class="card-title">Details</span>
+                <table id="values"></table>
+              </div>
+            </div>
+        </div>
         <div id="footer">
+            <div id="legend">
+                <div class="card darken-1">
+                  <div class="card-content black-text">
+                    <span class="card-title">Cleanliness</span>
+                    <p id="legend_cleanliness"></p>
+                  </div>
+                </div>
+            </div>
             <!--
-            <div id="date-chart" class="chart"></div>
+            <div class="chart"></div>
             -->
+            <div id="buttons"></div>
         </div>
     </div>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>

@@ -35,11 +35,15 @@ const marker_colors = {
 $(function() {
     tpl = '';
     $.each(marker_colors, function (key, item) {
-        tpl += `<div><div class="chip ${key}" style="background-color:${item}">${key}</div></div>`;
+        tpl += `<div class="chip ${key}" style="background-color:${item}">${key}</div>`;
     });
     $('#legend_cleanliness').html(tpl);
 });
 
+function closeDetails(e) {
+    // e.preventDefault();
+    $('#details').hide('fast');
+}
 
 function bindClick(e) {
     //     if (e.target.options.carId === undefined) {
@@ -55,10 +59,35 @@ function bindClick(e) {
     //         layers.cars = draw(timestampDim, timestamps);
     //     });
 
+    let carId = e.target.options.carId;
+
     // filter the data by the dimension
-    carIdDim.filter(e.target.options.carId);
+    carIdDim.filter(carId);
     // redraw with filtered car data
     layers.cars = draw(carIdDim);
+
+    // update the details box
+    let $details = $('#details');
+    let $table = $details.find('table#values');
+    $table.html('');
+
+    let values = carIdDim.top(Infinity);
+    console.log('values', values);
+
+    let tableContent = [];
+    if (values.length > 0) {
+        $.each(values[0], function(key, val) {
+            // skip some of the key-value pairs
+            // if (['fuelLevel', 'fuelLevelInPercent', 'estimatedRange', 'isInParkingSpace', 'parkingSpaceId', 'isCharging', 'innerCleanliness', 'latitude', 'longitude', 'timestamp', 'createdAt', 'updatedAt'].indexOf(key) > -1) {
+            // if (['carId'].indexOf(key) === -1) {
+            //     return true; // continue
+            // }
+            tableContent.push(`<tr><td>${key}:</td><td>${val}</td></tr>`);
+        });
+    }
+    $table.append(tableContent);
+
+    $details.show('fast');
 }
 
 
@@ -162,10 +191,6 @@ fetch('/cars')
 
         // console.log(json);
 
-        let tpl = '';
-        let layer;
-
-
         cars = crossfilter(json);
 
         // dimensions
@@ -199,11 +224,11 @@ fetch('/cars')
         console.log('timestamps', timestamps);
 
         // build the footer buttons (testing)
-        tpl = '';
+        let timestampButtons = [];
         $.each(timestamps, function (key, item) {
-            tpl += `<div class="btn" style="float:left;margin-left:10px;">${item}</div>`;
+            timestampButtons.push(`<div class="btn" style="float:left;margin-left:10px;">${item}</div>`);
         });
-        $('#footer').html(tpl);
+        $('#footer #buttons').html(timestampButtons);
 
 
 
