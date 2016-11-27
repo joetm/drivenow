@@ -58,11 +58,36 @@ function bindClick(e) {
     // filter the data by the dimension
     carIdDim.filter(e.target.options.carId);
     // redraw with filtered car data
-    layers.cars = draw(carIdDim, timestamps);
+    layers.cars = draw(carIdDim);
 }
 
 
-function draw(timestampDim) {
+// heat map (experimental)
+let heatmap = {
+    intensities: [],
+    // {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'}
+    gradient: {
+        0: '#0000ff',
+        1: '#0000DD'
+    },
+    reset: function() {
+        this.intensities = [];
+        if (layers.heat !== undefined) {
+            map.removeLayer(layers.heat);
+        }
+    },
+    render: function () {
+        layers.heat = L.heatLayer(this.intensities, {
+            radius: 40,
+            maxZoom: 20,
+            blur: 60,
+            gradient: this.gradient
+        }).addTo(map);
+    }
+}
+
+
+function draw(dimension) {
 
     if (layers.cars) {
         // clear map
@@ -71,24 +96,11 @@ function draw(timestampDim) {
 
     let markers = [];
 
-    // let marker_intensities = {
-    //     "VERY_CLEAN": 0.1,
-    //     "CLEAN": 0.3,
-    //     "REGULAR": 0.6,
-    //     "POOR": 1
-    // }
+    // reset heatmap;
+    heatmap.reset();
 
-    // heatmap intensities
-    let intensities = [];
 
-    timestampDim.top(Infinity).forEach(function(car){
-
-        // build an array of possible timestamp values (once)
-        if (!timestamps.length) {
-            if (timestamps.indexOf(car.timestamp) === -1) {
-                timestamps.push(car.timestamp);
-            }
-        }
+    dimension.top(Infinity).forEach(function(car){
 
         let popup = '';
         $.each(car, function(key, val) {
@@ -119,7 +131,7 @@ function draw(timestampDim) {
         markers.push(marker);
         markers.push(blurmarker);
 
-        intensities.push([car.latitude, car.longitude]); // marker_intensities[car.innerCleanliness]
+        heatmap.intensities.push([car.latitude, car.longitude]); // marker_intensities[car.innerCleanliness]
 
         // carMarkers.push(marker);
     });
@@ -128,21 +140,10 @@ function draw(timestampDim) {
     // to change the circle size on zoom event
     let circleGroup = L.featureGroup(markers);
 
+    heatmap.render();
+
     // add the layer to the map
     map.addLayer(circleGroup);
-
-    // heat map (experimental)
-    // let heatmap = {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'};
-    let heatmap = {0: '#0000ff', 1: '#0000DD'};
-    if (layers.heat !== undefined) {
-        map.removeLayer(layers.heat);
-    }
-    layers.heat = L.heatLayer(intensities, {
-        radius: 40,
-        maxZoom: 20,
-        blur: 60,
-        gradient: heatmap
-    }).addTo(map);
 
     return circleGroup;
 }
@@ -158,6 +159,8 @@ fetch('/cars')
 	.then(function(response) {
 		return response.json();
 	}).then(function(json) {
+
+        // console.log(json);
 
         let tpl = '';
         let layer;
@@ -185,20 +188,33 @@ fetch('/cars')
         // const maxDate = dateDim.top(1)[0]["timestamp"];
 
 
-
-        layers.cars = draw(timestampDim, timestamps);
-        console.log('layer', layers.cars);
+        // build an array of possible timestamp values (once)
 
 
-
+        timestampDim.top(Infinity).forEach(function(car){
+            if (timestamps.indexOf(car.timestamp) === -1) {
+                timestamps.push(car.timestamp);
+            }
+        });
+        console.log('timestamps', timestamps);
 
         // build the footer buttons (testing)
-        console.log('timestamps', timestamps);
         tpl = '';
         $.each(timestamps, function (key, item) {
             tpl += `<div class="btn" style="float:left;margin-left:10px;">${item}</div>`;
         });
         $('#footer').html(tpl);
+
+
+
+
+        layers.cars = draw(timestampDim);
+        console.log('layer', layers.cars);
+
+
+
+
+
 
 
 
@@ -209,7 +225,7 @@ fetch('/cars')
             // alert('Filtering for timestamp: '+timestamp);
             timestampDim.filter(timestamp);
             // redraw with filtered data
-            layers.cars = draw(timestampDim, timestamps);
+            layers.cars = draw(timestampDim);
             //show reset button
             // $('body').append('<a id="reset-btn" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">close</i></a>');
         });

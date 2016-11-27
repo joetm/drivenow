@@ -33,6 +33,9 @@ app.get('/cars', function response(req, res) {
         //         model: models.Car
         //     }
         // ]
+	    order: [
+			['timestamp', 'ASC']
+		]
 	}).then(function (carStatii) {
 		// return all
 		res.status(200).json(carStatii);
