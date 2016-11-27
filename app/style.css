@@ -58,6 +58,9 @@ svg path.blurCircle {
     float:left;
     overflow:auto;
 }
+#footer #buttons .btn {
+    margin-bottom:10px;
+}
 
 #slide-out-btn {
     float:right;

@@ -1,9 +1,9 @@
 
-let map = L.map('map').setView([52.5072111,13.1459675], 10);
-
+let map;
 
 let layers = {};
 let timestamps = [];
+let selectedTimestamp;
 
 let cars;
 
@@ -14,13 +14,9 @@ let locationDim;
 let timestampDim;
 let allDim;
 // ---
-let cleanlinessGroup;
-let carIdGroup;
 let locationGroup;
 let timestampGroup;
 let allGroup;
-
-
 
 // cleanliness: ["REGULAR", "CLEAN", "VERY_CLEAN", "POOR"]
 // marker colors
@@ -31,15 +27,19 @@ const marker_colors = {
     "POOR": '#FF5733'
 }
 
+
+$(function() {
+    map = L.map('map').setView([52.5072111,13.1459675], 10);
+});
+
 // build the legend
 $(function() {
-    tpl = '';
+    let tpl = [];
     $.each(marker_colors, function (key, item) {
-        tpl += `<div class="chip ${key}" style="background-color:${item}">${key}</div>`;
+        tpl.push(`<div class="chip ${key}" style="background-color:${item}">${key}</div>`);
     });
     $('#legend_cleanliness').html(tpl);
 });
-
 
 // Initialize the details side-nav
 $(function() {
@@ -50,17 +50,23 @@ $(function() {
       draggable: false // for touch screens
     });
     let $slideout = $('#slide-out');
-    $("#slide-out-btn").click(function () {
-        console.log('sidenav-open', $slideout.data('sidenav-open'));
+    $slideout.find("#slide-out-btn").click(function () {
+        // console.log('sidenav-open', $slideout.data('sidenav-open'));
         if (!$slideout.data('sidenav-open')) {
             // the sidenav is opening
-            $slideout.data('sidenav-open', true);
             // store state
+            $slideout.data('sidenav-open', true);
+            $('#sidenav-overlay').hide();
         } else {
             // the sidenav is closing
+            $('#sidenav-overlay').show();
+            // store state
             $slideout.data('sidenav-open', false);
             // reset the car filter
             carIdDim.filterAll();
+            if (selectedTimestamp) {
+                timestampDim.filter(selectedTimestamp);
+            }
             // redraw with filtered car data
             layers.cars = draw(carIdDim);
         }
@@ -83,20 +89,20 @@ function bindClick(e) {
 
     let carId = e.target.options.carId;
 
+    // reset the timestamp filter
+    timestampDim.filterAll();
+
     // filter the data by the dimension
     carIdDim.filter(carId);
     // redraw with filtered car data
-    layers.cars = draw(carIdDim);
+    layers.cars = draw(carIdDim); // TODO: replace this manual re-draw with d3
 
     // update the details box contents
-
     $detailsList = $('ul#details');
-
+    // reset
     $detailsList.html('');
-
     let values = carIdDim.top(Infinity);
     // console.log('values', values);
-
     let detailsContent = [];
     if (values.length > 0) {
         $.each(values[0], function(key, val) {
@@ -200,17 +206,24 @@ function draw(dimension) {
     // add the layer to the map
     map.addLayer(circleGroup);
 
+    // remove loading overlay from sidenav
+    $('#sidenav-overlay').hide();
+
     return circleGroup;
 }
 
-L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-	subdomains: 'abcd',
-	maxZoom: 19
-}).addTo(map);
+$(function() {
+    L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+    	subdomains: 'abcd',
+    	maxZoom: 19
+    }).addTo(map);
+});
 
 // load data
-fetch('/cars')
+$(function() {
+
+    fetch('/cars')
 	.then(function(response) {
 		return response.json();
 	}).then(function(json) {
@@ -226,11 +239,9 @@ fetch('/cars')
         carIdDim = cars.dimension(d => d["id"]);
         allDim = cars.dimension(d => d);
 
-        // groups
-        cleanlinessGroup = cleanlinessDim.group();
-        locationGroup = locationDim.group();
-        timestampGroup = timestampDim.group(d3.timeMinute);
-        carIdGroup = carIdDim.group();
+        // groupings of values
+        locationGroup = locationDim.group(function (location) {return [ Math.round(location.latitude / 100), Math.round(location.longitude / 1000) ];});
+        timestampGroup = timestampDim.group(function (timestamp) {return Math.round(timestamp / 1000);});
         allGroup = allDim.groupAll();
 
 
@@ -241,22 +252,27 @@ fetch('/cars')
 
         // build an array of possible timestamp values (once)
 
-
+        // build an array of possible timestamp values
         timestampDim.top(Infinity).forEach(function(car){
             if (timestamps.indexOf(car.timestamp) === -1) {
                 timestamps.push(car.timestamp);
             }
         });
         console.log('timestamps', timestamps);
+        if (!timestamps.length) {
+            throw "No timestamps in data";
+        }
 
         // build the footer buttons (testing)
         let timestampButtons = [];
         $.each(timestamps, function (key, item) {
-            timestampButtons.push(`<div class="btn" style="float:left;margin-left:10px;">${item}</div>`);
+            timestampButtons.push(`<div class="btn btn-${item} waves-effect waves-light" style="float:left;margin-left:10px;">${item}</div>`);
         });
         $('#footer #buttons').html(timestampButtons);
 
 
+        // only show the cars from the first timestamp
+        timestampDim.filter(timestamps[0]);
 
 
         layers.cars = draw(timestampDim);
@@ -267,18 +283,20 @@ fetch('/cars')
 
 
 
-
-
-
-        // button events
+        // timestamp button events
         $('#footer .btn').click(function () {
+            // enable all buttons
+            $('#footer .btn').attr('disabled', false);
+            // disable the clicked button
+            $(this).attr('disabled', true);
+            // get the selected timestamp (as integer)
             let timestamp = +$(this).text();
             // alert('Filtering for timestamp: '+timestamp);
             timestampDim.filter(timestamp);
+            // store this timestamp so that the view can be restored later
+            selectedTimestamp = timestamp;
             // redraw with filtered data
-            layers.cars = draw(timestampDim);
-            //show reset button
-            // $('body').append('<a id="reset-btn" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">close</i></a>');
+            layers.cars = draw(timestampDim); // TODO: use d3
         });
 
 
@@ -309,7 +327,6 @@ fetch('/cars')
 
 
         // init the date chart
-        $(function() {
 
             // formatters
             // var formatNumber = d3.format(",d"),
@@ -317,52 +334,52 @@ fetch('/cars')
             //     formatDate = d3.time.format("%B %d, %Y"),
             //     formatTime = d3.time.format("%I:%M %p");
 
-            // A nest operator, for grouping the cars
-            var nestByDate = d3.nest()
-                .key(function(d) { return d3.time.day(d.date); });
+            // // A nest operator, for grouping the cars
+            // var nestByDate = d3.nest()
+            //     .key(function(d) { return d3.time.day(d.date); });
 
-            let dateChart = barChart()
-                .dimension(timestampDim)
-                .group(timestampGroup)        //.round(d3.time.day.round)
-              .x(d3.time.scale()
-                .domain([new Date(2001, 0, 1), new Date(2001, 3, 1)]))
-                //.rangeRound([0, 10 * 90]))
-                //.filter([new Date(2001, 1, 1), new Date(2001, 2, 1)]);
+            // let dateChart = barChart()
+            //     .dimension(timestampDim)
+            //     .group(timestampGroup)        //.round(d3.time.day.round)
+            //   .x(d3.time.scale()
+            //     .domain([new Date(2001, 0, 1), new Date(2001, 3, 1)]))
+            //     //.rangeRound([0, 10 * 90]))
+            //     //.filter([new Date(2001, 1, 1), new Date(2001, 2, 1)]);
 
-            let charts = [dateChart];
+            // let charts = [dateChart];
 
-            let chart = d3.selectAll(".chart")
-                .data(charts)
-                // .each(function(chart) { chart.on("brush", renderAll).on("brushend", renderAll); });
+            // let chart = d3.selectAll(".chart")
+            //     .data(charts)
+            //     // .each(function(chart) { chart.on("brush", renderAll).on("brushend", renderAll); });
 
 
-            // Whenever the brush moves, re-rendering everything.
-            function renderChart() {
-                console.log('renderCHart');
-                chart.each(render);
-            }
+            // // Whenever the brush moves, re-rendering everything.
+            // function renderChart() {
+            //     console.log('renderCHart');
+            //     chart.each(render);
+            // }
 
-            renderChart();
+            // renderChart();
 
-            window.filter = function(filters) {
-                filters.forEach(function(d, i) {
-                    charts[i].filter(d);
-                });
-                renderChart();
-            };
+            // window.filter = function(filters) {
+            //     filters.forEach(function(d, i) {
+            //         charts[i].filter(d);
+            //     });
+            //     renderChart();
+            // };
 
-            window.reset = function(i) {
-                charts[i].filter(null);
-                renderChart();
-            };
+            // window.reset = function(i) {
+            //     charts[i].filter(null);
+            //     renderChart();
+            // };
 
-        });
 
 
 	// }).catch(function(ex) {
 	// 	console.error('Error:', ex)
 	});
 
+});
 
 
   // see view-source:http://square.github.io/crossfilter/
