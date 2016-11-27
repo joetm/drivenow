@@ -10,7 +10,7 @@ const log = require('./app/logger');
 
 
 
-const models = require('./models/models');
+const models = require('./models');
 
 
 

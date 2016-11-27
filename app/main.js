@@ -210,6 +210,8 @@ fetch('/cars')
             timestampDim.filter(timestamp);
             // redraw with filtered data
             layers.cars = draw(timestampDim, timestamps);
+            //show reset button
+            // $('body').append('<a id="reset-btn" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">close</i></a>');
         });
 
 
@@ -236,7 +238,7 @@ fetch('/cars')
         });
 
 
-	}).catch(function(ex) {
-		console.error('Error:', ex)
+	// }).catch(function(ex) {
+	// 	console.error('Error:', ex)
 	});
 
