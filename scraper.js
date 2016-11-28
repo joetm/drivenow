@@ -6,7 +6,7 @@ const path = require('path');
 const series = require('async/series');
 
 const apiconf = require('./config/api.json');
-const log = require('./app/logger');
+const log = require('./logger');
 
 
 
@@ -185,7 +185,7 @@ function runScrape() {
                         }
                         callback(null);
                     }).catch(function(error) {
-                        log.error(error, error.index(), error.value());
+                        log.error(error, error.index, error.value);
                         throw error;
                     });
                 };
@@ -224,7 +224,7 @@ function runScrape() {
                         // log.info('Status saved to db.');
                         callback(null);
                     }).catch(function(error) {
-                        log.error(error, error.index(), error.value());
+                        log.error(error, error.index, error.value);
                         throw error;
                     });
                 };
@@ -258,7 +258,7 @@ function runScrape() {
                         // log.info('Position saved to db.');
                         callback(null);
                     }).catch(function(error) {
-                        log.error(error, error.index(), error.value());
+                        log.error(error, error.index, error.value);
                         throw error;
                     });
                 };
