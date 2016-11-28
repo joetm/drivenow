@@ -56,6 +56,7 @@ function runScrape() {
         return;
     }
 
+    // fetch the json from API
     fetch(apiconf.endpoint, {headers: apiconf.headers})
         .then(function(res) {
             log.info("Scrape", res.statusText, "(" + res.status + ")");
@@ -184,6 +185,7 @@ function runScrape() {
                         }
                         callback(null);
                     }).catch(function(error) {
+                        log.error(error, error.index(), error.value());
                         throw error;
                     });
                 };
@@ -222,6 +224,7 @@ function runScrape() {
                         // log.info('Status saved to db.');
                         callback(null);
                     }).catch(function(error) {
+                        log.error(error, error.index(), error.value());
                         throw error;
                     });
                 };
@@ -255,6 +258,7 @@ function runScrape() {
                         // log.info('Position saved to db.');
                         callback(null);
                     }).catch(function(error) {
+                        log.error(error, error.index(), error.value());
                         throw error;
                     });
                 };
