@@ -1,22 +1,6 @@
 
 let map;
 
-let layers = {};
-let timestamps = [];
-let selectedTimestamp;
-
-let cars;
-
-// dimensions
-let cleanlinessDim;
-let carIdDim;
-let locationDim;
-let timestampDim;
-let allDim;
-// ---
-let locationGroup;
-let timestampGroup;
-let allGroup;
 
 // cleanliness: ["REGULAR", "CLEAN", "VERY_CLEAN", "POOR"]
 // marker colors
@@ -27,60 +11,6 @@ const marker_colors = {
     "POOR": '#FF5733'
 }
 
-
-$(function() {
-    map = L.map('map').setView([52.5072111,13.1459675], 10);
-});
-
-// build the legend
-$(function() {
-    let tpl = [];
-    $.each(marker_colors, function (key, item) {
-        tpl.push(`<div class="chip ${key}" style="background-color:${item}">${key}</div>`);
-    });
-    $('#legend_cleanliness').html(tpl);
-});
-
-// Initialize the details side-nav
-$(function() {
-
-    $("#slide-out-btn").sideNav({
-      // menuWidth: 300, // Default is 240
-      edge: 'right',
-      closeOnClick: true,
-      draggable: false // for touch screens
-    });
-    let $slideout = $('#slide-out');
-
-    // close button click in sidenav
-    $slideout.find("#slide-out-btn").click(function () {
-        // console.log('sidenav-open', $slideout.data('sidenav-open'));
-        if (!$slideout.data('sidenav-open')) {
-            // the sidenav is opening
-            // store state
-            $slideout.data('sidenav-open', true);
-            $('#sidenav-overlay').hide();
-        } else {
-            // the sidenav is closing
-            $('#sidenav-overlay').show();
-            // store state
-            $slideout.data('sidenav-open', false);
-            // reset the car filter
-            carIdDim.filterAll();
-            if (selectedTimestamp) {
-                timestampDim.filter(selectedTimestamp);
-            }
-            // reselect the timestamp button
-            // TODO
-
-
-
-            // redraw with filtered car data
-            layers.cars = draw(timestampDim);
-        }
-    });
-
-});
 
 function carClick(e) {
 
@@ -123,30 +53,6 @@ function carClick(e) {
 }
 
 
-
-// heat map (experimental)
-let heatmap = {
-    intensities: [],
-    // {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'}
-    gradient: {
-        0: '#0000ff',
-        1: '#0000DD'
-    },
-    reset: function() {
-        this.intensities = [];
-        if (layers.heat !== undefined) {
-            map.removeLayer(layers.heat);
-        }
-    },
-    render: function () {
-        layers.heat = L.heatLayer(this.intensities, {
-            radius: 40,
-            maxZoom: 20,
-            blur: 60,
-            gradient: this.gradient
-        }).addTo(map);
-    }
-}
 
 
 function draw(dimension) {
@@ -218,13 +124,6 @@ function draw(dimension) {
     return circleGroup;
 }
 
-$(function() {
-    L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-    	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-    	subdomains: 'abcd',
-    	maxZoom: 19
-    }).addTo(map);
-});
 
 // load data
 $(function() {
@@ -236,38 +135,7 @@ $(function() {
 
         // console.log(json);
 
-        cars = crossfilter(json);
 
-        // dimensions
-        cleanlinessDim = cars.dimension(d => d["innerCleanliness"]);
-        locationDim = cars.dimension(d => [d["latitude"], d["longitude"]]);
-        timestampDim = cars.dimension(d => d["timestamp"]);
-        carIdDim = cars.dimension(d => d["carId"]);
-        allDim = cars.dimension(d => d);
-
-        // groupings of values
-        locationGroup = locationDim.group(location => [ Math.round(location.latitude / 100), Math.round(location.longitude / 1000) ]);
-        timestampGroup = timestampDim.group(timestamp => Math.round(timestamp / 1000));
-        allGroup = allDim.groupAll();
-
-
-        // TODO
-        // const minDate = dateDim.bottom(1)[0]["timestamp"];
-        // const maxDate = dateDim.top(1)[0]["timestamp"];
-
-
-        // build an array of possible timestamp values (once)
-
-        // build an array of possible timestamp values
-        timestampDim.top(Infinity).forEach(function(car){
-            if (timestamps.indexOf(car.timestamp) === -1) {
-                timestamps.push(car.timestamp);
-            }
-        });
-        console.log('timestamps', timestamps);
-        if (!timestamps.length) {
-            throw "No timestamps in data";
-        }
 
         // build the footer buttons (testing)
         let timestampButtons = [];
@@ -279,36 +147,11 @@ $(function() {
         $('#footer .btn').first().attr('disabled', true);
 
 
-        // only show the cars from the first timestamp
-        timestampDim.filter(timestamps[0]);
+
 
 
         layers.cars = draw(timestampDim);
         // console.log('layer', layers.cars);
-
-
-
-
-
-
-        // timestamp button events
-        $('#footer .btn').click(function () {
-            // enable all buttons
-            $('#footer .btn').attr('disabled', false);
-            // disable the clicked button
-            $(this).attr('disabled', true);
-            // get the selected timestamp (as integer)
-            let timestamp = +$(this).text();
-            // alert('Filtering for timestamp: '+timestamp);
-            timestampDim.filter(timestamp);
-            // store this timestamp so that the view can be restored later
-            selectedTimestamp = timestamp;
-            // redraw with filtered data
-            layers.cars = draw(timestampDim); // TODO: use d3
-        });
-
-
-
 
 
 
