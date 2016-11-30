@@ -1,5 +1,7 @@
 import React from 'react';
 
+const maxZoom = 19;
+
 
 let Map = React.createClass({
 // class Map extends React.Component {
@@ -24,7 +26,7 @@ let Map = React.createClass({
         L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
             subdomains: 'abcd',
-            maxZoom: 19
+            maxZoom: maxZoom
         }).addTo(this.map);
 
         // TODO
@@ -35,9 +37,7 @@ let Map = React.createClass({
         //     // circleGroup.setStyle({radius: radius});
         // });
 
-    },
 
-    drawMarkers() {
 
     },
 

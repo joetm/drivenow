@@ -4,7 +4,7 @@ import Legend from "./Legend.jsx";
 import Buttons from "./Buttons.jsx";
 
 // TODO
-const timestamps = ['A', 'V'];
+const timestamps = [1412345678, 1412345679];
 
 class Footer extends React.Component {
     render() {
