@@ -14,11 +14,12 @@
   "scripts": {
     "test": "",
     "start": "node server",
+    "dev": "node_modules/.bin/webpack-dev-server",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "scrape": "node scraper",
     "jscs": "jscs .",
-    "watch": "webpack --watch"
+    "watch": "node_modules/.bin/webpack --watch"
   },
   "plugins": [
     [
@@ -36,13 +37,16 @@
     "d3": "^4.3.0",
     "dimas-kmeans": "^1.0.3",
     "jquery": "^3.1.1",
-    "leaflet": "^1.0.1",
+    "leaflet": "^1.0.0-rc.2",
     "leaflet.heat": "^0.2.0",
     "materialize-css": "^0.97.8",
     "node-fetch": "^1.6.3",
     "preact": "^6.4.0",
     "preact-compat": "^3.9.2",
     "proptypes": "^0.14.3",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-leaflet": "^1.0.0-rc.3",
     "sequelize": "^3.24.8",
     "sqlite3": "^3.1.8",
     "whatwg-fetch": "^1.1.1",
@@ -97,6 +101,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.2.0",
+    "webpack-dev-server": "^1.16.2",
     "webpack-hot-middleware": "^2.2.0"
   }
 }

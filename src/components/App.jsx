@@ -5,9 +5,9 @@ import preact from 'preact';
 import 'whatwg-fetch';
 import crossfilter from "crossfilter";
 
-import MapControl from './MapControl.jsx';
 import Footer from './Footer.jsx';
 import SideNav from './SideNav.jsx';
+import MapControl from './MapControl.jsx';
 
 class App extends preact.Component {
 

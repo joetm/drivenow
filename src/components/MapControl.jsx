@@ -57,6 +57,8 @@ class MapControl extends preact.Component {
             }
             _this.setState({dimensionGroups});
 
+        // }).catch(function(ex) {
+        //     console.error('Error:', ex)
         });
     }
 
