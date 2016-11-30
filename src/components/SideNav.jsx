@@ -1,8 +1,6 @@
-import preact from 'preact';
-// Tell Babel to transform JSX into preact.h() calls:
-/** @jsx preact.h */
+import react from 'react';
 
-class SideNav extends preact.Component {
+class SideNav extends react.Component {
     render(props, state) {
         return (
             <div id="slide-out" class="side-nav" data-sidenav-open="false">

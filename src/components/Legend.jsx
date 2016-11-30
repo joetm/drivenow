@@ -1,11 +1,9 @@
-import preact from 'preact';
-// Tell Babel to transform JSX into preact.h() calls:
-/** @jsx preact.h */
+import react from 'react';
 
 // TODO
 // import Constants from "./Constants.jsx";
 
-class LegendEntry extends preact.Component {
+class LegendEntry extends react.Component {
     render(props, state) {
         return (
 			<div class={"chip "+props.title} style={{"background-color": props.color}}>{props.title}</div>
@@ -17,7 +15,7 @@ class LegendEntry extends preact.Component {
 // TODO
 //						{Constants.marker_colors.map((lvl) => <LegendEntry key={'test'} item={lvl} />)}
 
-class Legend extends preact.Component {
+class Legend extends react.Component {
     render(props, state) {
         return (
             <div id="legend">

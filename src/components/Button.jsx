@@ -1,11 +1,9 @@
-import preact from 'preact';
-// Tell Babel to transform JSX into preact.h() calls:
-/** @jsx preact.h */
+import react from 'react';
 
 
 const buttonStyle = {float:'left',marginLeft:'10px'};
 
-class Button extends preact.Component {
+class Button extends react.Component {
 
     // componentWillReceiveProps(props) {
     //     this.setState({disabled: props.disabled});

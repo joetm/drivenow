@@ -1,13 +1,11 @@
-import preact from 'preact';
-// Tell Babel to transform JSX into preact.h() calls:
-/** @jsx preact.h */
+import react from 'react';
 
 import Button from "./Button.jsx";
 
-const buttonStyle = {float:'left',marginLeft:'10px'};
+const buttonStyle = {float:'left', marginLeft:'10px'};
 
 
-class Buttons extends preact.Component {
+class Buttons extends react.Component {
 
     constructor() {
         super();

@@ -1,9 +1,7 @@
-import preact from 'preact';
-// Tell Babel to transform JSX into preact.h() calls:
-/** @jsx preact.h */
+import react from 'react';
 
 
-class Marker extends preact.Component {
+class Marker extends react.Component {
 
     constructor() {
         super();
