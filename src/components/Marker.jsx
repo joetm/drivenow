@@ -1,17 +1,13 @@
-import react from 'react';
+import React from 'react';
 
 
-class Marker extends react.Component {
-
-    constructor() {
-        super();
-    }
+class Marker extends React.Component {
 
     componentDidMount() {
 
     }
 
-    render(props, state) {
+    render() {
         return (
             <div id="map"></div>
         );

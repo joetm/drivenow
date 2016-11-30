@@ -1,16 +1,19 @@
-import react from 'react';
+import React from 'react';
 
 import Button from "./Button.jsx";
 
 const buttonStyle = {float:'left', marginLeft:'10px'};
 
 
-class Buttons extends react.Component {
+let Buttons = React.createClass({
+// class Buttons extends React.Component {
 
-    constructor() {
-        super();
-        this.state.buttonStates = [];
-    }
+    getInitialState() {
+        // initialise the state (once)
+        return {
+            buttonStates: []
+        };
+    },
 
     // resetButtons(e) {
     //     // enable all buttons
@@ -19,41 +22,51 @@ class Buttons extends react.Component {
     //         // console.log(btn);
     //         btn.setState({disabled:true});
     //     });
-    // }
+    // },
 
-    componentWillReceiveProps() {
-        // let buttonStates = this.props.timestamps.map((timestamp) => ());
+    //componentWillReceiveProps() {
+        // let buttonStates = this.props.timestamps.map((timestamp, this) => ());
         // this.setState({buttonStates});
-    }
+    //},
+
+    disableButton() {
+        console.log('disable');
+        console.log(this);
+
+    },
 
     buttonClick() {
         console.log('disable');
         console.log(this);
 
-
         // TODO: disable the clicked button
 
-        
 
-    }
+    },
 
-    componentWillMount() {
-        // initial button states
-        for (let i=0, s=this.props.timestamps.length; i<s; i++) {
-            this.state.buttonStates[this.props.timestamps[i]] = false; // disabled = off by default
-        }
-        // console.log('this.state.buttonStates', this.state.buttonStates);
-    }
+    // TODO
+    // componentWillMount() {
+    //     // initial button states
+    //     for (let i=0, s=this.props.timestamps.length; i<s; i++) {
+    //         this.state.buttonStates[this.props.timestamps[i]] = false; // disabled = off by default
+    //     }
+    //     // console.log('this.state.buttonStates', this.state.buttonStates);
+    // },
 
-    render(props, state) {
+    render() {
+
+// TODO
+//                                disabled={this.props.buttonStates[timestamp] ? true : false}
+// TODO
         return (
 			<div id="buttons">
 			    {
                     this.props.timestamps.map((timestamp) => (
                             <Button
+                                key={'btn_'+timestamp}
                                 timestamp={timestamp}
-                                disabled={this.state.buttonStates[timestamp] ? true : false}
                                 buttonClick={this.buttonClick}
+                                disableButton={this.disableButton}
                             />
                         )
                     )
@@ -61,6 +74,7 @@ class Buttons extends react.Component {
 			</div>
 		);
     }
-}
+});
+
 
 module.exports = Buttons;

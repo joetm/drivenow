@@ -1,4 +1,5 @@
-import react from 'react';
+import React from 'react';
+import { render } from 'react-dom'
 
 import 'whatwg-fetch';
 import crossfilter from "crossfilter";
@@ -7,14 +8,10 @@ import Footer from './Footer.jsx';
 import SideNav from './SideNav.jsx';
 import MapControl from './MapControl.jsx';
 
-class App extends react.Component {
 
-    constructor() {
-        super();
-        this.state.cars = [];
-    }
+class App extends React.Component {
 
-    render(props, state) {
+    render() {
         return (
             <div id="wrap">
                 <SideNav />
@@ -26,4 +23,6 @@ class App extends react.Component {
 }
 
 // render the App
-preact.render(<App />, document.body);
+render(<App />,
+    document.getElementById("app")
+);

@@ -1,14 +1,16 @@
-import react from 'react';
+import React from 'react';
 
 
 import Map from "./Map.jsx";
 
 
-class MapControl extends react.Component {
+class MapControl extends React.Component {
 
-    constructor() {
-        super();
-        this.cars = [];
+    getInitialState() {
+        // initialise the state (once)
+        return {
+            cars: []
+        };
     }
 
     componentDidMount() {
@@ -67,7 +69,7 @@ class MapControl extends react.Component {
         }
     }
 
-    render(props, state) {
+    render() {
         return (
             <Map cars={this.state.cars} dimensions={this.state.dimensions} />
         );

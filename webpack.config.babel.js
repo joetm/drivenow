@@ -29,9 +29,9 @@ module.exports = {
 		alias: {
 			components: path.resolve(__dirname, "src/components"), // used for tests
 			style: path.resolve(__dirname, "src/style"),
-			'react': 'preact-compat',
-			'react-dom': 'preact-compat',
-            jquery: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.min.js')
+			// 'react': 'preact-compat',
+			// 'react-dom': 'preact-compat',
+            // jquery: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.min.js')
 		}
 	},
 
@@ -52,15 +52,20 @@ module.exports = {
 		          presets: ['react', 'es2015'] // , 'stage-0'
 		        }
 			},
-			{
-				test: /\.(scss|css)$/,
-				// exclude: /src\/components\//,
-				loader: ExtractTextPlugin.extract('style?singleton', [
-					`css?sourceMap`, // =${CSS_MAPS}
-					'postcss',
-					`sass?sourceMap&outputStyle=expanded` // =${CSS_MAPS}
-				].join('!'))
-			},
+			// {
+			// 	test: /\.(scss|css)$/,
+			// 	// exclude: /src\/components\//,
+			// 	loader: ExtractTextPlugin.extract('style?singleton', [
+			// 		`css?sourceMap`, // =${CSS_MAPS}
+			// 		'postcss',
+			// 		`sass?sourceMap&outputStyle=expanded` // =${CSS_MAPS}
+			// 	].join('!'))
+			// },
+	        {
+  	          test: /\.s?css$/,
+	          exclude: [/node_modules/],
+	          loader: ExtractTextPlugin.extract("style", "css?sourceMap!postcss!sass?sourceMap&outputStyle=expanded")
+	        },
 			{
 				test: /\.json$/,
 				loader: 'json'
@@ -71,10 +76,10 @@ module.exports = {
 		        exclude: /(node_modules|bower_components|projects)/,
 		        loader: 'json5-loader'
 		    },
-	        {
-		        test: /\.(ico|jpe?g|png|gif)$/,
-		        loader: "file"
-	        },
+	        // {
+		       //  test: /\.(ico|jpe?g|png|gif)$/,
+		       //  loader: "file"
+	        // },
 			// {
 			// 	test: /\.(xml|html|txt|md)$/,
 			// 	loader: 'raw'
@@ -93,12 +98,12 @@ module.exports = {
 	plugins: ([
 		new webpack.NoErrorsPlugin(),
 		new ExtractTextPlugin('style.css', {
-			allChunks: true,
-			disable: ENV !== 'production'
+			allChunks: true
+			// disable: ENV !== 'production'
 		}),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.DefinePlugin({
-			'process.env': JSON.stringify({ NODE_ENV: ENV })
+			'process.env': JSON.stringify({NODE_ENV: ENV})
 		}),
 		new HtmlWebpackPlugin({
 			template: './src/index.html'

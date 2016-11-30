@@ -1,20 +1,21 @@
-import react from 'react';
+import React from 'react';
 
 
-class Map extends react.Component {
+let Map = React.createClass({
+// class Map extends React.Component {
 
-    constructor() {
-        super();
-        this.initialZoom = 10;
-        this.map;
-        this.state = {
+    getInitialState() {
+        // initialise the state (once)
+        return {
+            initialZoom: 10,
+            map: null,
             lat: 52.5072111,
-            lng: 13.1459675
+            lng: 13.1459675,
+            markeroptions: {
+                radius: 10
+            }
         };
-        this.markeroptions = {
-            radius: 10
-        };
-    }
+    },
 
     componentDidMount() {
 
@@ -26,6 +27,7 @@ class Map extends react.Component {
             maxZoom: 19
         }).addTo(this.map);
 
+        // TODO
         // this.map.on('zoomend', function() {
         //     let currentZoom = map.getZoom();
         //     this.markeroptions.radius = currentZoom * 0.9;
@@ -33,18 +35,18 @@ class Map extends react.Component {
         //     // circleGroup.setStyle({radius: radius});
         // });
 
-    }
+    },
 
     drawMarkers() {
 
-    }
+    },
 
-    render(props, state) {
+    render() {
         return (
             <div id="map"></div>
         );
     }
 
-}
+});
 
 module.exports = Map;

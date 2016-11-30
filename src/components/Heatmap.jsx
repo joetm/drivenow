@@ -1,16 +1,17 @@
-import react from 'react';
+import React from 'react';
 
 
-class Heatmap extends react.Component {
+class Heatmap extends React.Component {
 
-    constructor() {
-        super();
-        this.intensities = [];
-        this.gradient: {
-            0: '#0000ff',
-            1: '#0000DD'
+    getInitialState() {
+        // initialise the state (once)
+        return {
+            intensities: [],
+            gradient: {
+                0: '#0000ff',
+                1: '#0000DD'
+            }
         };
-        // {0.1: '#ABEBC6', 0.3: '#58D68D', 0.6: '#F39C12', 1: '#FF5733'}
     }
 
     componentDidMount() {
@@ -27,7 +28,7 @@ class Heatmap extends react.Component {
         // }
     }
 
-    render(props, state) {
+    render() {
         // layers.heat = L.heatLayer(this.intensities, {
         //     radius: 40,
         //     maxZoom: 20,

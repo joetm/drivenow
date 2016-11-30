@@ -1,27 +1,27 @@
-import react from 'react';
+import React from 'react';
 
 // TODO
 // import Constants from "./Constants.jsx";
 
-class LegendEntry extends react.Component {
-    render(props, state) {
+class LegendEntry extends React.Component {
+    render() {
         return (
-			<div class={"chip "+props.title} style={{"background-color": props.color}}>{props.title}</div>
+			<span className={"chip "+this.props.title} style={{"backgroundColor": this.props.color}}>{this.props.title}</span>
 		);
     }
 }
 
 
 // TODO
-//						{Constants.marker_colors.map((lvl) => <LegendEntry key={'test'} item={lvl} />)}
+//						{Constants.marker_colors.map((lvl, this) => <LegendEntry key={'test'} item={lvl} />)}
 
-class Legend extends react.Component {
-    render(props, state) {
+class Legend extends React.Component {
+    render() {
         return (
             <div id="legend">
-                <div class="card darken-1">
-                  <div class="card-content black-text">
-                    <span class="card-title">Cleanliness</span>
+                <div className="card darken-1">
+                  <div className="card-content black-text">
+                    <span className="card-title">Cleanliness</span>
                     <p id="legend_cleanliness">
 	                    <LegendEntry title="VERY_CLEAN" color="#ABEBC6" />
 	                    <LegendEntry title="CLEAN" color="#58D68D" />

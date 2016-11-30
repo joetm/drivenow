@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 
 import Legend from "./Legend.jsx";
 import Buttons from "./Buttons.jsx";
@@ -6,8 +6,8 @@ import Buttons from "./Buttons.jsx";
 // TODO
 const timestamps = ['A', 'V'];
 
-class Footer extends react.Component {
-    render(props, state) {
+class Footer extends React.Component {
+    render() {
         return (
             <div id="footer">
                 <Legend

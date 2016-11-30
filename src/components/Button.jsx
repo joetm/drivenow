@@ -1,9 +1,9 @@
-import react from 'react';
+import React from 'react';
 
 
-const buttonStyle = {float:'left',marginLeft:'10px'};
+const buttonStyle = {float:'left', marginLeft:'10px'};
 
-class Button extends react.Component {
+class Button extends React.Component {
 
     // componentWillReceiveProps(props) {
     //     this.setState({disabled: props.disabled});
@@ -31,10 +31,16 @@ class Button extends react.Component {
     //         // layers.cars = draw(timestampDim); // TODO: use d3
     // }
 
-    render(props, state) {
+    render() {
         let buttonClass = "btn waves-effect waves-light" + (this.props.disabled ? " disabled" : '');
         return (
-        	<div onClick={this.props.disableButton.bind(this)} class={buttonClass} style={buttonStyle}>{props.timestamp}</div>
+        	<div
+                onClick={this.props.disableButton}
+                className={buttonClass}
+                style={buttonStyle}
+            >
+                {this.props.timestamp}
+            </div>
 		);
     }
 
