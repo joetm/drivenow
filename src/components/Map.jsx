@@ -20,7 +20,7 @@ let Map = React.createClass({
     componentDidMount() {
 
         // init the map
-        this.map = L.map('map').setView([this.state.lat, this.state.lng], this.initialZoom);
+        this.map = L.map('map').setView([this.state.lat, this.state.lng], this.state.initialZoom);
         L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
             subdomains: 'abcd',
