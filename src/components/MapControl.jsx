@@ -8,39 +8,20 @@ import Map from "./Map.jsx";
 // import Heatmap from "./Heatmap.jsx";
 
 
-class MapControl extends React.Component {
+
+let MapControl = React.createClass({
+// class MapControl extends React.Component {
 
     getInitialState() {
-        console.log('??????????????????');
-
-
-
-
-
-
-
-
         // initialise the state (once)
         return {
             cars: [],
             layers: {}
         };
-    }
+    },
 
     componentDidMount() {
-
-        console.log('??????????????????');
-
-
-
-
-
-
-
-
-
-
-
+        //
         let _this = this;
 
         this.serverRequest = fetch('/cars')
@@ -93,14 +74,14 @@ class MapControl extends React.Component {
         // }).catch(function(ex) {
         //     console.error('Error:', ex)
         });
-    }
+    },
 
     // abort the running request if component is unmounted
     componentWillUnmount() {
         if (this.serverRequest) {
             this.serverRequest.abort();
         }
-    }
+    },
 
     drawMarkers(dimension) {
 
@@ -166,24 +147,9 @@ class MapControl extends React.Component {
         // $('#sidenav-overlay').hide();
 
         return circleGroup;
-    }
+    },
 
     render() {
-
-        console.log('??????????????????');
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // TODO
         // console.log('draw markers');
@@ -197,6 +163,6 @@ class MapControl extends React.Component {
         );
     }
 
-}
+});
 
-module.exports = Map;
+module.exports = MapControl;
