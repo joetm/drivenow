@@ -41,7 +41,88 @@ let Map = React.createClass({
 
     },
 
+    drawMarkers(dimension) {
+
+        let markers = [];
+
+        // // map reset
+        // if (this.state.layers.cars) {
+        //     // clear map
+        //     map.removeLayer(layers.cars);
+        // }
+        if (this.state.map) {
+            this.state.map.eachLayer(function (layer) {
+                this.state.map.removeLayer(layer);
+            });
+        }
+
+        // TODO
+        // reset heatmap;
+        // heatmap.reset();
+
+
+        console.log('dimension', dimension);
+
+        dimension.top(Infinity).forEach(function(car){
+
+            // blurred circle
+            // let blurmarker = L.circleMarker([car.latitude, car.longitude], {
+            //         radius: 10,
+            //         stroke: false,
+            //         fill: true,
+            //         fillOpacity: 0.2,
+            //         className: 'blurCircle',
+            //         carId: car.carId,
+            //         fillColor: marker_colors[car.innerCleanliness]
+            //     })
+
+            // marker in the center
+            let marker = L.circleMarker([car.latitude, car.longitude], {
+                    radius: 6,
+                    fill: true,
+                    fillOpacity: 0.8,
+                    stroke: false,
+                    carId: car.carId,
+                    // className: 'blurCircle',
+                    color: Constants.marker_colors[car.innerCleanliness],
+                    fillColor: Constants.marker_colors[car.innerCleanliness]
+                })
+                // .on('click', carClick)
+                // .bindPopup(popup)
+
+            markers.push(marker);
+            // markers.push(blurmarker);
+
+            // TODO
+            // heatmap.intensities.push([car.latitude, car.longitude]); // marker_intensities[car.innerCleanliness]
+
+        });
+
+        // group the circles
+        // to change the circle size on zoom event
+        this.circleGroup = L.featureGroup(markers);
+
+        // TODO
+        // heatmap.render();
+
+        // add the layer to the map
+        map.addLayer(this.circleGroup);
+
+        // remove loading overlay from sidenav
+        // $('#sidenav-overlay').hide();
+
+        return circleGroup;
+
+    },
+
     render() {
+
+        // TODO
+        // console.log('draw markers');
+        if (this.props.dimension.top !== undefined) {
+            this.drawMarkers(this.props.dimension);
+        }
+
         return (
             <div id="map"></div>
         );

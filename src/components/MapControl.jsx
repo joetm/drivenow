@@ -1,12 +1,15 @@
 import React from 'react';
 
 import 'whatwg-fetch';
+import crossfilter from 'crossfilter';
 
 import Constants from "./Constants.jsx";
 
 import Map from "./Map.jsx";
 // import Heatmap from "./Heatmap.jsx";
 
+
+const emptyCrossfilter = crossfilter([]);
 
 
 let MapControl = React.createClass({
@@ -15,8 +18,20 @@ let MapControl = React.createClass({
     getInitialState() {
         // initialise the state (once)
         return {
-            cars: [],
-            layers: {}
+            cars: emptyCrossfilter,
+            layers: {},
+            dimensions: {
+                cleanlinessDim: emptyCrossfilter,
+                locationDim: emptyCrossfilter,
+                timestampDim: emptyCrossfilter,
+                carIdDim: emptyCrossfilter,
+                allDim: emptyCrossfilter
+            },
+            dimensionGroups: {
+                locationGroup: emptyCrossfilter,
+                timestampGroup: emptyCrossfilter,
+                allGroup: emptyCrossfilter
+            }
         };
     },
 
@@ -42,9 +57,9 @@ let MapControl = React.createClass({
 
             // groupings (clustering) of values
             let dimensionGroups = {
-                locationGroup: locationDim.group(location => [ Math.round(location.latitude / 100), Math.round(location.longitude / 1000) ]),
-                timestampGroup: timestampDim.group(timestamp => Math.round(timestamp / 1000)),
-                allGroup: allDim.groupAll()
+                locationGroup: dimensions.locationDim.group(location => [ Math.round(location.latitude / 100), Math.round(location.longitude / 1000) ]),
+                timestampGroup: dimensions.timestampDim.group(timestamp => Math.round(timestamp / 1000)),
+                allGroup: dimensions.allDim.groupAll()
             }
 
             // build an array of possible timestamp values
@@ -83,82 +98,12 @@ let MapControl = React.createClass({
         }
     },
 
-    drawMarkers(dimension) {
-
-        let markers = [];
-
-        // TODO
-        // // map reset
-        // if (this.state.layers.cars) {
-        //     // clear map
-        //     map.removeLayer(layers.cars);
-        // }
-
-        // TODO
-        // reset heatmap;
-        // heatmap.reset();
-
-        dimension.top(Infinity).forEach(function(car){
-
-            // blurred circle
-            // let blurmarker = L.circleMarker([car.latitude, car.longitude], {
-            //         radius: 10,
-            //         stroke: false,
-            //         fill: true,
-            //         fillOpacity: 0.2,
-            //         className: 'blurCircle',
-            //         carId: car.carId,
-            //         fillColor: marker_colors[car.innerCleanliness]
-            //     })
-
-            // marker in the center
-            let marker = L.circleMarker([car.latitude, car.longitude], {
-                    radius: 6,
-                    fill: true,
-                    fillOpacity: 0.8,
-                    stroke: false,
-                    carId: car.carId,
-                    // className: 'blurCircle',
-                    color: Constants.marker_colors[car.innerCleanliness],
-                    fillColor: Constants.marker_colors[car.innerCleanliness]
-                })
-                // .on('click', carClick)
-                // .bindPopup(popup)
-
-            markers.push(marker);
-            // markers.push(blurmarker);
-
-            // TODO
-            // heatmap.intensities.push([car.latitude, car.longitude]); // marker_intensities[car.innerCleanliness]
-
-        });
-
-        // group the circles
-        // to change the circle size on zoom event
-        this.circleGroup = L.featureGroup(markers);
-
-        // TODO
-        // heatmap.render();
-
-        // add the layer to the map
-        map.addLayer(this.circleGroup);
-
-        // remove loading overlay from sidenav
-        // $('#sidenav-overlay').hide();
-
-        return circleGroup;
-    },
-
     render() {
-
-        // TODO
-        // console.log('draw markers');
-        // _this.drawMarkers(timestampDim);
 
         return (
             <Map
                 cars={this.state.cars}
-                dimensions={this.state.dimensions}
+                dimension={this.state.dimensions.timestampDim}
             />
         );
     }
