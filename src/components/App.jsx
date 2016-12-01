@@ -23,4 +23,15 @@ class App extends React.Component {
 }
 
 // render the App
-render(<App />, document.getElementById("app"));
+const __DEV__ = true;
+const root = document.getElementById("app");
+if (__DEV__) {
+  const RedBox = require('redbox-react').default
+  try {
+    render(<App />, root);
+  } catch (e) {
+    render(<RedBox error={e} />, root)
+  }
+} else {
+    render(<App />, root);
+}
