@@ -3,8 +3,6 @@ import React from 'react';
 import 'whatwg-fetch';
 import crossfilter from 'crossfilter';
 
-import Constants from "./Constants.jsx";
-
 import Map from "./Map.jsx";
 // import Heatmap from "./Heatmap.jsx";
 

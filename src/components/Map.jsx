@@ -2,6 +2,8 @@ import React from 'react';
 
 const maxZoom = 19;
 
+import Constants from "./Constants.jsx";
+
 
 let Map = React.createClass({
 // class Map extends React.Component {
