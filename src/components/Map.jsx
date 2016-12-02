@@ -24,12 +24,12 @@ let Map = React.createClass({
     componentDidMount() {
 
         // init the map
-        this.map = L.map('map').setView([this.state.lat, this.state.lng], this.state.initialZoom);
+        this.state.map = L.map('map').setView([this.state.lat, this.state.lng], this.state.initialZoom);
         L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
             subdomains: 'abcd',
             maxZoom: maxZoom
-        }).addTo(this.map);
+        }).addTo(this.state.map);
 
         // TODO
         // this.map.on('zoomend', function() {
@@ -45,6 +45,8 @@ let Map = React.createClass({
 
     drawMarkers(dimension) {
 
+        let _this = this;
+
         let markers = [];
 
         // // map reset
@@ -52,10 +54,12 @@ let Map = React.createClass({
         //     // clear map
         //     map.removeLayer(layers.cars);
         // }
-        if (this.state.map) {
-            this.state.map.eachLayer(function (layer) {
-                this.state.map.removeLayer(layer);
-            });
+        if (this.circleGroup) {
+            // this.state.map.eachLayer(function (layer) {
+            //     console.log(layer);
+            //     _this.state.map.removeLayer(layer);
+            // });
+            this.state.map.removeLayer(this.circleGroup);
         }
 
         // TODO
@@ -63,7 +67,7 @@ let Map = React.createClass({
         // heatmap.reset();
 
 
-        console.log('dimension', dimension);
+        // console.log('dimension', dimension);
 
         dimension.top(Infinity).forEach(function(car){
 
@@ -108,12 +112,12 @@ let Map = React.createClass({
         // heatmap.render();
 
         // add the layer to the map
-        map.addLayer(this.circleGroup);
+        this.state.map.addLayer(this.circleGroup);
 
         // remove loading overlay from sidenav
         // $('#sidenav-overlay').hide();
 
-        return circleGroup;
+        // return this.circleGroup;
 
     },
 

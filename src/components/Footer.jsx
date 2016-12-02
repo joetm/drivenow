@@ -9,13 +9,14 @@ import Constants from "./Constants.jsx";
 // TODO
 const timestamps = [1412345678, 1412345679];
 
+
 // get the label keys
-let keys = [];
-Constants.marker_colors.forEach(function (item, key) {
-    for (key in item) {
-        keys.push(key);
+let colorKeys = [];
+for (let key in Constants.marker_colors) {
+    if (Constants.marker_colors.hasOwnProperty(key)) {
+        colorKeys.push(key);
     }
-});
+}
 
 
 class Footer extends React.Component {
@@ -23,7 +24,7 @@ class Footer extends React.Component {
         return (
             <div id="footer">
                 <Legend
-                    cleanlinessLevels={keys}
+                    cleanlinessLevels={colorKeys}
                 />
                 <Buttons timestamps={timestamps} />
             </div>
