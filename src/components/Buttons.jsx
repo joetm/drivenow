@@ -11,27 +11,22 @@ let Buttons = React.createClass({
     getInitialState() {
         // initialise the state (once)
         return {
-            buttonStates: []
+            buttonStates: {}
         };
     },
 
-    // resetButtons(e) {
+    resetButtons() {
     //     // enable all buttons
     //     // console.log('this.buttons', this.state.buttons);
     //     this.state.buttons.forEach((btn) => {
     //         // console.log(btn);
     //         btn.setState({disabled:true});
     //     });
-    // },
-
-    //componentWillReceiveProps() {
-        // let buttonStates = this.props.timestamps.map((timestamp, this) => ());
-        // this.setState({buttonStates});
-    //},
+    },
 
     disableButton() {
+    	this.resetButtons();
         console.log('disable');
-        console.log(this);
 
     },
 
@@ -44,20 +39,20 @@ let Buttons = React.createClass({
 
     },
 
-    // TODO
-    // componentWillMount() {
-    //     // initial button states
-    //     for (let i=0, s=this.props.timestamps.length; i<s; i++) {
-    //         this.state.buttonStates[this.props.timestamps[i]] = false; // disabled = off by default
-    //     }
-    //     // console.log('this.state.buttonStates', this.state.buttonStates);
-    // },
+    componentWillMount() {
+        // populate the initial button states
+        let buttonStates = {};
+        for (let i=0, s=this.props.timestamps.length; i < s; i++) {
+            buttonStates[this.props.timestamps[i]] = false; // disabled == true
+        }
+        this.setState({buttonStates});
+        console.log('this.state.buttonStates', this.state.buttonStates);
+    },
 
     render() {
 
-// TODO
-//                                disabled={this.props.buttonStates[timestamp] ? true : false}
-// TODO
+        //     disabled={this.props.buttonStates[timestamp] ? true : false}
+
         return (
 			<div id="buttons">
 			    {
@@ -65,6 +60,7 @@ let Buttons = React.createClass({
                             <Button
                                 key={'btn_'+timestamp}
                                 timestamp={timestamp}
+                                disabled={this.state.buttonStates[timestamp] ? true : false}
                                 buttonClick={this.buttonClick}
                                 disableButton={this.disableButton}
                             />

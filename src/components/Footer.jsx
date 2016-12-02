@@ -16,7 +16,13 @@ for (let key in Constants.marker_colors) {
 }
 
 
-class Footer extends React.Component {
+let Footer = React.createClass({
+// class Footer extends React.Component {
+
+
+    componentWillReceiveProps(props) {
+        // this.setState({buttonStates});
+    },
 
     render() {
         return (
@@ -24,10 +30,12 @@ class Footer extends React.Component {
                 <Legend
                     cleanlinessLevels={colorKeys}
                 />
-                <Buttons timestamps={this.props.timestamps} />
+                <Buttons
+                    timestamps={this.props.timestamps}
+                />
             </div>
         );
     }
-}
+});
 
 module.exports = Footer;
