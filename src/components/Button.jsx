@@ -9,6 +9,15 @@ class Button extends React.Component {
     //     this.setState({disabled: props.disabled});
     // }
 
+    buttonClick() {
+        this.props.disableButton(this);
+
+        // TODO
+        // load the corresponding layer
+
+
+    }
+
     // timestamp button events
     // buttonClick(e) {
     //     console.log('e', e);
@@ -35,7 +44,7 @@ class Button extends React.Component {
         let buttonClass = "btn waves-effect waves-light" + (this.props.disabled ? " disabled" : '');
         return (
         	<div
-                onClick={this.props.disableButton}
+                onClick={this.buttonClick.bind(this)}
                 className={buttonClass}
                 style={buttonStyle}
             >
