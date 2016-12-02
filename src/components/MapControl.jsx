@@ -67,10 +67,8 @@ let MapControl = React.createClass({
                     timestamps.push(car.timestamp);
                 }
             });
-            console.log('timestamps', timestamps);
-            // if (!timestamps.length) {
-            //     throw "No timestamps in data";
-            // }
+            // console.log('MapControl:timestamps', timestamps);
+            _this.props.setTimestamps(timestamps);
 
             // filter: only show the cars from the first timestamp
             if (timestamps[0] !== undefined) {

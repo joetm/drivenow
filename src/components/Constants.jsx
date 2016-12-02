@@ -1,9 +1,9 @@
 
 module.exports = {
 	marker_colors: {
-	    "VERY_CLEAN": '#ABEBC6',
-	    "CLEAN": '#58D68D',
+	    "POOR": '#FF5733',
 	    "REGULAR": '#F39C12',
-	    "POOR": '#FF5733'
+	    "CLEAN": '#58D68D',
+	    "VERY_CLEAN": '#ABEBC6'
 	}
 };

@@ -9,18 +9,36 @@ import SideNav from './SideNav.jsx';
 import MapControl from './MapControl.jsx';
 
 
-class App extends React.Component {
+let App = React.createClass({
+// class App extends React.Component {
+
+    getInitialState() {
+        // initialise the state (once)
+        return {
+            timestamps: []
+        };
+    },
+
+    setTimestamps(timestamps) {
+      // console.log('App:timestamps', timestamps);
+      this.setState({timestamps: timestamps});
+    },
 
     render() {
         return (
             <div id="wrap">
                 <SideNav />
-                <MapControl />
-                <Footer />
+                <MapControl
+                  setTimestamps={this.setTimestamps}
+                />
+                <Footer
+                  timestamps={this.state.timestamps}
+                />
             </div>
         );
     }
-}
+
+});
 
 // render the App
 // const __DEV__ = true;

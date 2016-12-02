@@ -6,9 +6,6 @@ import Buttons from "./Buttons.jsx";
 import Constants from "./Constants.jsx";
 
 
-// TODO
-const timestamps = [1412345678, 1412345679];
-
 
 // get the label keys
 let colorKeys = [];
@@ -20,13 +17,14 @@ for (let key in Constants.marker_colors) {
 
 
 class Footer extends React.Component {
+
     render() {
         return (
             <div id="footer">
                 <Legend
                     cleanlinessLevels={colorKeys}
                 />
-                <Buttons timestamps={timestamps} />
+                <Buttons timestamps={this.props.timestamps} />
             </div>
         );
     }
