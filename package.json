@@ -14,12 +14,14 @@
   "scripts": {
     "test": "",
     "start": "node server",
+    "prod": "ENV=production node server",
     "dev": "node_modules/.bin/webpack-dev-server --content-base ./build --inline --hot",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "scrape": "node scraper",
     "jscs": "jscs .",
-    "watch": "node_modules/.bin/webpack --watch"
+    "watch": "node_modules/.bin/webpack --watch",
+    "webpack-prod": "ENV=production node_modules/.bin/webpack"
   },
   "plugins": [
     [
