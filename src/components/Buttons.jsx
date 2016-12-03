@@ -11,57 +11,43 @@ let Buttons = React.createClass({
     getInitialState() {
         // initialise the state (once)
         return {
-            buttonStates: {}
+            buttonDisabledStates: {}
         };
     },
 
-    resetButtons() {
-    //     // enable all buttons
-    //     // console.log('this.buttons', this.state.buttons);
-    //     this.state.buttons.forEach((btn) => {
-    //         // console.log(btn);
-    //         btn.setState({disabled:true});
-    //     });
-    },
-
-    disableButton() {
-    	this.resetButtons();
-        console.log('disable');
-
-    },
-
-    buttonClick() {
-        console.log('disable');
-        console.log(this);
-
-        // TODO: disable the clicked button
-
-
-    },
-
-    componentWillMount() {
-        // populate the initial button states
-        let buttonStates = {};
+    resetButtons(setState = true) {
+        // enable all buttons
+        let buttonDisabledStates = {};
+        // console.log(this.props.timestamps);
         for (let i=0, s=this.props.timestamps.length; i < s; i++) {
-            buttonStates[this.props.timestamps[i]] = false; // disabled == true
+            buttonDisabledStates[this.props.timestamps[i]] = false; // disabled == true
         }
-        this.setState({buttonStates});
-        console.log('this.state.buttonStates', this.state.buttonStates);
+        // console.log('buttonDisabledStates', buttonDisabledStates);
+        if (setState === true) {
+            this.setState({buttonDisabledStates});
+        } else {
+            return buttonDisabledStates;
+        }
+    },
+
+    disableButton(e) {
+        // enable all buttons
+    	let buttonDisabledStates = this.resetButtons(false);
+        // disable the clicked button
+        buttonDisabledStates[e.props.timestamp] = true;
+        // set the new button states
+        this.setState({buttonDisabledStates});
     },
 
     render() {
-
-        //     disabled={this.props.buttonStates[timestamp] ? true : false}
-
         return (
 			<div id="buttons">
 			    {
                     this.props.timestamps.map((timestamp) => (
                             <Button
-                                key={'btn_'+timestamp}
+                                key={`btn_${timestamp}`}
                                 timestamp={timestamp}
-                                disabled={this.state.buttonStates[timestamp] ? true : false}
-                                buttonClick={this.buttonClick}
+                                disabled={this.state.buttonDisabledStates[timestamp] ? true : false}
                                 disableButton={this.disableButton}
                             />
                         )

@@ -19,7 +19,6 @@ for (let key in Constants.marker_colors) {
 let Footer = React.createClass({
 // class Footer extends React.Component {
 
-
     componentWillReceiveProps(props) {
         // this.setState({buttonStates});
     },
