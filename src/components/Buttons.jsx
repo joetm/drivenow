@@ -39,7 +39,7 @@ let Buttons = React.createClass({
         // set the new button states
         this.setState({buttonDisabledStates});
         // change layer
-        console.log('change layer');
+        // console.log('change layer');
         this.props.selectTimeDimension(clickedTimestamp);
     },
 

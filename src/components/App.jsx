@@ -94,7 +94,7 @@ let App = React.createClass({
     },
 
     selectTimeDimension(timestamp) {
-        console.log('selectTimeDimension');
+        // console.log('selectTimeDimension');
         this.setState({activeDimension: this.state.dimensions.timestampDim.filter(timestamp)});
     },
 
