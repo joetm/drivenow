@@ -30,13 +30,17 @@ let Buttons = React.createClass({
         }
     },
 
-    disableButton(e) {
+    clickButton(e) {
+        let clickedTimestamp = e.props.timestamp;
         // enable all buttons
     	let buttonDisabledStates = this.resetButtons(false);
         // disable the clicked button
-        buttonDisabledStates[e.props.timestamp] = true;
+        buttonDisabledStates[clickedTimestamp] = true;
         // set the new button states
         this.setState({buttonDisabledStates});
+        // change layer
+        console.log('change layer');
+        this.props.selectTimeDimension(clickedTimestamp);
     },
 
     render() {
@@ -48,7 +52,7 @@ let Buttons = React.createClass({
                                 key={`btn_${timestamp}`}
                                 timestamp={timestamp}
                                 disabled={this.state.buttonDisabledStates[timestamp] ? true : false}
-                                disableButton={this.disableButton}
+                                clickButton={this.clickButton}
                             />
                         )
                     )

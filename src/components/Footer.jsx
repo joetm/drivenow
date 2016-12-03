@@ -31,6 +31,7 @@ let Footer = React.createClass({
                 />
                 <Buttons
                     timestamps={this.props.timestamps}
+                    selectTimeDimension={this.props.selectTimeDimension}
                 />
             </div>
         );

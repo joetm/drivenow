@@ -10,8 +10,7 @@ class Button extends React.Component {
     // }
 
     buttonClick() {
-        this.props.disableButton(this);
-        console.log('change layer');
+        this.props.clickButton(this);
     }
 
     // timestamp button events
