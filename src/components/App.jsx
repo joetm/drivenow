@@ -11,6 +11,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Map from './Map.jsx';
 import Footer from './Footer.jsx';
 import SideNav from './SideNav.jsx';
+import Toolbar from './Toolbar.jsx';
+
 
 
 // Needed for onTouchTap
@@ -41,7 +43,8 @@ let App = React.createClass({
                 allGroup: emptyCrossfilter
             },
             sideNavVisible: false,
-            selectedCar: null
+            selectedCar: null,
+            toolbarTitle: "Loading..."
         };
     },
 
@@ -87,7 +90,8 @@ let App = React.createClass({
                 activeDimension: dimensions.timestampDim.filter(timestamps[0]),
                 dimensions: dimensions,
                 dimensionGroups: dimensionGroups,
-                timestamps: timestamps
+                timestamps: timestamps,
+                toolbarTitle: `Showing: ${timestamps[0]}`
             });
 
         // }).catch(function(ex) {
@@ -155,20 +159,20 @@ let App = React.createClass({
         return (
              <MuiThemeProvider>
                 <div id="wrap">
+                <Toolbar
+                    title={this.state.toolbarTitle}
+                />
                 <SideNav
-                  key={'SideNav'}
                   closeSideNav={this.closeSideNav}
                   visible={this.state.sideNavVisible}
                   carData={this.state.selectedCar}
                 />
                 <Map
-                  key={'MapControl'}
                   dimension={this.state.activeDimension}
                   cars={this.state.cars}
                   carClick={this.carClick}
                 />
                 <Footer
-                  key={'Footer'}
                   timestamps={this.state.timestamps}
                   selectTimeDimension={this.selectTimeDimension}
                 />
