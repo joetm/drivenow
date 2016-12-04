@@ -62,7 +62,7 @@ class SteppedSlider extends React.Component {
     render() {
         return (
             <Slider
-                style={{marginRight:'35%'}}
+                style={{margin:'0 2em'}}
                 min={this.state.min}
                 max={this.state.max}
                 step={this.state.stepSize}

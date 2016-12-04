@@ -71,14 +71,14 @@ module.exports = {
 	          	// test: /\.css$/,
 	          	// loader: "style-loader!css-loader"
 	        // },
-{
-	test: /\.css$/,
-	loader: ExtractTextPlugin.extract("style-loader","css-loader")
-},
-{
-  test: /\.scss$/,
-  loader: ExtractTextPlugin.extract("style","css!sass")
-},
+			{
+				test: /\.css$/,
+				loader: ExtractTextPlugin.extract("style-loader","css-loader")
+			},
+			{
+			  test: /\.scss$/,
+			  loader: ExtractTextPlugin.extract("style","css!sass")
+			},
 			{
 				test: /\.json$/,
 				loader: 'json'

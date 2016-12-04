@@ -13,11 +13,10 @@ import Footer from './Footer.jsx';
 import SideNav from './SideNav.jsx';
 import Toolbar from './Toolbar.jsx';
 
-
-
 // Needed for onTouchTap
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
+
 
 
 let App = React.createClass({
@@ -78,7 +77,7 @@ let App = React.createClass({
 
             // build an array of possible timestamp values
             let timestamps = [];
-            dimensions.timestampDim.top(Infinity).forEach(function(car){
+            dimensions.timestampDim.bottom(Infinity).forEach(function(car){
                 if (timestamps.indexOf(car.timestamp) === -1) {
                     timestamps.push(car.timestamp);
                 }
@@ -93,7 +92,7 @@ let App = React.createClass({
                 dimensions: dimensions,
                 dimensionGroups: dimensionGroups,
                 timestamps: timestamps,
-                toolbarTitle: `Showing: ${activeTimestamp}`
+                toolbarTitle: `Showing: ${_this.timestampToDate(activeTimestamp)}`
             });
 
         // }).catch(function(ex) {
@@ -108,8 +107,13 @@ let App = React.createClass({
         }
     },
 
+    timestampToDate(timestamp) {
+        const newDate = new Date(timestamp);
+        return `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
+    },
+
     changeToolbarTitle(timestamp) {
-        let title = `Showing: ${timestamp}`;
+        let title = `Showing: ${this.timestampToDate(timestamp)}`;
         this.setState({
             toolbarTitle: title
         });  
@@ -175,23 +179,23 @@ let App = React.createClass({
         return (
              <MuiThemeProvider>
                 <div id="wrap">
-                <Toolbar
-                    title={this.state.toolbarTitle}
-                />
-                <SideNav
-                  closeSideNav={this.closeSideNav}
-                  visible={this.state.sideNavVisible}
-                  carData={this.state.selectedCar}
-                />
-                <Map
-                  dimension={this.state.activeDimension}
-                  cars={this.state.cars}
-                  carClick={this.carClick}
-                />
-                <Footer
-                  timestamps={this.state.timestamps}
-                  selectTimeDimension={this.selectTimeDimension}
-                />
+                    <Toolbar
+                        title={this.state.toolbarTitle}
+                    />
+                    <SideNav
+                      closeSideNav={this.closeSideNav}
+                      visible={this.state.sideNavVisible}
+                      carData={this.state.selectedCar}
+                    />
+                    <Map
+                      dimension={this.state.activeDimension}
+                      cars={this.state.cars}
+                      carClick={this.carClick}
+                    />
+                    <Footer
+                      timestamps={this.state.timestamps}
+                      selectTimeDimension={this.selectTimeDimension}
+                    />
                 </div>
             </MuiThemeProvider>
         );

@@ -7,6 +7,17 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
+import Legend from "./Legend.jsx";
+import Constants from "./Constants.jsx";
+// get the label keys
+let colorKeys = [];
+for (let key in Constants.marker_colors) {
+    if (Constants.marker_colors.hasOwnProperty(key)) {
+        colorKeys.push(key);
+    }
+}
+
+
 export default class AppToolbar extends React.Component {
 
   constructor(props) {
@@ -22,10 +33,17 @@ export default class AppToolbar extends React.Component {
     return (
       <Toolbar>
         <ToolbarGroup firstChild={true}>
-            <MenuItem value={3} primaryText={this.props.title} />
+            <MenuItem
+                value={3}
+                primaryText={this.props.title}
+            />
         </ToolbarGroup>
         <ToolbarGroup>
           <ToolbarTitle text="Berlin" />
+          <ToolbarSeparator />
+          <Legend
+              cleanlinessLevels={colorKeys}
+          />
           <ToolbarSeparator />
           <IconMenu
             iconButtonElement={
@@ -35,7 +53,10 @@ export default class AppToolbar extends React.Component {
             }
           >
             <MenuItem
-            	primaryText="XXX"
+            	primaryText="TODO"
+            />
+            <MenuItem
+              primaryText="TODO"
             />
             <MenuItem
             	primaryText="About"
