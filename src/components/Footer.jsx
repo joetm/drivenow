@@ -19,10 +19,6 @@ for (let key in Constants.marker_colors) {
 let Footer = React.createClass({
 // class Footer extends React.Component {
 
-    componentWillReceiveProps(props) {
-        // this.setState({buttonStates});
-    },
-
     render() {
         return (
             <div id="footer">
@@ -32,6 +28,7 @@ let Footer = React.createClass({
                 <Buttons
                     timestamps={this.props.timestamps}
                     selectTimeDimension={this.props.selectTimeDimension}
+                    changeTitle={this.props.changeTitle}
                 />
             </div>
         );

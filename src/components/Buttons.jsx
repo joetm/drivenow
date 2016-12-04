@@ -41,6 +41,8 @@ let Buttons = React.createClass({
         // change layer
         // console.log('change layer');
         this.props.selectTimeDimension(clickedTimestamp);
+        // change the title in the toolbar
+        this.props.changeTitle(clickedTimestamp);
     },
 
     render() {

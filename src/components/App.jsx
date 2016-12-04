@@ -84,19 +84,28 @@ let App = React.createClass({
                 }
             });
 
+            let activeTimestamp = timestamps[0];
+
             // setting state will trigger a re-render (in componentDidMount)
             _this.setState({
                 cars: crossfilter(json),
-                activeDimension: dimensions.timestampDim.filter(timestamps[0]),
+                activeDimension: dimensions.timestampDim.filter(activeTimestamp),
                 dimensions: dimensions,
                 dimensionGroups: dimensionGroups,
                 timestamps: timestamps,
-                toolbarTitle: `Showing: ${timestamps[0]}`
+                toolbarTitle: `Showing: ${activeTimestamp}`
             });
 
         // }).catch(function(ex) {
         //     console.error('Error:', ex)
         });
+    },
+
+    changeTitle(timestamp) {
+        let title = `Showing: ${timestamp}`;
+        this.setState({
+            toolbarTitle: title
+        });  
     },
 
     // abort the running request if component is unmounted
@@ -108,7 +117,9 @@ let App = React.createClass({
 
     selectTimeDimension(timestamp) {
         // console.log('selectTimeDimension');
-        this.setState({activeDimension: this.state.dimensions.timestampDim.filter(timestamp)});
+        this.setState({
+            activeDimension: this.state.dimensions.timestampDim.filter(timestamp)
+        });
     },
 
     // resetLayers(dimensions) {
@@ -175,6 +186,7 @@ let App = React.createClass({
                 <Footer
                   timestamps={this.state.timestamps}
                   selectTimeDimension={this.selectTimeDimension}
+                  changeTitle={this.changeTitle}
                 />
                 </div>
             </MuiThemeProvider>
