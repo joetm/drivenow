@@ -4,6 +4,8 @@ const maxZoom = 19;
 
 import Constants from "./Constants.jsx";
 
+import Heatmap from "./Heatmap.jsx";
+
 
 let Map = React.createClass({
 // class Map extends React.Component {
@@ -39,8 +41,6 @@ let Map = React.createClass({
         //     // circleGroup.setStyle({radius: radius});
         // });
 
-
-
     },
 
     drawMarkers(dimension) {
@@ -49,25 +49,10 @@ let Map = React.createClass({
 
         let markers = [];
 
-        // // map reset
-        // if (this.state.layers.cars) {
-        //     // clear map
-        //     map.removeLayer(layers.cars);
-        // }
+        // map reset
         if (this.circleGroup) {
-            // this.state.map.eachLayer(function (layer) {
-            //     console.log(layer);
-            //     _this.state.map.removeLayer(layer);
-            // });
             this.state.map.removeLayer(this.circleGroup);
         }
-
-        // TODO
-        // reset heatmap;
-        // heatmap.reset();
-
-
-        // console.log('dimension', dimension);
 
         dimension.top(Infinity).forEach(function(car){
 
@@ -123,14 +108,19 @@ let Map = React.createClass({
 
     render() {
 
-        // TODO
-        // console.log('draw markers');
+        // draw markers
         if (this.props.dimension.top !== undefined) {
             this.drawMarkers(this.props.dimension);
         }
 
         return (
-            <div id="map"></div>
+            <div style={{height:'100%',width:'100%'}}>
+                <div id="map"></div>
+                <Heatmap
+                    map={this.state.map}
+                    dimension={this.props.dimension}
+                />
+            </div>
         );
     }
 
