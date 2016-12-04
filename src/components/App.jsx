@@ -140,7 +140,7 @@ let App = React.createClass({
         }
     },
 
-    drawArcs() {
+    updateArcs() {
         //
         if (!this.state.activeDimension) {
             return;
@@ -162,7 +162,7 @@ let App = React.createClass({
             }
         });
 
-        console.log('arcs', arcs);
+        // console.log('arcs', arcs);
 
         if (arcs.length) {
             this.setState({arcs});
@@ -223,7 +223,7 @@ let App = React.createClass({
         });
 
         // draw arcs between the cars
-        this.drawArcs();
+        this.updateArcs();
     },
 
     closeSideNav() {

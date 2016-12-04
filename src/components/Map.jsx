@@ -83,40 +83,39 @@ let Map = React.createClass({
 
             markers.push(marker);
             // markers.push(blurmarker);
-
-            // TODO
-            // heatmap.intensities.push([car.latitude, car.longitude]); // marker_intensities[car.innerCleanliness]
-
         });
 
         // group the circles
-        // to change the circle size on zoom event
         this.circleGroup = L.featureGroup(markers);
-
-        // TODO
-        // heatmap.render();
 
         // add the layer to the map
         this.state.map.addLayer(this.circleGroup);
 
     },
 
+    drawArcs() {
+        // map reset
+        if (this.arcGroup) {
+            this.state.map.removeLayer(this.arcGroup);
+        }
+        let arcs = [];
+        this.props.arcs.forEach(function(arc) {
+            arcs.push(L.Polyline.Arc(arc.from, arc.to));
+        });
+        this.arcGroup = L.featureGroup(arcs);
+        this.state.map.addLayer(this.arcGroup);
+    },
+
     render() {
         //
-        let _this = this;
-
-        // draw markers
+        // draw the markers
         if (this.props.dimension.top !== undefined) {
             this.drawMarkers(this.props.dimension);
         }
 
-        console.log('this.state.map', this.state.map);
-
         // draw the arcs
         if (this.props.arcs.length) {
-            this.props.arcs.forEach(function(arc) {
-                L.Polyline.Arc(arc.from, arc.to).addTo(_this.state.map);
-            });
+            this.drawArcs();
         }
 
         return (
