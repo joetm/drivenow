@@ -18,3 +18,10 @@ Visualization of DriveNow car movements and cleanliness
 2. `npm start` or `npm run dev`
 3. navigate to `http://localhost:3000` or `http://localhost:8080` in your browser of choice
 
+## Technologies
+
+1. React
+1. Material UI
+1. Leaflet
+1. Crossfilter
+1. D3
