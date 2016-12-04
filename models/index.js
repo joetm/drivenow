@@ -79,6 +79,9 @@ models.PetrolStation = sequelize.define("PetrolStation", {
         longitude: {type: Sequelize.FLOAT},
         organisation: {type: Sequelize.STRING}
     });
+// ------------------------------------
+// models without sepcified primary key
+// ------------------------------------
 models.Position = sequelize.define("Position", {
         timestamp: {type: Sequelize.INTEGER},
         carId: {
