@@ -16,8 +16,8 @@ const minutes = 60 * 1000;
 const hours = 60 * minutes;
 const interval = 3 * minutes;
 const stopAfter = 7 * 24 * hours;
-let intervalId;
 const startDate = new Date();
+let intervalId;
 // ----------------------------------------------------
 
 function removeObjKeys(items, obj) {
@@ -80,14 +80,15 @@ function runScrape() {
             // var carTypes = clone(json.carTypes.items);
             fns.push.apply(fns, json.carTypes.items.map(function(ct) {
                 return function(callback) {
-                    models.CarType.findOrCreate({where: ct})
+                    models.CarType.findOrCreate({where: {modelIdentifier: ct.modelIdentifier}})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created cartype: ' + model.modelName);
                         }
                         callback(null);
                     }).catch(function(error) {
-                        throw error;
+                        log.error(error, error.index, error.value);
+                        // throw error;
                     });
                 };
             }));
@@ -98,14 +99,15 @@ function runScrape() {
             fns.push.apply(fns, json.chargingStations.items.map(function(cs) {
                 cs.address = cs.address[0]; // string conversion
                 return function(callback) {
-                    models.ChargingStation.findOrCreate({where: cs})
+                    models.ChargingStation.findOrCreate({where: {name: cs.name}})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created charging station: ' + model.name);
                         }
                         callback(null);
                     }).catch(function(error) {
-                        throw error;
+                        log.error(error, error.index, error.value);
+                        // throw error;
                     });
                 };
             }));
@@ -115,14 +117,15 @@ function runScrape() {
             fns.push.apply(fns, json.petrolStations.items.map(function(ps) {
                 ps.address = ps.address[0]; // string conversion
                 return function(callback) {
-                    models.PetrolStation.findOrCreate({where: ps})
+                    models.PetrolStation.findOrCreate({where: {name: ps.name}})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created petrol station: ' + model.name);
                         }
                         callback(null);
                     }).catch(function(error) {
-                        throw error;
+                        log.error(error, error.index, error.value);
+                        // throw error;
                     });
                 };
             }));
@@ -134,14 +137,15 @@ function runScrape() {
                 delete ps.count;
                 delete ps.openingHours;
                 return function(callback) {
-                    models.ParkingSpace.findOrCreate({where: ps})
+                    models.ParkingSpace.findOrCreate({where: {name: ps.name}})
                     .spread(function(model, created) {
                         if (created && model) {
                             log.info('Created parking space: ' + model.name);
                         }
                         callback(null);
                     }).catch(function(error) {
-                        throw error;
+                        log.error(error, error.index, error.value);
+                        // throw error;
                     });
                 };
             }));
@@ -172,7 +176,7 @@ function runScrape() {
             });
             fns.push.apply(fns, cars.map(function(c) {
                 return function(callback) {
-                    models.Car.findOrCreate({where: c})
+                    models.Car.findOrCreate({where: {id: c.id}})
                     .spread(function(model, created) {
                         if (model && created) {
                             log.info('Created car ' + model.name);
@@ -180,7 +184,7 @@ function runScrape() {
                         callback(null);
                     }).catch(function(error) {
                         log.error(error, error.index, error.value);
-                        throw error;
+                        // throw error;
                     });
                 };
             }));
@@ -219,7 +223,7 @@ function runScrape() {
                         callback(null);
                     }).catch(function(error) {
                         log.error(error, error.index, error.value);
-                        throw error;
+                        // throw error;
                     });
                 };
             }));
@@ -253,7 +257,7 @@ function runScrape() {
                         callback(null);
                     }).catch(function(error) {
                         log.error(error, error.index, error.value);
-                        throw error;
+                        // throw error;
                     });
                 };
             }));
