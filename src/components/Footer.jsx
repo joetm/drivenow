@@ -5,6 +5,7 @@ import Buttons from "./Buttons.jsx";
 
 import Constants from "./Constants.jsx";
 
+import Slider from "./Slider.jsx";
 
 
 // get the label keys
@@ -24,6 +25,9 @@ let Footer = React.createClass({
             <div id="footer">
                 <Legend
                     cleanlinessLevels={colorKeys}
+                />
+                <Slider
+                    timestamps={this.props.timestamps}
                 />
                 <Buttons
                     timestamps={this.props.timestamps}
