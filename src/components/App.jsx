@@ -142,6 +142,8 @@ let App = React.createClass({
 
     drawArcs() {
         //
+        let _this = this;
+
         if (!this.state.activeDimension) {
             return;
         }
@@ -164,9 +166,9 @@ let App = React.createClass({
         console.log('arcs', arcs);
 
         if (arcs.length) {
-            arcs.forEach(function(arc) {
+            arcs.forEach(function(carArc) {
                 // draw arc
-                L.Polyline.Arc(arc.from, arc.to).addTo(this.state.map);
+                L.Polyline.Arc(carArc.from, carArc.to).addTo(_this.state.map);
             });
         }
     },
