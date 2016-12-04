@@ -101,13 +101,6 @@ let App = React.createClass({
         });
     },
 
-    changeTitle(timestamp) {
-        let title = `Showing: ${timestamp}`;
-        this.setState({
-            toolbarTitle: title
-        });  
-    },
-
     // abort the running request if component is unmounted
     componentWillUnmount() {
         if (this.serverRequest) {
@@ -115,11 +108,23 @@ let App = React.createClass({
         }
     },
 
-    selectTimeDimension(timestamp) {
-        // console.log('selectTimeDimension');
+    changeToolbarTitle(timestamp) {
+        let title = `Showing: ${timestamp}`;
         this.setState({
-            activeDimension: this.state.dimensions.timestampDim.filter(timestamp)
+            toolbarTitle: title
+        });  
+    },
+
+    selectTimeDimension(timestamp) {
+        this.changeToolbarTitle(timestamp);
+        let dimensions = this.state.dimensions;
+        let activeDim = dimensions.timestampDim.filter(timestamp);
+        dimensions.activeDimension = activeDim;
+        this.setState({
+            dimensions: dimensions,
+            activeDimension: activeDim
         });
+        // console.log('selectTimeDimension', activeDim.top(Infinity));
     },
 
     // resetLayers(dimensions) {
@@ -129,7 +134,7 @@ let App = React.createClass({
     // }
 
     carClick(e) {
-
+        //
         console.log('car click:', e.target.options.carId);
 
         const carId = e.target.options.carId;
@@ -186,7 +191,6 @@ let App = React.createClass({
                 <Footer
                   timestamps={this.state.timestamps}
                   selectTimeDimension={this.selectTimeDimension}
-                  changeTitle={this.changeTitle}
                 />
                 </div>
             </MuiThemeProvider>

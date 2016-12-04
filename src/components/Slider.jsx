@@ -33,36 +33,41 @@ class SteppedSlider extends React.Component {
         this.state = {
             min: 0,
             max: 1,
-            initialValue: 0,
-            stepSize: 0.1
+            initialIndex: 0,
+            stepSize: 1
         }
     }
 
     componentWillReceiveProps(props) {
         // console.log(props.timestamps);
         if (props.timestamps.length) {
-            let min = props.timestamps.min();
-            let max = props.timestamps.max();
-            let initialValue = min;
-            let stepSize = Math.floor((max - min) / props.timestamps.length, 0);
+            // let min = 0; // props.timestamps.min();
+            let max = props.timestamps.length - 1; // props.timestamps.max();
+            // let stepSize = 1; // Math.floor((max - min) / props.timestamps.length, 0);
             // console.log(min, max, initialValue, stepSize);
             this.setState({
-                min: min,
-                max: max,
-                initialValue: initialValue,
-                stepSize: stepSize
+                // min: min,
+                max: max
+                // stepSize: stepSize
             });            
         }
+    }
+
+    sliderChanged(event, index) {
+        console.log('slider:', index);
+        // console.log('slider val in timestamps: ', this.props.timestamps.indexOf(this.props.timestamps[index]) !== -1);
+        this.props.selectTimeDimension(this.props.timestamps[index]);
     }
 
     render() {
         return (
             <Slider
                 style={{marginRight:'35%'}}
-                max={this.state.max}
                 min={this.state.min}
+                max={this.state.max}
                 step={this.state.stepSize}
-                value={this.state.initialValue}
+                value={this.state.initialIndex}
+                onChange={this.sliderChanged.bind(this)}
             />
         );
     }

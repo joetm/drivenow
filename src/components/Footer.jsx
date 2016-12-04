@@ -20,6 +20,11 @@ for (let key in Constants.marker_colors) {
 let Footer = React.createClass({
 // class Footer extends React.Component {
 
+//                <Buttons
+//                   timestamps={this.props.timestamps}
+//                    selectTimeDimension={this.props.selectTimeDimension}
+//                />
+
     render() {
         return (
             <div id="footer">
@@ -28,11 +33,7 @@ let Footer = React.createClass({
                 />
                 <Slider
                     timestamps={this.props.timestamps}
-                />
-                <Buttons
-                    timestamps={this.props.timestamps}
                     selectTimeDimension={this.props.selectTimeDimension}
-                    changeTitle={this.props.changeTitle}
                 />
             </div>
         );
