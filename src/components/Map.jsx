@@ -99,11 +99,6 @@ let Map = React.createClass({
         // add the layer to the map
         this.state.map.addLayer(this.circleGroup);
 
-        // remove loading overlay from sidenav
-        // $('#sidenav-overlay').hide();
-
-        // return this.circleGroup;
-
     },
 
     render() {

@@ -18,6 +18,38 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 
+// see http://stackoverflow.com/a/14853974/426266
+// Warn if overriding existing method
+if(Array.prototype.equals)
+    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
+// attach the .equals method to Array's prototype to call it on any array
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time 
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].equals(array[i]))
+                return false;       
+        }           
+        else if (this[i] != array[i]) { 
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;   
+        }           
+    }       
+    return true;
+}
+// Hide method from for-in loops
+Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+
+
 
 let App = React.createClass({
 // class App extends React.Component {
@@ -43,6 +75,7 @@ let App = React.createClass({
             },
             sideNavVisible: false,
             selectedCar: null,
+            arcs: [],
             toolbarTitle: "Loading..."
         };
     },
@@ -107,6 +140,37 @@ let App = React.createClass({
         }
     },
 
+    drawArcs() {
+        //
+        if (!this.state.activeDimension) {
+            return;
+        }
+
+        let previousPosition = null;
+        let arcs = [];
+        this.state.activeDimension.bottom(Infinity).forEach(function(car){
+            if (!previousPosition) {
+                // init the previous position once
+                previousPosition = [car.latitude, car.longitude];
+            } else {
+                let currentPosition = [car.latitude, car.longitude];
+                if (!currentPosition.equals(previousPosition)) {
+                    arcs.push({from:previousPosition, to:currentPosition});
+                }
+                // update the previous position
+                previousPosition = currentPosition;
+            }
+        });
+        console.log('arcs', arcs);
+
+        if (arcs.length) {
+            arcs.forEach(function(arc) {
+                // draw arc
+                L.Polyline.Arc(arc.from, arc.to).addTo(this.state.map);
+            });
+        }
+    },
+
     timestampToDate(timestamp) {
         const newDate = new Date(timestamp);
         return `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
@@ -122,7 +186,7 @@ let App = React.createClass({
     selectTimeDimension(timestamp) {
         this.changeToolbarTitle(timestamp);
         let dimensions = this.state.dimensions;
-        let activeDim = dimensions.timestampDim.filter(timestamp);
+        const activeDim = dimensions.timestampDim.filter(timestamp);
         dimensions.activeDimension = activeDim;
         this.setState({
             dimensions: dimensions,
@@ -159,6 +223,9 @@ let App = React.createClass({
             sideNavVisible: true,
             selectedCar: dimensions.carIdDim.top(Infinity)
         });
+
+        // draw arcs between the cars
+        this.drawArcs();
     },
 
     closeSideNav() {
@@ -191,6 +258,7 @@ let App = React.createClass({
                       dimension={this.state.activeDimension}
                       cars={this.state.cars}
                       carClick={this.carClick}
+                      arcs={this.state.drawArcs}
                     />
                     <Footer
                       timestamps={this.state.timestamps}
