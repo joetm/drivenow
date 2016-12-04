@@ -1,3 +1,9 @@
 language: node_js
 node_js:
-  - 4
+  - "stable"
+sudo: false
+cache:
+  directories:
+    - node_modules
+script:
+  - ./test/run_travis_tests.sh

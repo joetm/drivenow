@@ -8,12 +8,7 @@ const series = require('async/series');
 const apiconf = require('./config/api.json');
 const log = require('./logger');
 
-
-
 const models = require('./models');
-
-
-
 
 // scrape configuration
 // ----------------------------------------------------
@@ -38,10 +33,9 @@ function clone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
-
 function runScrape() {
-
-    let timestamp = Math.floor(Date.now());
+    //
+    const timestamp = Math.floor(Date.now());
 
     //
     // console.log(json);
@@ -79,7 +73,7 @@ function runScrape() {
             // sqlite only allows one operation at a time
             // hence: operations are executed in series
 
-            let fns = [];
+            const fns = [];
 
             // persist the car types
             // -------------------------
