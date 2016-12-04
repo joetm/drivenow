@@ -80,15 +80,16 @@ function runScrape() {
             // var carTypes = clone(json.carTypes.items);
             fns.push.apply(fns, json.carTypes.items.map(function(ct) {
                 return function(callback) {
-                    models.CarType.findOrCreate({where: {modelIdentifier: ct.modelIdentifier}})
-                    .spread(function(model, created) {
-                        if (created && model) {
-                            log.info('Created cartype: ' + model.modelName);
+                    models.CarType.findById(ct.modelIdentifier).then(function(found){
+                        if (found) {
+                            callback(null);
+                        } else {
+                            models.CarType.create(ct)
+                            .then(function(model) {
+                                log.info('Created cartype: ' + model.modelName);
+                                callback(null);
+                            });
                         }
-                        callback(null);
-                    }).catch(function(error) {
-                        log.error(error, error.index, error.value);
-                        // throw error;
                     });
                 };
             }));
@@ -99,15 +100,16 @@ function runScrape() {
             fns.push.apply(fns, json.chargingStations.items.map(function(cs) {
                 cs.address = cs.address[0]; // string conversion
                 return function(callback) {
-                    models.ChargingStation.findOrCreate({where: {name: cs.name}})
-                    .spread(function(model, created) {
-                        if (created && model) {
-                            log.info('Created charging station: ' + model.name);
+                    models.ChargingStation.findById(cs.name).then(function(found) {
+                        if (found) {
+                            callback(null);
+                        } else {
+                            models.ChargingStation.create(cs)
+                            .then(function(model) {
+                                log.info('Created charging station: ' + model.name);
+                                callback(null);
+                            });
                         }
-                        callback(null);
-                    }).catch(function(error) {
-                        log.error(error, error.index, error.value);
-                        // throw error;
                     });
                 };
             }));
@@ -117,15 +119,16 @@ function runScrape() {
             fns.push.apply(fns, json.petrolStations.items.map(function(ps) {
                 ps.address = ps.address[0]; // string conversion
                 return function(callback) {
-                    models.PetrolStation.findOrCreate({where: {name: ps.name}})
-                    .spread(function(model, created) {
-                        if (created && model) {
-                            log.info('Created petrol station: ' + model.name);
+                    models.PetrolStation.findById(ps.name).then(function(found) {
+                        if (found) {
+                            callback(null);
+                        } else {
+                            models.PetrolStation.create(ps)
+                            .then(function(model) {
+                                log.info('Created petrol station: ' + model.name);
+                                callback(null);
+                            });
                         }
-                        callback(null);
-                    }).catch(function(error) {
-                        log.error(error, error.index, error.value);
-                        // throw error;
                     });
                 };
             }));
@@ -137,15 +140,16 @@ function runScrape() {
                 delete ps.count;
                 delete ps.openingHours;
                 return function(callback) {
-                    models.ParkingSpace.findOrCreate({where: {name: ps.name}})
-                    .spread(function(model, created) {
-                        if (created && model) {
-                            log.info('Created parking space: ' + model.name);
+                    models.ParkingSpace.findById(ps.id).then(function(found) {
+                        if (found) {
+                            callback(null);
+                        } else {
+                            models.ParkingSpace.create(ps)
+                            .then(function(model) {
+                                log.info('Created parking space: ' + model.name);
+                                callback(null);
+                            });
                         }
-                        callback(null);
-                    }).catch(function(error) {
-                        log.error(error, error.index, error.value);
-                        // throw error;
                     });
                 };
             }));
@@ -171,20 +175,23 @@ function runScrape() {
                     id: c.id,
                     name: c.name,
                     modelIdentifier: c.modelIdentifier,
-                    data: JSON.stringify(filteredCar)
+                    data: JSON.stringify(filteredCar),
+                    createdAt: new Date(),
+                    updatedAt: new Date()
                 };
             });
             fns.push.apply(fns, cars.map(function(c) {
                 return function(callback) {
-                    models.Car.findOrCreate({where: {id: c.id}})
-                    .spread(function(model, created) {
-                        if (model && created) {
-                            log.info('Created car ' + model.name);
+                    models.Car.findById(c.id).then(function(found) {
+                        if (found) {
+                            callback(null);
+                        } else {
+                            models.Car.create(c)
+                            .then(function(model) {
+                                log.info('Created car: ' + model.name);
+                                callback(null);
+                            });
                         }
-                        callback(null);
-                    }).catch(function(error) {
-                        log.error(error, error.index, error.value);
-                        // throw error;
                     });
                 };
             }));
