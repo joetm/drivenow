@@ -4,9 +4,9 @@ import { render } from 'react-dom'
 import 'whatwg-fetch';
 import crossfilter from "crossfilter";
 
+import Map from './Map.jsx';
 import Footer from './Footer.jsx';
 import SideNav from './SideNav.jsx';
-import MapControl from './MapControl.jsx';
 
 
 const emptyCrossfilter = crossfilter([]);
@@ -98,16 +98,63 @@ let App = React.createClass({
         this.setState({activeDimension: this.state.dimensions.timestampDim.filter(timestamp)});
     },
 
+    carClick(e) {
+
+        console.log('car click:', e.target.options.carId);
+
+        let carId = e.target.options.carId;
+
+        let dimensions = this.state.dimensions;
+
+        // reset the filters
+        dimensions.timestampDim.filterAll();
+        dimensions.carIdDim.filterAll();
+
+        // filter the data by the carId
+        // console.log('carIdDim:', carIdDim.top(Infinity));
+        dimensions.carIdDim.filter(carId);
+
+        // // update the details box contents
+        // $detailsList = $('ul#details');
+        // // reset
+        // $detailsList.html('');
+        // let values = carIdDim.top(Infinity);
+        // // console.log('values', values);
+        // let detailsContent = [];
+        // if (values.length > 0) {
+        //     $.each(values[0], function(key, val) {
+        //         // skip some of the key-value pairs
+        //         // if (['fuelLevel', 'fuelLevelInPercent', 'estimatedRange', 'isInParkingSpace', 'parkingSpaceId', 'isCharging', 'innerCleanliness', 'latitude', 'longitude', 'timestamp', 'createdAt', 'updatedAt'].indexOf(key) > -1) {
+        //         // if (['carId'].indexOf(key) === -1) {
+        //         //     return true; // continue
+        //         // }
+        //         detailsContent.push(`<li>${key}: ${val}</li>`);
+        //     });
+        // }
+        // $detailsList.append(detailsContent);
+
+        // // show the side-nav
+        // $('#slide-out-btn').sideNav('show');
+        // $('#slide-out').data('sidenav-open', true);
+
+        // set the new dimension state
+        this.setState({
+            activeDimension: dimensions.carIdDim,
+            dimensions: dimensions
+        });
+    },
+
     render() {
         return (
              <div id="wrap">
                 <SideNav
                   key={'SideNav'}
                 />
-                <MapControl
+                <Map
                   key={'MapControl'}
                   dimension={this.state.activeDimension}
                   cars={this.state.cars}
+                  carClick={this.carClick}
                 />
                 <Footer
                   key={'Footer'}

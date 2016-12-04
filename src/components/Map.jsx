@@ -78,7 +78,7 @@ let Map = React.createClass({
                     color: Constants.marker_colors[car.innerCleanliness],
                     fillColor: Constants.marker_colors[car.innerCleanliness]
                 })
-                // .on('click', carClick)
+                .on('click', _this.props.carClick)
                 // .bindPopup(popup)
 
             markers.push(marker);
