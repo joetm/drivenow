@@ -3,6 +3,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import path from 'path';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const ENV = process.env.NODE_ENV || 'development';
 
@@ -19,7 +20,7 @@ module.exports = {
 		publicPath: '/',
 		filename: 'bundle.js'
 	},
-
+    devtool: CSS_MAPS ? "inline-sourcemap" : null,
 	resolve: {
 		extensions: ['', '.jsx', '.js', '.json', '.scss', '.css'],
 		modulesDirectories: [
@@ -28,7 +29,7 @@ module.exports = {
 		],
 		alias: {
 			components: path.resolve(__dirname, "src/components"), // used for tests
-			style: path.resolve(__dirname, "src/style"),
+			// cssDir: path.resolve(__dirname, "src/css"),
 			// 'react': 'preact-compat',
 			// 'react-dom': 'preact-compat',
             // jquery: path.resolve(__dirname, 'node_modules/jquery/dist/jquery.min.js')
@@ -62,11 +63,22 @@ module.exports = {
 			// 		`sass?sourceMap&outputStyle=expanded` // =${CSS_MAPS}
 			// 	].join('!'))
 			// },
-	        {
-  	          test: /\.s?css$/,
-	          exclude: [/node_modules/],
-	          loader: ExtractTextPlugin.extract("style", "css?sourceMap!postcss!sass?sourceMap&outputStyle=expanded")
-	        },
+	        // {
+  	          // test: /\.css$/,
+	          // exclude: [/node_modules/],
+	          // loader: ExtractTextPlugin.extract("style", "css?sourceMap!postcss!sass?sourceMap&outputStyle=expanded")
+
+	          	// test: /\.css$/,
+	          	// loader: "style-loader!css-loader"
+	        // },
+{
+	test: /\.css$/,
+	loader: ExtractTextPlugin.extract("style-loader","css-loader")
+},
+{
+  test: /\.scss$/,
+  loader: ExtractTextPlugin.extract("style","css!sass")
+},
 			{
 				test: /\.json$/,
 				loader: 'json'

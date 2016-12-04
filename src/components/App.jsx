@@ -36,7 +36,7 @@ let App = React.createClass({
         };
     },
 
-    componentDidMount() {
+    componentWillMount() {
         //
         let _this = this;
 

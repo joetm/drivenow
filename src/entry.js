@@ -1,7 +1,9 @@
+
 // CSS
 
-// import "materialize-css/dist/css/materialize.min.css";
-import "./style/style.scss";
+import "../node_modules/leaflet/dist/leaflet.css";
+import "../node_modules/materialize-css/dist/css/materialize.css";
+import "./css/style.scss";
 
 // JS
 
