@@ -2,18 +2,25 @@ import React from 'react';
 import { render } from 'react-dom'
 
 import 'whatwg-fetch';
+
 import crossfilter from "crossfilter";
+const emptyCrossfilter = crossfilter([]);
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import Map from './Map.jsx';
 import Footer from './Footer.jsx';
 import SideNav from './SideNav.jsx';
 
 
-const emptyCrossfilter = crossfilter([]);
+// Needed for onTouchTap
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 
 let App = React.createClass({
 // class App extends React.Component {
+
 
     getInitialState() {
         // initialise the state (once)
@@ -32,7 +39,9 @@ let App = React.createClass({
                 locationGroup: emptyCrossfilter,
                 timestampGroup: emptyCrossfilter,
                 allGroup: emptyCrossfilter
-            }
+            },
+            sideNavVisible: false,
+            selectedCar: null
         };
     },
 
@@ -98,15 +107,20 @@ let App = React.createClass({
         this.setState({activeDimension: this.state.dimensions.timestampDim.filter(timestamp)});
     },
 
+    // resetLayers(dimensions) {
+    //     // reset the filters
+    //     dimensions.timestampDim.filterAll();
+    //     dimensions.carIdDim.filterAll();
+    // }
+
     carClick(e) {
 
         console.log('car click:', e.target.options.carId);
 
-        let carId = e.target.options.carId;
+        const carId = e.target.options.carId;
 
         let dimensions = this.state.dimensions;
 
-        // reset the filters
         dimensions.timestampDim.filterAll();
         dimensions.carIdDim.filterAll();
 
@@ -114,41 +128,38 @@ let App = React.createClass({
         // console.log('carIdDim:', carIdDim.top(Infinity));
         dimensions.carIdDim.filter(carId);
 
-        // // update the details box contents
-        // $detailsList = $('ul#details');
-        // // reset
-        // $detailsList.html('');
-        // let values = carIdDim.top(Infinity);
-        // // console.log('values', values);
-        // let detailsContent = [];
-        // if (values.length > 0) {
-        //     $.each(values[0], function(key, val) {
-        //         // skip some of the key-value pairs
-        //         // if (['fuelLevel', 'fuelLevelInPercent', 'estimatedRange', 'isInParkingSpace', 'parkingSpaceId', 'isCharging', 'innerCleanliness', 'latitude', 'longitude', 'timestamp', 'createdAt', 'updatedAt'].indexOf(key) > -1) {
-        //         // if (['carId'].indexOf(key) === -1) {
-        //         //     return true; // continue
-        //         // }
-        //         detailsContent.push(`<li>${key}: ${val}</li>`);
-        //     });
-        // }
-        // $detailsList.append(detailsContent);
-
-        // // show the side-nav
-        // $('#slide-out-btn').sideNav('show');
-        // $('#slide-out').data('sidenav-open', true);
-
         // set the new dimension state
         this.setState({
             activeDimension: dimensions.carIdDim,
-            dimensions: dimensions
+            dimensions: dimensions,
+            sideNavVisible: true,
+            selectedCar: dimensions.carIdDim.top(Infinity)
+        });
+    },
+
+    closeSideNav() {
+        // reset layer
+        let dimensions = this.state.dimensions;
+        dimensions.timestampDim.filterAll();
+        dimensions.carIdDim.filterAll();
+
+        this.setState({
+            dimensions: dimensions,
+            activeDimension: dimensions.timestampDim.filter(this.state.timestamps[0]),
+            sideNavVisible: false,
+            selectedCar: null
         });
     },
 
     render() {
         return (
-             <div id="wrap">
+             <MuiThemeProvider>
+                <div id="wrap">
                 <SideNav
                   key={'SideNav'}
+                  closeSideNav={this.closeSideNav}
+                  visible={this.state.sideNavVisible}
+                  carData={this.state.selectedCar}
                 />
                 <Map
                   key={'MapControl'}
@@ -161,7 +172,8 @@ let App = React.createClass({
                   timestamps={this.state.timestamps}
                   selectTimeDimension={this.selectTimeDimension}
                 />
-            </div>
+                </div>
+            </MuiThemeProvider>
         );
     }
 

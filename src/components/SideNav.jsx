@@ -1,17 +1,49 @@
 import React from 'react';
 
+import Drawer from 'material-ui/Drawer';
+// import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 class SideNav extends React.Component {
-    render() {
-        return (
-            <div id="slide-out" className="side-nav" data-sidenav-open="false">
-                <a href="#" id="slide-out-btn" className="button-collapse" data-activates="slide-out">
-                	<i className="material-icons">close</i>
-                </a>
-                <ul id="details"></ul>
-            </div>
-        );
+
+  constructor(props) {
+    super(props);
+    this.state = {open: false};
+  }
+
+  // handleToggle = () => this.setState({open: !this.state.open});
+
+//onTouchTap={this.handleToggle}
+
+  render() {
+
+    if (this.props.carData) {
+        console.log(this.props.carData);
+
     }
+
+    return (
+      <div>
+        <Drawer open={this.props.visible} style={{zIndex:9999}}>
+            <RaisedButton
+                label="Close"
+                onTouchTap={this.props.closeSideNav}
+            />
+            {
+                this.props.carData ?
+                    (
+                        <ul style={{padding:'0 1em'}}>
+                            <li>ID: {this.props.carData[0].carId}</li>
+                        </ul>
+                    )
+                    : ""
+            }
+            
+        </Drawer>
+      </div>
+    );
+  }
 }
 
-module.exports = SideNav;
+export default SideNav;
