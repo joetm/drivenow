@@ -102,10 +102,21 @@ let Map = React.createClass({
     },
 
     render() {
+        //
+        let _this = this;
 
         // draw markers
         if (this.props.dimension.top !== undefined) {
             this.drawMarkers(this.props.dimension);
+        }
+
+        console.log('this.state.map', this.state.map);
+
+        // draw the arcs
+        if (this.props.arcs.length) {
+            this.props.arcs.forEach(function(arc) {
+                L.Polyline.Arc(arc.from, arc.to).addTo(_this.state.map);
+            });
         }
 
         return (

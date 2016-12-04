@@ -16,7 +16,7 @@ class LegendEntry extends React.Component {
 class Legend extends React.Component {
     render() {
         return (
-            <div id="legend">
+            <div id="legend" style={{height:'auto'}}>
                 <LegendEntry title="VERY_CLEAN" color="#ABEBC6" />
                 <LegendEntry title="CLEAN" color="#58D68D" />
                 <LegendEntry title="REGULAR" color="#F39C12" />

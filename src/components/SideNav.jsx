@@ -19,7 +19,10 @@ class SideNav extends React.Component {
   render() {
 
     if (this.props.carData) {
-        console.log(this.props.carData);
+        //console.log(this.props.carData);
+
+
+
 
     }
 

@@ -142,8 +142,6 @@ let App = React.createClass({
 
     drawArcs() {
         //
-        let _this = this;
-
         if (!this.state.activeDimension) {
             return;
         }
@@ -163,13 +161,11 @@ let App = React.createClass({
                 previousPosition = currentPosition;
             }
         });
+
         console.log('arcs', arcs);
 
         if (arcs.length) {
-            arcs.forEach(function(carArc) {
-                // draw arc
-                L.Polyline.Arc(carArc.from, carArc.to).addTo(_this.state.map);
-            });
+            this.setState({arcs});
         }
     },
 
@@ -260,7 +256,7 @@ let App = React.createClass({
                       dimension={this.state.activeDimension}
                       cars={this.state.cars}
                       carClick={this.carClick}
-                      arcs={this.state.drawArcs}
+                      arcs={this.state.arcs}
                     />
                     <Footer
                       timestamps={this.state.timestamps}
