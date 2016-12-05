@@ -12,6 +12,7 @@ import Map from './Map.jsx';
 import Footer from './Footer.jsx';
 import SideNav from './SideNav.jsx';
 import Toolbar from './Toolbar.jsx';
+import Loader from './Loader.jsx';
 
 import Constants from "./Constants.jsx";
 
@@ -56,7 +57,6 @@ Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 let App = React.createClass({
 // class App extends React.Component {
 
-
     getInitialState() {
         // initialise the state (once)
         return {
@@ -78,6 +78,7 @@ let App = React.createClass({
             sideNavVisible: false,
             selectedCar: null,
             arcs: [],
+            loading: true,
             toolbarTitle: "Loading..."
         };
     },
@@ -127,6 +128,7 @@ let App = React.createClass({
                 dimensions: dimensions,
                 dimensionGroups: dimensionGroups,
                 timestamps: timestamps,
+                loading: false,
                 toolbarTitle: `Showing: ${_this.timestampToDate(activeTimestamp)}`
             });
 
@@ -250,6 +252,9 @@ let App = React.createClass({
         return (
              <MuiThemeProvider>
                 <div id="wrap">
+                    <Loader
+                        visible={this.state.loading}
+                    />
                     <Toolbar
                         title={this.state.toolbarTitle}
                     />

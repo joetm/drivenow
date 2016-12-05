@@ -119,10 +119,10 @@ module.exports = {
 			'process.env': JSON.stringify({NODE_ENV: ENV})
 		}),
 		new HtmlWebpackPlugin({
-			template: './src/index.html'
-			// minify: {
-			// 	collapseWhitespace: true
-			// }
+			template: './src/index.html',
+			minify: {
+				collapseWhitespace: true
+			}
 		})
 	]).concat(ENV==='production' ? [
 		new webpack.optimize.OccurenceOrderPlugin()

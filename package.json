@@ -55,6 +55,7 @@
     "react-dom": "^15.4.1",
     "react-flexbox-grid": "^0.10.2",
     "react-leaflet": "^1.0.0-rc.3",
+    "react-loading": "0.0.9",
     "react-tap-event-plugin": "^2.0.1",
     "sequelize": "^3.24.8",
     "sqlite3": "^3.1.8",
