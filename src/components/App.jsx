@@ -13,6 +13,8 @@ import Footer from './Footer.jsx';
 import SideNav from './SideNav.jsx';
 import Toolbar from './Toolbar.jsx';
 
+import Constants from "./Constants.jsx";
+
 // Needed for onTouchTap
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -154,23 +156,21 @@ let App = React.createClass({
                 previousPosition = [car.latitude, car.longitude];
             } else {
                 let currentPosition = [car.latitude, car.longitude];
+                let arcColor = Constants.marker_colors[car.innerCleanliness];
                 if (!currentPosition.equals(previousPosition)) {
-                    arcs.push({from:previousPosition, to:currentPosition});
+                    arcs.push({from:previousPosition, to:currentPosition, color:arcColor});
                 }
                 // update the previous position
                 previousPosition = currentPosition;
             }
         });
-
         // console.log('arcs', arcs);
-
         if (arcs.length) {
             this.setState({arcs});
         }
     },
 
     resetArcs() {
-        console.log('reset arcs');
         this.setState({arcs: []});
     },
 
@@ -241,11 +241,9 @@ let App = React.createClass({
             dimensions: dimensions,
             activeDimension: dimensions.timestampDim.filter(this.state.timestamps[0]),
             sideNavVisible: false,
-            selectedCar: null
+            selectedCar: null,
+            arcs: []
         });
-
-        // reset arcs
-        this.resetArcs();
     },
 
     render() {

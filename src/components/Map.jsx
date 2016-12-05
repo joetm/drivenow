@@ -100,7 +100,7 @@ let Map = React.createClass({
         }
         let arcs = [];
         this.props.arcs.forEach(function(arc) {
-            arcs.push(L.Polyline.Arc(arc.from, arc.to));
+            arcs.push(L.Polyline.Arc(arc.from, arc.to, {color: arc.color}));
         });
         this.arcGroup = L.featureGroup(arcs);
         this.state.map.addLayer(this.arcGroup);
