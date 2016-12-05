@@ -32,7 +32,7 @@ class SideNav extends React.Component {
             open={this.props.visible}
             openSecondary={true}
             style={{zIndex:9999}}
-            containerStyle={{marginTop:'56px',marginBottom:'56px'}}
+            containerStyle={{height:'auto',marginTop:'56px',marginBottom:'56px'}}
         >
             <RaisedButton
                 label="Close"

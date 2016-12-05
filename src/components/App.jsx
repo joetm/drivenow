@@ -169,6 +169,11 @@ let App = React.createClass({
         }
     },
 
+    resetArcs() {
+        console.log('reset arcs');
+        this.setState({arcs: []});
+    },
+
     timestampToDate(timestamp) {
         const newDate = new Date(timestamp);
         return `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
@@ -238,6 +243,9 @@ let App = React.createClass({
             sideNavVisible: false,
             selectedCar: null
         });
+
+        // reset arcs
+        this.resetArcs();
     },
 
     render() {
