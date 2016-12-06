@@ -181,16 +181,17 @@ let App = React.createClass({
 
         let dimensions = this.state.dimensions;
 
-        // reset any of the filters
-        // dimensions.timestampDim.filterAll();
-        // dimensions.carIdDim.filterAll();
-
-        // filter the data by the cleanliness
-        dimensions.cleanlinessDim.filter(cleanliness);
+        if (cleanliness === 'RESET') {
+            // reset filters
+            dimensions.cleanlinessDim.filterAll();
+        } else {
+            // filter the data by the cleanliness
+            dimensions.cleanlinessDim.filter(cleanliness);
+        }
 
         // set the new dimension state
         this.setState({
-            activeDimension: dimensions.cleanlinessDim,
+            // activeDimension: dimensions.cleanlinessDim,
             dimensions: dimensions
         });
     },
