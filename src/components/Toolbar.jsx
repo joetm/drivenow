@@ -42,6 +42,7 @@ export default class AppToolbar extends React.Component {
           <ToolbarTitle text="Berlin" />
           <ToolbarSeparator />
           <Legend
+              filterForCleanliness={this.props.filterForCleanliness}
               cleanlinessLevels={colorKeys}
           />
           <ToolbarSeparator />

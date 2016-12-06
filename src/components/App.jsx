@@ -176,6 +176,25 @@ let App = React.createClass({
         this.setState({arcs: []});
     },
 
+    filterForCleanliness(cleanliness) {
+        console.log(`filter for cleanliness: ${cleanliness}`);
+
+        let dimensions = this.state.dimensions;
+
+        // reset any of the filters
+        // dimensions.timestampDim.filterAll();
+        // dimensions.carIdDim.filterAll();
+
+        // filter the data by the cleanliness
+        dimensions.cleanlinessDim.filter(cleanliness);
+
+        // set the new dimension state
+        this.setState({
+            activeDimension: dimensions.cleanlinessDim,
+            dimensions: dimensions
+        });
+    },
+
     timestampToDate(timestamp) {
         const newDate = new Date(timestamp);
         return `${newDate.getFullYear()}-${newDate.getMonth()+1}-${newDate.getDate()} ${newDate.getHours()}:${newDate.getMinutes()}:${newDate.getSeconds()}`;
@@ -256,6 +275,7 @@ let App = React.createClass({
                         visible={this.state.loading}
                     />
                     <Toolbar
+                        filterForCleanliness={this.filterForCleanliness}
                         title={this.state.toolbarTitle}
                     />
                     <SideNav
