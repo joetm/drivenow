@@ -3,6 +3,7 @@ BAK
 API-details.txt
 .DS_Store
 *.log
+./.coveralls.yml
 coverage
 .idea
 npm-debug.log
