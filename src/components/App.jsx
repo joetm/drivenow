@@ -181,12 +181,13 @@ let App = React.createClass({
 
         let dimensions = this.state.dimensions;
 
-        if (cleanliness === 'RESET') {
-            // reset filters
-            dimensions.cleanlinessDim.filterAll();
-        } else {
+        // check for 'RESET'
+        if (Constants.marker_colors[cleanliness] !== undefined) {
             // filter the data by the cleanliness
             dimensions.cleanlinessDim.filter(cleanliness);
+        } else {
+            // reset filters
+            dimensions.cleanlinessDim.filterAll();
         }
 
         // set the new dimension state
