@@ -114,7 +114,7 @@ let Map = React.createClass({
         }
 
         // draw the arcs
-        if (this.props.arcs.length) {
+        if (this.state.map) {
             this.drawArcs();
         }
 
