@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/joetm/drivenow.svg?branch=master)](https://travis-ci.org/joetm/drivenow)
+[![Coverage Status](https://coveralls.io/repos/github/joetm/drivenow/badge.svg)](https://coveralls.io/github/joetm/drivenow)
+
 # Who called the Clean-up Crew?
 
 ![Screenshot](https://raw.githubusercontent.com/joetm/drivenow/master/screenshot.jpg "Screenshot")
