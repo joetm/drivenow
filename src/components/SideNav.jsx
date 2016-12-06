@@ -4,6 +4,8 @@ import Drawer from 'material-ui/Drawer';
 // import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import Stepper from './Stepper.jsx';
+
 
 class SideNav extends React.Component {
 
@@ -47,7 +49,11 @@ class SideNav extends React.Component {
                     )
                     : ""
             }
-            
+
+            <Stepper
+                carData={this.props.carData}
+            />
+
         </Drawer>
       </div>
     );
