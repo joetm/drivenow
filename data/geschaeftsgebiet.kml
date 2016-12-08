@@ -1,0 +1,1046 @@
+<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2">
+   <Document>
+      <name>CS-BER_PROD.kml</name>
+      <StyleMap id="dn_poi">
+         <Pair>
+            <key>normal</key>
+            <styleUrl>#dn_poi_nm</styleUrl>
+         </Pair>
+         <Pair>
+            <key>highlight</key>
+            <styleUrl>#dn_poi_hl</styleUrl>
+         </Pair>
+      </StyleMap>
+      <Style id="dn_poi_nm"/>
+      <Style id="dn_poi_hl">
+         <IconStyle>
+            <scale>1.3</scale>
+         </IconStyle>
+      </Style>
+     
+	    <StyleMap id="dn_forbidden">
+         <Pair>
+            <key>normal</key>
+            <styleUrl>#dn_forbidden_nm</styleUrl>
+         </Pair>
+         <Pair>
+            <key>highlight</key>
+            <styleUrl>#dn_forbidden_nm</styleUrl>
+         </Pair>
+      </StyleMap>
+      <Style id="dn_forbidden_nm">
+         <LineStyle>
+            <color>4c0000ff</color>
+         </LineStyle>
+         <PolyStyle>
+            <color>4c0000ff</color>
+         </PolyStyle>
+      </Style>
+      <StyleMap id="dn_allowed">
+         <Pair>
+            <key>normal</key>
+            <styleUrl>#dn_allowed_nm</styleUrl>
+         </Pair>
+         <Pair>
+            <key>highlight</key>
+            <styleUrl>#dn_allowed_nm</styleUrl>
+         </Pair>
+      </StyleMap>
+      <Style id="dn_allowed_nm">
+         <LineStyle>
+            <color>4c00ff00</color>
+         </LineStyle>
+         <PolyStyle>
+            <color>4c00ff00</color>
+         </PolyStyle>
+      </Style>
+      <StyleMap id="dn_extended">
+         <Pair>
+            <key>normal</key>
+            <styleUrl>#dn_extended_nm</styleUrl>
+         </Pair>
+         <Pair>
+            <key>highlight</key>
+            <styleUrl>#dn_extended_nm</styleUrl>
+         </Pair>
+      </StyleMap>
+      <Style id="dn_extended_nm">
+         <LineStyle>
+            <color>dd00ffff</color>
+         </LineStyle>
+         <PolyStyle>
+            <color>443BEBFF</color>
+         </PolyStyle>
+      </Style>
+	   
+      <Folder>
+         <name>PROD</name>
+         <Folder>
+            <name>CS_BER</name>
+            
+            <Folder>
+               <name>forbiddenParkingAreas</name>
+               <Placemark>
+                  <description>{"name":"Hasenheide","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.421221,52.487096,0 13.423035,52.486579,0 13.423013,52.485554,0 13.421098,52.485596,0 13.421221,52.487096,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Seydlitzstraße Vabali Spa","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.360748,52.527537,0 13.361306,52.527722,0 13.361703,52.527265,0 13.36114,52.527088,0 13.360748,52.527537,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Uni PP Moabit","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.322395,52.524531,0 13.322626,52.524214,0 13.323105,52.524298,0 13.323675,52.524265,0 13.324182,52.524193,0 13.324597,52.524037,0 13.324935,52.524331,0 13.324344,52.524498,0 13.323651,52.524592,0 13.323002,52.524589,0 13.322395,52.524531,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"type":"CITY","zoneId":"@BER","name":"PH Schloßstraße"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.320622,52.457104,0 13.321513,52.458023,0 13.320987,52.45819,0 13.320821,52.458033,0 13.319748,52.458402,0 13.319035,52.457667,0 13.320622,52.457104,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Caroline-von-Humboldt-Weg Verkehrsberuhigter Bereich","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.39765,52.514517,0 13.398831,52.513134,0 13.398979,52.513184,0 13.397812,52.514562,0 13.39765,52.514517,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"HBF Europaplatz","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.370664,52.525976,0 13.369028,52.525966,0 13.369023,52.525905,0 13.368258,52.525907,0 13.368258,52.525765,0 13.370681,52.525768,0 13.370664,52.525976,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Eldenaer Straße REWE PP","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.463941,52.520207,0 13.461514,52.520655,0 13.461282,52.520157,0 13.461927,52.520033,0 13.46225,52.519971,0 13.462619,52.519949,0 13.46328,52.51998,0 13.463641,52.520015,0 13.463909,52.520043,0 13.463941,52.520207,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Gelände Flughafen Tempelhof","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.401035,52.483512,0 13.400467,52.481836,0 13.399174,52.482204,0 13.398787,52.482294,0 13.398445,52.482373,0 13.397899,52.482415,0 13.39719,52.482446,0 13.396359,52.482433,0 13.394911,52.482301,0 13.393232,52.481988,0 13.393458,52.483922,0 13.395982,52.48386,0 13.398239,52.483799,0 13.399688,52.483699,0 13.400565,52.483606,0 13.401035,52.483512,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"PH Marktstraße","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.473487,52.503413,0 13.473401,52.503334,0 13.473262,52.503334,0 13.473015,52.503408,0 13.472489,52.504133,0 13.472768,52.504506,0 13.472929,52.5049,0 13.474297,52.504568,0 13.473487,52.503413,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"type":"CITY","zoneId":"@BER","name":"Oberlandstraße Hinterhof"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.412359,52.464423,0 13.413223,52.46526,0 13.408384,52.464815,0 13.408213,52.464027,0 13.412359,52.464423,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Südkreuz P1","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.364085,52.475597,0 13.363838,52.47514,0 13.363967,52.475056,0 13.364257,52.475147,0 13.36445,52.475513,0 13.364085,52.475597,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Südkreuz Busbahnhof","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.363613,52.476761,0 13.363602,52.47644,0 13.363152,52.476006,0 13.364149,52.475742,0 13.364418,52.476116,0 13.364042,52.476711,0 13.363613,52.476761,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Privatstraße Am Pankepark","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.371689,52.533234,0 13.371761,52.533169,0 13.372872,52.533592,0 13.37347,52.533096,0 13.373446,52.533031,0 13.372124,52.532539,0 13.37215,52.532467,0 13.373671,52.533043,0 13.372907,52.533691,0 13.371689,52.533234,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Anwohnerparkzone 3","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.401196,52.514198,0 13.401346,52.514263,0 13.402805,52.512825,0 13.402569,52.512722,0 13.401196,52.514198,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Anwohnerparkzone 2","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.345985,52.508816,0 13.346028,52.508987,0 13.349311,52.508633,0 13.349161,52.508476,0 13.345985,52.508816,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Betriebsgelaende der ARWE","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.325032,52.540581,0 13.325601,52.54105,0 13.325016,52.541298,0 13.324597,52.540951,0 13.323975,52.541206,0 13.323814,52.54108,0 13.325032,52.540581,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Radisson Hotel","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.400971,52.520695,0 13.40287,52.521332,0 13.40465,52.520039,0 13.40246,52.518951,0 13.400971,52.520695,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"zoneId":"@BER","name":"Linienstrasse","type":"CITY"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.387892,52.526293,0 13.388194,52.526337,0 13.388309,52.526354,0 13.388322,52.526298,0 13.38825,52.526213,0 13.388478,52.526173,0 13.388493,52.52624,0 13.388873,52.526367,0 13.392887,52.527418,0 13.392777,52.527525,0 13.389035,52.526491,0 13.387429,52.526398,0 13.387892,52.526293,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Auguststrasse","zoneId":"@BER","type":"CITY"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.390393,52.525736,0 13.393511,52.526319,0 13.393431,52.52645,0 13.390001,52.525823,0 13.390393,52.525736,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Krausnickstr.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.395631,52.524387,0 13.396266,52.524931,0 13.398861,52.525365,0 13.398775,52.52555,0 13.396076,52.525096,0 13.395356,52.524464,0 13.395631,52.524387,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Sophienstr.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.39854,52.526448,0 13.400527,52.525713,0 13.401823,52.525281,0 13.403161,52.524963,0 13.403217,52.525073,0 13.401909,52.52538,0 13.400621,52.525803,0 13.398485,52.526604,0 13.39854,52.526448,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Gipsstr. &amp;amp; Joachimstr.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.399183,52.527253,0 13.403517,52.526044,0 13.403508,52.526188,0 13.401478,52.526754,0 13.400224,52.528658,0 13.400228,52.528863,0 13.399942,52.528862,0 13.39997,52.52863,0 13.4012,52.526877,0 13.401128,52.526847,0 13.399445,52.527312,0 13.399333,52.527417,0 13.398912,52.52733,0 13.399183,52.527253,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Roch-Strasse","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.404251,52.521887,0 13.404476,52.521734,0 13.405046,52.521988,0 13.405455,52.522157,0 13.405929,52.522334,0 13.406633,52.522723,0 13.406487,52.522834,0 13.405432,52.522366,0 13.404251,52.521887,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Max-Beer-Strasse","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.407352,52.523463,0 13.408114,52.524552,0 13.408991,52.526794,0 13.409581,52.528147,0 13.409989,52.528082,0 13.409852,52.528275,0 13.409218,52.52837,0 13.408909,52.527976,0 13.40919,52.527911,0 13.40872,52.526805,0 13.407815,52.524651,0 13.4071,52.523533,0 13.407352,52.523463,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Almstadtstr.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.40908,52.524241,0 13.409804,52.526257,0 13.410328,52.527686,0 13.410153,52.527867,0 13.409698,52.526602,0 13.408851,52.524292,0 13.40908,52.524241,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Linienstr. + Zolastr.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.410634,52.527845,0 13.413813,52.526921,0 13.414123,52.527033,0 13.411604,52.527802,0 13.41193,52.528124,0 13.411668,52.528192,0 13.411294,52.527862,0 13.410471,52.528129,0 13.410634,52.527845,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Steinstr.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.407305,52.526252,0 13.403471,52.52736,0 13.403466,52.527491,0 13.404574,52.527173,0 13.407384,52.526358,0 13.407305,52.526252,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Mulackstr.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.403419,52.527748,0 13.404708,52.527521,0 13.40653,52.527188,0 13.407862,52.526947,0 13.407929,52.527043,0 13.406534,52.527306,0 13.404627,52.527646,0 13.403405,52.527864,0 13.403419,52.527748,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Ruckerstr.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.406697,52.527281,0 13.407537,52.528402,0 13.407337,52.528439,0 13.40654,52.527311,0 13.406697,52.527281,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Kleine Rosenthaler str.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.403405,52.527759,0 13.40325,52.527751,0 13.403028,52.528932,0 13.403223,52.528932,0 13.403405,52.527759,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Gormannstrasse","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.40401,52.526085,0 13.404514,52.527048,0 13.404413,52.527226,0 13.404552,52.527536,0 13.404801,52.527636,0 13.405321,52.528685,0 13.405118,52.528714,0 13.404637,52.527652,0 13.404716,52.52751,0 13.40456,52.527191,0 13.404345,52.527096,0 13.403861,52.526137,0 13.40401,52.526085,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Wadzeckstrasse [1]","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.417496,52.524496,0 13.41765,52.524611,0 13.417835,52.524544,0 13.41799,52.524669,0 13.416909,52.525142,0 13.416804,52.52506,0 13.416383,52.525227,0 13.41618,52.525059,0 13.417496,52.524496,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Wadzeckstrasse [2]","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.418524,52.524428,0 13.419203,52.525027,0 13.418738,52.525232,0 13.418056,52.524615,0 13.418524,52.524428,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"kindergarden","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.421069,52.523546,0 13.42141,52.523446,0 13.421877,52.524001,0 13.421532,52.524115,0 13.421069,52.523546,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Berolinastr.","type":"CITY","zoneId":"@BER"}</description>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.425357,52.521319,0 13.42526,52.521208,0 13.425396,52.521166,0 13.425882,52.521753,0 13.425497,52.521873,0 13.425251,52.521583,0 13.42315,52.522191,0 13.424173,52.523479,0 13.423918,52.523556,0 13.422872,52.522304,0 13.420367,52.523015,0 13.420254,52.522877,0 13.425357,52.521319,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Weydemeyer strasse[1]","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.426243,52.52288,0 13.428349,52.522258,0 13.428154,52.522087,0 13.427873,52.522096,0 13.427557,52.521918,0 13.426285,52.520268,0 13.426476,52.520223,0 13.427802,52.521813,0 13.429205,52.521194,0 13.429283,52.521407,0 13.428813,52.521579,0 13.428857,52.522228,0 13.42867,52.522406,0 13.426786,52.522917,0 13.426323,52.522987,0 13.426243,52.52288,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Weydemeyer strasse [2]","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.428515,52.519502,0 13.428608,52.519701,0 13.428274,52.519682,0 13.427499,52.51969,0 13.42391,52.52076,0 13.422412,52.521187,0 13.421332,52.521508,0 13.421978,52.522333,0 13.421814,52.522385,0 13.42112,52.52156,0 13.419433,52.52206,0 13.419335,52.521931,0 13.421999,52.521122,0 13.422407,52.521069,0 13.423822,52.520636,0 13.426798,52.519687,0 13.427311,52.519506,0 13.428515,52.519502,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Alexanderstrasse [1]","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.416693,52.520186,0 13.417674,52.519851,0 13.4178,52.519738,0 13.417919,52.519631,0 13.418243,52.519166,0 13.418631,52.518686,0 13.418823,52.518732,0 13.418419,52.519316,0 13.418143,52.519716,0 13.417912,52.519933,0 13.417588,52.520085,0 13.416813,52.520347,0 13.416693,52.520186,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Jacobystr.","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.417391,52.520796,0 13.418743,52.520347,0 13.420279,52.51987,0 13.421785,52.519463,0 13.421883,52.519582,0 13.418674,52.520562,0 13.417161,52.521023,0 13.417391,52.520796,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Alexanderstrasse [2]","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.418966,52.518252,0 13.4192,52.517939,0 13.419318,52.517923,0 13.419493,52.51761,0 13.419254,52.517306,0 13.419404,52.517261,0 13.41964,52.517539,0 13.419628,52.517632,0 13.419165,52.518303,0 13.418966,52.518252,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Wallnerstrasse","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.423834,52.514192,0 13.425517,52.515968,0 13.425175,52.516108,0 13.423741,52.514443,0 13.420231,52.51562,0 13.4201,52.515465,0 13.423834,52.514192,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"type":"CITY","zoneId":"@BER","name":"Ifflandstr."}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.421518,52.516056,0 13.421757,52.515974,0 13.422508,52.516942,0 13.42226,52.517019,0 13.421518,52.516056,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Neue Blumenstrasse","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.422288,52.517183,0 13.423632,52.518849,0 13.425752,52.518275,0 13.426489,52.518076,0 13.426947,52.51795,0 13.426889,52.517849,0 13.427111,52.517765,0 13.427481,52.517673,0 13.427607,52.517866,0 13.427414,52.517911,0 13.427107,52.518042,0 13.426465,52.518365,0 13.426362,52.518297,0 13.425781,52.518476,0 13.424267,52.51891,0 13.423147,52.519252,0 13.423005,52.519081,0 13.423082,52.519057,0 13.422583,52.518428,0 13.422624,52.518179,0 13.421943,52.517299,0 13.422288,52.517183,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Lichtenberger str.","type":"CITY","zoneId":"@BER"}</description>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.425874,52.516031,0 13.427131,52.51775,0 13.426867,52.517845,0 13.426919,52.517942,0 13.426489,52.518062,0 13.426106,52.517619,0 13.425581,52.517782,0 13.424664,52.51667,0 13.425811,52.516307,0 13.425657,52.516089,0 13.425874,52.516031,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"PH Neukölln Karl-Marx-Straße","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.435839,52.480363,0 13.436826,52.479628,0 13.435496,52.479451,0 13.435196,52.480297,0 13.435839,52.480363,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"PH Mercedes Benz Arena","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.442427,52.506805,0 13.442792,52.507177,0 13.44012,52.507661,0 13.439761,52.507308,0 13.442427,52.506805,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Lidl Maybachufer","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.431081,52.492416,0 13.432291,52.492046,0 13.431953,52.491654,0 13.430749,52.492037,0 13.431081,52.492416,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"type":"CITY","zoneId":"@BER","name":"Privatgelände Schöneberger Straße 2"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.372094,52.469586,0 13.373001,52.469139,0 13.374406,52.468336,0 13.374012,52.468069,0 13.373862,52.46789,0 13.373829,52.467713,0 13.373082,52.467734,0 13.37308,52.46835,0 13.370689,52.468374,0 13.370731,52.468639,0 13.371048,52.46889,0 13.372094,52.469586,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Anwohnerparkzone","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.346329,52.509979,0 13.346329,52.50972,0 13.348989,52.50943,0 13.348989,52.509613,0 13.346329,52.509979,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Contiparkplatz am Hamburger Bahnhof","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.370736,52.52813,0 13.370892,52.527882,0 13.371224,52.527943,0 13.371632,52.527355,0 13.372168,52.5275,0 13.371503,52.528324,0 13.370736,52.52813,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Südkreuz P2","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.366199,52.475742,0 13.366115,52.475185,0 13.36629,52.475117,0 13.366518,52.475201,0 13.366553,52.475689,0 13.366408,52.475746,0 13.366199,52.475742,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":" ","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.415895,52.527638,0 13.416721,52.528565,0 13.415658,52.529531,0 13.414371,52.528017,0 13.415895,52.527638,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Real Ungarnstraße","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.35209,52.553766,0 13.352895,52.553335,0 13.35076,52.551893,0 13.349966,52.552376,0 13.35209,52.553766,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Bikini Berlin","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.33795,52.505248,0 13.337638,52.505904,0 13.339596,52.50624,0 13.339924,52.505581,0 13.33795,52.505248,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Fennpfuhl","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.471373,52.532768,0 13.471577,52.53239,0 13.475686,52.533232,0 13.474689,52.534586,0 13.473369,52.535921,0 13.471062,52.535255,0 13.469973,52.534929,0 13.469034,52.534576,0 13.469303,52.534302,0 13.472468,52.53519,0 13.473573,52.534922,0 13.474463,52.533532,0 13.472961,52.533124,0 13.471373,52.532768,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <name>forbiddenParkingAreas</name>
+                  <description>{"name":"Markgrafenstraße","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.392696,52.506193,0 13.392937,52.504662,0 13.394614,52.504798,0 13.394351,52.506295,0 13.392696,52.506193,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Gesundbrunnencenter PH","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.387372,52.549913,0 13.387576,52.549607,0 13.388107,52.549391,0 13.388751,52.549359,0 13.392071,52.549512,0 13.391063,52.550236,0 13.387372,52.549913,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"PH Alexa","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.414516,52.519652,0 13.414983,52.51927,0 13.415262,52.518976,0 13.415503,52.518545,0 13.415653,52.518144,0 13.415771,52.51783,0 13.417456,52.518424,0 13.416833,52.519188,0 13.416334,52.519688,0 13.41575,52.520132,0 13.414516,52.519652,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Hinterhöfe Bessemerstraße","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.366332,52.459826,0 13.363723,52.459907,0 13.36137,52.460004,0 13.362143,52.463153,0 13.362513,52.46519,0 13.362706,52.466241,0 13.363178,52.468991,0 13.364428,52.468958,0 13.364514,52.468492,0 13.366917,52.468413,0 13.366843,52.467232,0 13.367024,52.467057,0 13.36685,52.465823,0 13.366718,52.464151,0 13.366537,52.462245,0 13.366332,52.459826,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"PH Birkenstraße","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.345406,52.531369,0 13.345851,52.532028,0 13.34583,52.532132,0 13.345149,52.532648,0 13.343689,52.531933,0 13.343695,52.531848,0 13.345406,52.531369,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"type":"CITY","zoneId":"@BER","name":"Privatgelände Schöneberger Straße"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.372416,52.469812,0 13.372813,52.469982,0 13.37321,52.470041,0 13.373799,52.470059,0 13.374403,52.470022,0 13.374395,52.46912,0 13.373478,52.469129,0 13.373269,52.469256,0 13.373221,52.469345,0 13.372416,52.469812,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Lidl Oberlandstraße","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.416769,52.465418,0 13.416924,52.464859,0 13.415594,52.464739,0 13.415457,52.46529,0 13.416769,52.465418,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Ring Center Frankfurter Allee","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.477655,52.514549,0 13.475735,52.515104,0 13.475397,52.514602,0 13.475391,52.513827,0 13.476942,52.513645,0 13.477655,52.514549,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Franklinstraße Hinterhöfe","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.326078,52.518687,0 13.327724,52.51826,0 13.328208,52.518825,0 13.329125,52.518786,0 13.329125,52.51924,0 13.329501,52.520533,0 13.329522,52.521294,0 13.329334,52.521633,0 13.329157,52.521956,0 13.328905,52.522278,0 13.32795,52.521007,0 13.326078,52.518687,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Naumann Park","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.363618,52.482504,0 13.363559,52.47864,0 13.363951,52.47853,0 13.364549,52.478616,0 13.364939,52.47874,0 13.36511,52.478992,0 13.365335,52.480096,0 13.365603,52.480823,0 13.365979,52.481153,0 13.366453,52.481402,0 13.366703,52.481591,0 13.367035,52.482012,0 13.367282,52.482467,0 13.367068,52.482482,0 13.366606,52.482487,0 13.36549,52.482508,0 13.363618,52.482504,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Gasometer","type":"CITY","zoneId":"@BER"}</description>
+                  <styleUrl>#dn_forbidden</styleUrl>
+                  <name>forbiddenParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.353002,52.479984,0 13.3571,52.483097,0 13.358339,52.482643,0 13.358264,52.482192,0 13.358098,52.481656,0 13.357744,52.481218,0 13.357326,52.480892,0 13.356991,52.480642,0 13.356537,52.480445,0 13.356138,52.480316,0 13.354858,52.480141,0 13.353817,52.480017,0 13.353174,52.479909,0 13.353002,52.479984,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+            </Folder>
+            <Folder>
+               <name>allowedParkingAreas</name>
+               
+               
+               
+               <Placemark>
+                  <description>{"name":"NL Gehringstraße","type":"CITY","zoneId":"@BER","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.462195,52.56274,0 13.462179,52.562599,0 13.46492,52.562431,0 13.465627,52.562359,0 13.465656,52.562496,0 13.464966,52.562561,0 13.464264,52.562611,0 13.462195,52.56274,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"zoneId":"@BER","name":"NL Blumberger Damm","type":"CITY","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.562064,52.510078,0 13.563277,52.509926,0 13.564854,52.509209,0 13.563566,52.50819,0 13.563792,52.508091,0 13.565218,52.509247,0 13.563352,52.510086,0 13.56208,52.510235,0 13.562064,52.510078,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"zoneId":"@BER","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"name":"Karlshorst","type":"CITY","content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.52515,52.481731,0 13.521981,52.483196,0 13.518591,52.484558,0 13.5149,52.486385,0 13.517432,52.491299,0 13.52069,52.490589,0 13.52111,52.491219,0 13.5215,52.49234,0 13.52759,52.492001,0 13.52841,52.490719,0 13.52845,52.490219,0 13.53309,52.4828,0 13.53519,52.479591,0 13.53613,52.477909,0 13.53562,52.47744,0 13.53416,52.47765,0 13.52515,52.481731,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"zoneId":"162856@BER","type":"AIRPORT","name":"Flughafen Tegel","handshakeAllowed":"false"}</description>
+                  <styleUrl>#dn_extended</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.296882,52.550686,0 13.297065,52.549981,0 13.298483,52.550115,0 13.29827,52.550926,0 13.296848,52.550797,0 13.296882,52.550686,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"type":"AIRPORT","name":"Flughafen Schönefeld","handshakeAllowed":"false","zoneId":"833469@BER"}</description>
+                  <styleUrl>#dn_extended</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.51272,52.389816,0 13.513543,52.390091,0 13.514353,52.389746,0 13.514536,52.389547,0 13.513862,52.388926,0 13.513071,52.389095,0 13.512505,52.389731,0 13.51272,52.389816,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"type":"CITY","zoneId":"@BER","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"name":"IKEA Spandau","content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.215855,52.527843,0 13.216043,52.528301,0 13.216086,52.528404,0 13.215811,52.528446,0 13.21463,52.528618,0 13.215253,52.530235,0 13.215929,52.530151,0 13.21609,52.530022,0 13.216465,52.529442,0 13.216519,52.529289,0 13.216744,52.52914,0 13.216637,52.528774,0 13.216539,52.528515,0 13.216926,52.528423,0 13.216723,52.527927,0 13.216519,52.527767,0 13.21639,52.527763,0 13.215855,52.527843,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"IKEA Lichtenberg","type":"CITY","zoneId":"@BER","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.511197,52.534794,0 13.513446,52.534943,0 13.513532,52.534435,0 13.512926,52.534378,0 13.513193,52.532768,0 13.513193,52.532642,0 13.511605,52.532639,0 13.511337,52.53388,0 13.508102,52.533681,0 13.50796,52.534626,0 13.511197,52.534794,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"events":{"1":{"type":"driveOut","template":"LeftAllowed"},"0":{"type":"driveIn","template":"EnteredAllowed"}},"content":{},"name":"ebay Dreilinden","type":"CITY","zoneId":"@BER"}</description>
+                  <name>allowedParkingAreas</name>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.186591,52.40234,0 13.18599,52.402576,0 13.184445,52.404121,0 13.184933,52.406635,0 13.183849,52.407494,0 13.18533,52.40834,0 13.185053,52.408939,0 13.185868,52.409161,0 13.188808,52.40992,0 13.190739,52.409134,0 13.192797,52.40807,0 13.193055,52.407845,0 13.192175,52.407028,0 13.18975,52.4049,0 13.187787,52.403145,0 13.186591,52.40234,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"GG Erweiterung Saatwinkler Damm \/ Airberlin, Teil 2","type":"CITY","zoneId":"@BER","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.32723,52.5406,0 13.32469,52.542122,0 13.32002,52.545719,0 13.31869,52.546638,0 13.31727,52.54744,0 13.31543,52.547729,0 13.297224,52.54824,0 13.29727,52.547822,0 13.314443,52.547298,0 13.31508,52.546371,0 13.31547,52.545738,0 13.31656,52.544628,0 13.31701,52.544529,0 13.31789,52.54467,0 13.31884,52.546249,0 13.32397,52.542351,0 13.32268,52.54158,0 13.32628,52.539879,0 13.32654,52.53965,0 13.32701,52.5396,0 13.32723,52.5406,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"GG Erweiterung Freibad Ploetzensee, Teil3","type":"CITY","zoneId":"@BER","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.333626,52.541176,0 13.334323,52.541492,0 13.33113,52.541538,0 13.32869,52.541359,0 13.32785,52.54142,0 13.32625,52.54266,0 13.32555,52.543121,0 13.32596,52.543499,0 13.32482,52.544319,0 13.3245,52.544609,0 13.32418,52.54443,0 13.32553,52.54274,0 13.32769,52.541241,0 13.32989,52.541069,0 13.331641,52.541256,0 13.333626,52.541176,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"name":"Adlershof","type":"CITY","zoneId":"@BER","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.51789,52.432795,0 13.517866,52.432664,0 13.519631,52.426518,0 13.540237,52.425432,0 13.544784,52.425218,0 13.549223,52.427893,0 13.533387,52.438255,0 13.530027,52.436348,0 13.527201,52.438223,0 13.51789,52.432795,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               <Placemark>
+                  <description>{"type":"CITY","zoneId":"@BER","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"name":"Nefzger Nonnendammallee","content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.258417,52.537471,0 13.254769,52.537758,0 13.25467,52.537262,0 13.256496,52.537109,0 13.258301,52.536958,0 13.26138,52.536718,0 13.264394,52.536477,0 13.2645,52.536982,0 13.258417,52.537471,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               
+               <Placemark>
+                  <description>{"name":"Berlin","type":"CITY","zoneId":"@BER","events":[{"type":"driveIn","template":"EnteredAllowed"},{"type":"driveOut","template":"LeftAllowed"}],"content":{}}</description>
+                  <styleUrl>#dn_allowed</styleUrl>
+                  <name>allowedParkingAreas</name>
+                  <Polygon>
+                     <outerBoundaryIs>
+                        <LinearRing>
+                           <coordinates>13.422908,52.46502,0 13.43514,52.466687,0 13.442404,52.467583,0 13.44194,52.469572,0 13.447265,52.470265,0 13.450214,52.470633,0 13.452623,52.471075,0 13.454156,52.471828,0 13.454951,52.472545,0 13.455694,52.473612,0 13.457436,52.472717,0 13.460686,52.4714,0 13.462997,52.470744,0 13.464483,52.470098,0 13.464682,52.470423,0 13.463505,52.470987,0 13.459584,52.472292,0 13.460856,52.473477,0 13.462614,52.477592,0 13.458695,52.477898,0 13.457329,52.478771,0 13.459009,52.48764,0 13.465937,52.483081,0 13.470995,52.47965,0 13.476269,52.476068,0 13.483745,52.480058,0 13.479667,52.484448,0 13.482595,52.485856,0 13.480144,52.485745,0 13.47949,52.485428,0 13.478908,52.485487,0 13.476992,52.487403,0 13.477291,52.487587,0 13.477109,52.488369,0 13.476633,52.48856,0 13.475987,52.487965,0 13.467682,52.490496,0 13.468047,52.490879,0 13.468028,52.491003,0 13.467149,52.491302,0 13.466335,52.491424,0 13.465738,52.491064,0 13.459616,52.49289,0 13.46111,52.493976,0 13.463857,52.496302,0 13.46459,52.495506,0 13.466283,52.495,0 13.466344,52.494992,0 13.46952,52.493869,0 13.47178,52.493016,0 13.474755,52.492413,0 13.476865,52.492043,0 13.479956,52.489853,0 13.480762,52.489244,0 13.481872,52.488715,0 13.482254,52.48865,0 13.482417,52.488686,0 13.482732,52.488807,0 13.48287,52.488976,0 13.482961,52.489388,0 13.482984,52.489789,0 13.481956,52.491204,0 13.480706,52.491812,0 13.479429,52.493194,0 13.476299,52.494278,0 13.475113,52.495381,0 13.475749,52.495998,0 13.475737,52.49632,0 13.469902,52.498578,0 13.469211,52.499139,0 13.468876,52.499795,0 13.469533,52.501565,0 13.469946,52.502163,0 13.475029,52.501403,0 13.473915,52.500278,0 13.477877,52.49858,0 13.478096,52.497539,0 13.483247,52.493276,0 13.484449,52.493396,0 13.485883,52.492765,0 13.489406,52.495123,0 13.485833,52.496878,0 13.486289,52.497303,0 13.48474,52.498652,0 13.479008,52.500859,0 13.477551,52.501276,0 13.477764,52.50152,0 13.48096,52.50182,0 13.487025,52.502313,0 13.488806,52.501904,0 13.490177,52.501463,0 13.492124,52.501026,0 13.496436,52.499953,0 13.496767,52.500496,0 13.509412,52.503185,0 13.511257,52.503893,0 13.513328,52.50525,0 13.513665,52.505381,0 13.519402,52.505381,0 13.518518,52.509495,0 13.518633,52.514486,0 13.512581,52.514674,0 13.499255,52.515837,0 13.499181,52.515522,0 13.499031,52.515555,0 13.499455,52.518219,0 13.499908,52.523047,0 13.48469,52.523406,0 13.479851,52.523171,0 13.479843,52.524117,0 13.479899,52.525077,0 13.480109,52.526688,0 13.48002,52.526962,0 13.47969,52.52766,0 13.479295,52.528346,0 13.478548,52.529716,0 13.476923,52.532496,0 13.476407,52.533219,0 13.475827,52.533851,0 13.474624,52.535167,0 13.473587,52.536295,0 13.471739,52.535778,0 13.47081,52.535494,0 13.47002,52.535209,0 13.467378,52.53398,0 13.467167,52.534106,0 13.465873,52.533632,0 13.464421,52.533138,0 13.46443,52.53295,0 13.463034,52.532429,0 13.460887,52.533036,0 13.46201,52.535285,0 13.458459,52.535831,0 13.457097,52.535795,0 13.45692,52.536684,0 13.457001,52.537057,0 13.458728,52.538495,0 13.456587,52.539348,0 13.455509,52.539791,0 13.45451,52.540224,0 13.458059,52.542457,0 13.455444,52.543677,0 13.456397,52.544344,0 13.460738,52.545591,0 13.461132,52.544913,0 13.462254,52.545341,0 13.465446,52.546098,0 13.468107,52.546373,0 13.469036,52.546576,0 13.469363,52.547222,0 13.468661,52.547524,0 13.468398,52.548065,0 13.467512,52.548016,0 13.466501,52.551169,0 13.467052,52.551159,0 13.467354,52.551144,0 13.467516,52.551149,0 13.467678,52.551207,0 13.468918,52.552086,0 13.470048,52.552836,0 13.470645,52.554193,0 13.4709,52.554887,0 13.470844,52.555282,0 13.470067,52.555219,0 13.469258,52.555136,0 13.469194,52.555726,0 13.469728,52.556139,0 13.470198,52.556565,0 13.470383,52.556845,0 13.471133,52.556954,0 13.471844,52.557055,0 13.472163,52.557107,0 13.472024,52.557801,0 13.471947,52.558144,0 13.471865,52.558499,0 13.471742,52.559199,0 13.47166,52.559549,0 13.471556,52.559873,0 13.4709,52.559819,0 13.470223,52.559805,0 13.469524,52.559817,0 13.468578,52.559894,0 13.466982,52.560068,0 13.466114,52.560145,0 13.465075,52.56017,0 13.461135,52.560129,0 13.460549,52.559641,0 13.457106,52.561109,0 13.454906,52.559348,0 13.45312,52.55837,0 13.451312,52.557385,0 13.449682,52.556486,0 13.448116,52.555601,0 13.447313,52.555169,0 13.44669,52.554817,0 13.446017,52.554428,0 13.445222,52.554007,0 13.439784,52.55549,0 13.439711,52.555669,0 13.439581,52.555792,0 13.439398,52.555898,0 13.43915,52.555936,0 13.438851,52.555902,0 13.43859,52.555818,0 13.433847,52.557143,0 13.432941,52.557355,0 13.432457,52.557835,0 13.429388,52.556693,0 13.427284,52.564817,0 13.429126,52.572289,0 13.423745,52.571408,0 13.416181,52.568171,0 13.415259,52.567682,0 13.414326,52.567159,0 13.413845,52.566872,0 13.413386,52.566616,0 13.412658,52.566378,0 13.412344,52.567918,0 13.411895,52.568749,0 13.411365,52.569664,0 13.409831,52.571408,0 13.407039,52.570599,0 13.402164,52.569333,0 13.401002,52.56934,0 13.400523,52.569205,0 13.400468,52.56944,0 13.397236,52.569478,0 13.396738,52.568853,0 13.391991,52.568345,0 13.388851,52.567411,0 13.385183,52.568952,0 13.383718,52.569634,0 13.379122,52.569247,0 13.376683,52.569095,0 13.373248,52.56866,0 13.37254,52.568547,0 13.372357,52.569133,0 13.365942,52.572632,0 13.361129,52.570671,0 13.355443,52.568975,0 13.351106,52.567689,0 13.346113,52.567155,0 13.340796,52.566577,0 13.337193,52.566128,0 13.335114,52.565266,0 13.332527,52.563868,0 13.331713,52.565598,0 13.331926,52.567583,0 13.329068,52.568156,0 13.326465,52.562866,0 13.329114,52.557789,0 13.329282,52.557019,0 13.336532,52.552483,0 13.338679,52.550343,0 13.336027,52.548576,0 13.339821,52.546272,0 13.342165,52.547352,0 13.343426,52.546358,0 13.348321,52.542761,0 13.348082,52.54269,0 13.348272,52.541789,0 13.34828,52.541694,0 13.344867,52.53922,0 13.344258,52.538422,0 13.344075,52.538103,0 13.343383,52.535601,0 13.343194,52.534462,0 13.33979,52.534136,0 13.336487,52.533435,0 13.335575,52.533261,0 13.331956,52.532869,0 13.328813,52.533052,0 13.328031,52.533032,0 13.315108,52.53061,0 13.311673,52.529741,0 13.306216,52.528943,0 13.305294,52.528895,0 13.303106,52.529233,0 13.301683,52.529378,0 13.30036,52.529582,0 13.298689,52.529714,0 13.295942,52.529393,0 13.291831,52.528963,0 13.288558,52.528063,0 13.286154,52.527054,0 13.284702,52.52515,0 13.284667,52.524382,0 13.286298,52.518951,0 13.283993,52.518808,0 13.282707,52.518716,0 13.28249,52.518691,0 13.28238,52.51869,0 13.282293,52.518683,0 13.282244,52.518688,0 13.282129,52.518686,0 13.28202,52.518681,0 13.281887,52.518673,0 13.28174,52.518664,0 13.281534,52.518646,0 13.281269,52.518627,0 13.281019,52.51861,0 13.278797,52.518508,0 13.26843,52.52039,0 13.265634,52.520901,0 13.263098,52.521315,0 13.260746,52.521747,0 13.257704,52.522298,0 13.25475,52.522819,0 13.251692,52.523516,0 13.249842,52.524003,0 13.249174,52.523785,0 13.249378,52.523351,0 13.250756,52.522449,0 13.252879,52.521144,0 13.254734,52.516107,0 13.255639,52.51332,0 13.25571,52.512557,0 13.256499,52.51078,0 13.25683,52.510467,0 13.25732,52.510365,0 13.258649,52.510374,0 13.258952,52.508788,0 13.2591,52.508311,0 13.266307,52.508768,0 13.267537,52.508854,0 13.270376,52.508707,0 13.272892,52.508124,0 13.275646,52.507351,0 13.277299,52.506765,0 13.279182,52.506313,0 13.280534,52.50612,0 13.281815,52.50625,0 13.283175,52.506292,0 13.283554,52.506273,0 13.283656,52.505745,0 13.284451,52.503747,0 13.28478,52.503284,0 13.28498,52.503133,0 13.285646,52.503062,0 13.287559,52.502865,0 13.28867,52.502791,0 13.289795,52.502861,0 13.290429,52.500839,0 13.282798,52.498623,0 13.283607,52.497216,0 13.285678,52.495239,0 13.284959,52.493863,0 13.284073,52.485639,0 13.283526,52.48499,0 13.281111,52.483001,0 13.280837,52.479622,0 13.280724,52.478317,0 13.280366,52.477237,0 13.280446,52.476977,0 13.280591,52.476827,0 13.281017,52.4765,0 13.282768,52.475264,0 13.285127,52.473455,0 13.287605,52.471671,0 13.289338,52.470266,0 13.288957,52.466738,0 13.287632,52.464146,0 13.287131,52.460565,0 13.286836,52.458138,0 13.286429,52.457122,0 13.284917,52.455108,0 13.284805,52.454809,0 13.284786,52.454337,0 13.285039,52.453771,0 13.285593,52.453302,0 13.285144,52.452843,0 13.284515,52.452442,0 13.282942,52.4518,0 13.280692,52.450894,0 13.280151,52.450672,0 13.279563,52.450524,0 13.278849,52.450515,0 13.262724,52.451714,0 13.258706,52.451645,0 13.255563,52.451412,0 13.253343,52.451059,0 13.250216,52.449965,0 13.24715,52.448464,0 13.245823,52.447742,0 13.242754,52.445485,0 13.240885,52.443935,0 13.238851,52.442064,0 13.238266,52.441566,0 13.234987,52.439897,0 13.231564,52.437528,0 13.236746,52.435105,0 13.247819,52.429855,0 13.252156,52.429375,0 13.257818,52.430263,0 13.265416,52.432918,0 13.275124,52.436615,0 13.291674,52.442807,0 13.295277,52.444056,0 13.300211,52.439684,0 13.303471,52.44104,0 13.3066,52.442492,0 13.306767,52.44251,0 13.307064,52.442385,0 13.307377,52.442305,0 13.30769,52.442356,0 13.30799,52.442464,0 13.308232,52.442601,0 13.308303,52.44283,0 13.310741,52.442947,0 13.313244,52.441704,0 13.31579,52.440238,0 13.315784,52.439347,0 13.316754,52.43926,0 13.31731,52.44108,0 13.3225,52.443139,0 13.322231,52.4442,0 13.32531,52.445018,0 13.328523,52.444612,0 13.333588,52.445479,0 13.340139,52.445251,0 13.346711,52.44459,0 13.349684,52.443948,0 13.354954,52.442822,0 13.356824,52.442667,0 13.358559,52.442859,0 13.362509,52.444213,0 13.366238,52.445779,0 13.372549,52.443623,0 13.380651,52.440814,0 13.379714,52.437536,0 13.395499,52.439856,0 13.400453,52.44439,0 13.408636,52.452701,0 13.400338,52.453387,0 13.401154,52.463192,0 13.413711,52.464203,0 13.420816,52.464689,0 13.422908,52.46502,0</coordinates>
+                        </LinearRing>
+                     </outerBoundaryIs>
+                  </Polygon>
+               </Placemark>
+               
+               
+               
+            </Folder>
+            
+         </Folder>
+      </Folder>
+   </Document>
+</kml>

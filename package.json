@@ -63,6 +63,7 @@
     "winston": "^2.3.0"
   },
   "devDependencies": {
+    "@mapbox/togeojson": "^0.16.0",
     "autoprefixer": "^6.5.3",
     "babel": "^6.5.2",
     "babel-cli": "^6.18.0",

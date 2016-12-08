@@ -1,10 +1,12 @@
 import React from 'react';
 
-const maxZoom = 19;
+import 'whatwg-fetch';
 
 import Constants from "./Constants.jsx";
 
 import Heatmap from "./Heatmap.jsx";
+
+const maxZoom = 19;
 
 
 let Map = React.createClass({
@@ -33,7 +35,12 @@ let Map = React.createClass({
             maxZoom: maxZoom
         }).addTo(this.state.map);
 
+        // draw the business area
+        this.drawGeschaeftsgebiet();
+
         // TODO
+        // events
+
         // this.map.on('zoomend', function() {
         //     let currentZoom = map.getZoom();
         //     this.markeroptions.radius = currentZoom * 0.9;
@@ -104,6 +111,24 @@ let Map = React.createClass({
         });
         this.arcGroup = L.featureGroup(arcs);
         this.state.map.addLayer(this.arcGroup);
+    },
+
+    drawGeschaeftsgebiet() {
+
+        let _this = this;
+
+        this.serverRequest = fetch('./geschaeftsgebiet.json')
+        .then(function(response) {
+            return response.json();
+        }).then(function(gb) {
+            console.log(gb);
+            L.geoJSON(gb, {
+                style: function (feature) {
+                    return {color: '#CCCCCC'}; //feature.properties.color
+                }
+            }).addTo(_this.state.map);
+        });
+
     },
 
     render() {
