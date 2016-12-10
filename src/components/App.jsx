@@ -79,6 +79,7 @@ let App = React.createClass({
             selectedCar: null,
             arcs: [],
             loading: true,
+            numCars: 0,
             toolbarTitle: "Loading..."
         };
     },
@@ -120,11 +121,13 @@ let App = React.createClass({
             });
 
             let activeTimestamp = timestamps[0];
+            let activeDim = dimensions.timestampDim.filter(activeTimestamp);
 
             // setting state will trigger a re-render (in componentDidMount)
             _this.setState({
                 cars: crossfilter(json),
-                activeDimension: dimensions.timestampDim.filter(activeTimestamp),
+                activeDimension: activeDim,
+                numCars: activeDim.bottom(Infinity).length,
                 dimensions: dimensions,
                 dimensionGroups: dimensionGroups,
                 timestamps: timestamps,
@@ -180,20 +183,22 @@ let App = React.createClass({
         console.log(`filter for cleanliness: ${cleanliness}`);
 
         let dimensions = this.state.dimensions;
+        let activeDim;
 
         // check for 'RESET'
         if (Constants.marker_colors[cleanliness] !== undefined) {
             // filter the data by the cleanliness
-            dimensions.cleanlinessDim.filter(cleanliness);
+            activeDim = dimensions.cleanlinessDim.filter(cleanliness);
         } else {
             // reset filters
-            dimensions.cleanlinessDim.filterAll();
+            activeDim = dimensions.cleanlinessDim.filterAll();
         }
 
         // set the new dimension state
         this.setState({
             // activeDimension: dimensions.cleanlinessDim,
-            dimensions: dimensions
+            dimensions,
+            numCars: activeDim.bottom(Infinity).length
         });
     },
 
@@ -215,8 +220,9 @@ let App = React.createClass({
         const activeDim = dimensions.timestampDim.filter(timestamp);
         dimensions.activeDimension = activeDim;
         this.setState({
-            dimensions: dimensions,
-            activeDimension: activeDim
+            dimensions,
+            activeDimension: activeDim,
+            numCars: activeDim.bottom(Infinity).length
         });
         // console.log('selectTimeDimension', activeDim.top(Infinity));
     },
@@ -240,11 +246,12 @@ let App = React.createClass({
 
         // filter the data by the carId
         // console.log('carIdDim:', carIdDim.top(Infinity));
-        dimensions.carIdDim.filter(carId);
+        let activeDim = dimensions.carIdDim.filter(carId);
 
         // set the new dimension state
         this.setState({
             activeDimension: dimensions.carIdDim,
+            numCars: activeDim.bottom(Infinity).length, 
             dimensions: dimensions,
             sideNavVisible: true,
             selectedCar: dimensions.carIdDim.top(Infinity)
@@ -272,10 +279,12 @@ let App = React.createClass({
         let dimensions = this.state.dimensions;
         dimensions.timestampDim.filterAll();
         dimensions.carIdDim.filterAll();
+        const activeDim = dimensions.timestampDim.filter(this.state.timestamps[0]);
 
         this.setState({
             dimensions: dimensions,
-            activeDimension: dimensions.timestampDim.filter(this.state.timestamps[0]),
+            activeDimension: activeDim,
+            numCars: activeDim.bottom(Infinity).length,
             sideNavVisible: false,
             selectedCar: null,
             arcs: []
@@ -292,6 +301,7 @@ let App = React.createClass({
                     <Toolbar
                         filterForCleanliness={this.filterForCleanliness}
                         title={this.state.toolbarTitle}
+                        numCars={this.state.numCars}
                         startDate={this.getStartDate()}
                         endDate={this.getEndDate()}
                     />

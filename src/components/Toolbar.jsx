@@ -67,6 +67,9 @@ export default class AppToolbar extends React.Component {
 
 
     render() {
+
+        console.log('numCars', this.props.numCars);
+
         return (
           <div>
             <Toolbar>
@@ -78,10 +81,20 @@ export default class AppToolbar extends React.Component {
               </ToolbarGroup>
               <ToolbarGroup>
                 <MenuItem
-                    value={3}
                     primaryText={this.props.title}
                 />
-                <ToolbarSeparator />
+                <ToolbarSeparator
+                    style={{marginLeft:'24px',marginRight:'24px'}}
+                />
+                <MenuItem
+                    secondaryText={this.props.numCars}
+                    disabled={true}
+                    style={{cursor:'default'}}
+                    title={'Number of visible cars'}
+                />
+                <ToolbarSeparator
+                    style={{marginLeft:'24px',marginRight:'24px'}}
+                />
                 <Legend
                     filterForCleanliness={this.props.filterForCleanliness}
                     cleanlinessLevels={colorKeys}
