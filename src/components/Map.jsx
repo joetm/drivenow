@@ -45,7 +45,7 @@ let Map = React.createClass({
         //     let currentZoom = map.getZoom();
         //     this.markeroptions.radius = currentZoom * 0.9;
         //     // TODO
-        //     // circleGroup.setStyle({radius: radius});
+        //     // markerGroup.setStyle({radius: radius});
         // });
 
     },
@@ -57,8 +57,8 @@ let Map = React.createClass({
         let markers = [];
 
         // map reset
-        if (this.circleGroup) {
-            this.state.map.removeLayer(this.circleGroup);
+        if (this.markerGroup) {
+            this.state.map.removeLayer(this.markerGroup);
         }
 
         dimension.top(Infinity).forEach(function(car){
@@ -85,18 +85,17 @@ let Map = React.createClass({
                     color: Constants.marker_colors[car.innerCleanliness],
                     fillColor: Constants.marker_colors[car.innerCleanliness]
                 })
-                .on('click', _this.props.carClick)
-                // .bindPopup(popup)
+                .on('click', _this.props.carClick);
 
             markers.push(marker);
             // markers.push(blurmarker);
         });
 
         // group the circles
-        this.circleGroup = L.featureGroup(markers);
+        this.markerGroup = L.featureGroup(markers);
 
         // add the layer to the map
-        this.state.map.addLayer(this.circleGroup);
+        this.state.map.addLayer(this.markerGroup);
 
     },
 

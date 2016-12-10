@@ -24,20 +24,20 @@ export default class AppToolbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 3,
             modalOpen: false,
             startDate: null,
             endDate: null
         };
     }
 
-    handleChange = (event, index, value) => this.setState({value});
+    // handleChange = (event, index, value) => this.setState({value});
 
     // Modals
     closeModal = (event, index, value) => this.setState({modalOpen:false});
     openAbout = (event, index, value) => this.setState({modalOpen:true});
 
     componentWillReceiveProps(props) {
+        // dates need to be formatted only once
         if (!this.state.startDate && !this.state.endDate) {
             const startDate = this.formatDate(props.startDate);
             const endDate = this.formatDate(props.endDate);
