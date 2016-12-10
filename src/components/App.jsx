@@ -254,6 +254,19 @@ let App = React.createClass({
         this.updateArcs();
     },
 
+    getStartDate() {
+        if (this.state.dimensions.timestampDim.bottom !== undefined) {
+            return this.state.dimensions.timestampDim.bottom(1)[0].timestamp;
+        }
+        return null;
+    },
+    getEndDate() {
+        if (this.state.dimensions.timestampDim.top !== undefined) {
+            return this.state.dimensions.timestampDim.top(1)[0].timestamp;
+        }
+        return null;
+    },
+
     closeSideNav() {
         // reset layer
         let dimensions = this.state.dimensions;
@@ -279,6 +292,8 @@ let App = React.createClass({
                     <Toolbar
                         filterForCleanliness={this.filterForCleanliness}
                         title={this.state.toolbarTitle}
+                        startDate={this.getStartDate()}
+                        endDate={this.getEndDate()}
                     />
                     <SideNav
                       closeSideNav={this.closeSideNav}
