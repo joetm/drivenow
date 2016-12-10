@@ -33,6 +33,7 @@
     ]
   ],
   "dependencies": {
+    "@turf/turf": "^3.7.0",
     "async": "^2.1.2",
     "babel-cli": "^6.4.0",
     "chroniton": "^1.1.0",

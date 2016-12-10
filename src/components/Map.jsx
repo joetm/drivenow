@@ -38,6 +38,9 @@ let Map = React.createClass({
         // draw the business area
         this.drawGeschaeftsgebiet();
 
+        // draw the boroughs
+        this.drawBezirke();
+
         // TODO
         // events
 
@@ -120,10 +123,38 @@ let Map = React.createClass({
         .then(function(response) {
             return response.json();
         }).then(function(gb) {
-            console.log(gb);
+            // console.log(gb);
             L.geoJSON(gb, {
                 style: function (feature) {
-                    return {color: '#CCCCCC'}; //feature.properties.color
+                    return {
+                        fillColor: '#CCCCCC',
+                        color: '#BBBBBB'
+                    }; //feature.properties.color
+                }
+            }).addTo(_this.state.map);
+        });
+
+    },
+
+    drawBezirke() {
+
+        let _this = this;
+
+        this.serverRequest = fetch('./Berlin-Ortsteile.json')
+        .then(function(response) {
+            return response.json();
+        }).then(function(ot) {
+            L.geoJSON(ot, {
+                style: function (feature) {
+                    return {
+                        fillColor: '#AADDDD',
+                        color: '#AADDDD',
+                        opacity: 0.65
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    console.log(feature.properties);
+                    layer.bindPopup(feature.properties.name); // html: feature.properties.description
                 }
             }).addTo(_this.state.map);
         });
