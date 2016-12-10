@@ -34,17 +34,8 @@ export default class AppToolbar extends React.Component {
         if (this.state.selectedView !== value) {
             console.log('switch to view', value);
             this.setState({selectedView: value});
-
             // execute the view switch
-
-
-
-
-
-
-
-            
-
+            this.props.drawCleanupMovements();
         }
     }
 

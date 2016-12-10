@@ -147,6 +147,78 @@ let App = React.createClass({
         }
     },
 
+    drawCleanupMovements() {
+        //
+        const _this = this;
+        //
+        this.setState({
+            loading: true
+        });
+        // reset filters
+        let dimensions = this.state.dimensions;
+        dimensions.timestampDim.filterAll();
+        dimensions.carIdDim.filterAll();
+        dimensions.cleanlinessDim.filterAll();
+        dimensions.locationDim.filterAll();
+
+        // process all cars + draw new arcs
+        console.log('# cars:', this.state.cars.size());
+
+        let processedCarIds = [];
+        let arcs = [];
+        let carIds = [];
+        dimensions.carIdDim.bottom(Infinity).forEach(function(c){
+            if (carIds.indexOf(c.carId) === -1) {
+                carIds.push(c.carId);
+            }
+        });
+        console.log('carIds', carIds);
+
+        carIds.forEach(function (carId) {
+            //
+            processedCarIds.push(carId);
+            // filter for this car
+            dimensions.carIdDim.filter(carId);
+            // process the positions of this car
+            _this.state.dimensions.timestampDim.bottom(Infinity).forEach(function(car){
+                //
+                let previousPosition = null;
+                let previousState = null;
+                _this.state.dimensions.timestampDim.bottom(Infinity).forEach(function(car){
+                    if (!previousPosition) {
+                        // init the previous position once
+                        previousPosition = [car.latitude, car.longitude];
+                        previousState = Constants.numeric_marker_states[car.innerCleanliness];
+                    } else {
+                        let currentPosition = [car.latitude, car.longitude];
+                        let currentState = Constants.numeric_marker_states[car.innerCleanliness];
+                        // only record the movements that had an improvement in cleanliness state
+                        if (currentState > previousState && !currentPosition.equals(previousPosition)) {
+                            let arcColor = Constants.marker_colors[car.innerCleanliness];
+                            arcs.push({from:previousPosition, to:currentPosition, color:arcColor});
+                        }
+                        // update the previous position and state
+                        previousPosition = currentPosition;
+                        previousState = currentState;
+                    }
+                });
+            });
+        });
+        dimensions.carIdDim.filterAll();
+
+        console.log('processedCarIds', processedCarIds);
+        console.log('arcs', arcs);
+
+        // trigger redraw
+        this.setState({
+            // close sidenav
+            sideNavVisible: false,
+            dimensions,
+            loading: false,
+            arcs
+        });
+    },
+
     updateArcs() {
         //
         if (!this.state.dimensions.timestampDim) {
@@ -300,6 +372,7 @@ let App = React.createClass({
                     />
                     <Toolbar
                         filterForCleanliness={this.filterForCleanliness}
+                        drawCleanupMovements={this.drawCleanupMovements}
                         title={this.state.toolbarTitle}
                         numCars={this.state.numCars}
                     />
