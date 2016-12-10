@@ -41,16 +41,6 @@ let Map = React.createClass({
         // draw the boroughs
         this.drawBezirke();
 
-        // TODO
-        // events
-
-        // this.map.on('zoomend', function() {
-        //     let currentZoom = map.getZoom();
-        //     this.markeroptions.radius = currentZoom * 0.9;
-        //     // TODO
-        //     // markerGroup.setStyle({radius: radius});
-        // });
-
     },
 
     drawMarkers(dimension) {
@@ -153,7 +143,7 @@ let Map = React.createClass({
                     };
                 },
                 onEachFeature: function (feature, layer) {
-                    console.log(feature.properties);
+                    // console.log(feature.properties);
                     layer.bindPopup(feature.properties.name); // html: feature.properties.description
                 }
             }).addTo(_this.state.map);

@@ -24,9 +24,7 @@ export default class AppToolbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            modalOpen: false,
-            startDate: null,
-            endDate: null
+            modalOpen: false
         };
     }
 
@@ -36,40 +34,24 @@ export default class AppToolbar extends React.Component {
     closeModal = (event, index, value) => this.setState({modalOpen:false});
     openAbout = (event, index, value) => this.setState({modalOpen:true});
 
-    componentWillReceiveProps(props) {
-        // dates need to be formatted only once
-        if (!this.state.startDate && !this.state.endDate) {
-            const startDate = this.formatDate(props.startDate);
-            const endDate = this.formatDate(props.endDate);
-            this.setState({
-                startDate,
-                endDate
-            });
-        }
-    }
-
-    formatDate(theDate) {
-        let da = new Date(theDate);
-        let str = `${da.getFullYear()}-${da.getMonth()}-${da.getDate()} ${da.getHours()}:${da.getMinutes()}:${da.getSeconds()}`;
-        return str;
-    }
+    // formatDate(theDate) {
+    //     let da = new Date(theDate);
+    //     let str = `${da.getFullYear()}-${da.getMonth()}-${da.getDate()} ${da.getHours()}:${da.getMinutes()}:${da.getSeconds()}`;
+    //     return str;
+    // }
 
     getAboutContent() {
         return (
             <div>
                 <h2 style={{fontSize:'1.5em'}}>Visualisation of DriveNow cars</h2>
-                <div>
-                    Data scraped from {this.state.startDate} to {this.state.endDate}.
-                </div>
             </div>
         );
+                //<div>
+                //    Data scraped from {this.props.startDate} to {this.props.endDate}.
+                //</div>
     }
 
-
     render() {
-
-        console.log('numCars', this.props.numCars);
-
         return (
           <div>
             <Toolbar>

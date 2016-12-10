@@ -149,13 +149,13 @@ let App = React.createClass({
 
     updateArcs() {
         //
-        if (!this.state.activeDimension) {
+        if (!this.state.dimensions.timestampDim) {
             return;
         }
 
         let previousPosition = null;
         let arcs = [];
-        this.state.activeDimension.bottom(Infinity).forEach(function(car){
+        this.state.dimensions.timestampDim.bottom(Infinity).forEach(function(car){
             if (!previousPosition) {
                 // init the previous position once
                 previousPosition = [car.latitude, car.longitude];
@@ -169,7 +169,7 @@ let App = React.createClass({
                 previousPosition = currentPosition;
             }
         });
-        // console.log('arcs', arcs);
+        console.log('arcs', arcs);
         if (arcs.length) {
             this.setState({arcs});
         }
@@ -261,18 +261,18 @@ let App = React.createClass({
         this.updateArcs();
     },
 
-    getStartDate() {
-        if (this.state.dimensions.timestampDim.bottom !== undefined) {
-            return this.state.dimensions.timestampDim.bottom(1)[0].timestamp;
-        }
-        return null;
-    },
-    getEndDate() {
-        if (this.state.dimensions.timestampDim.top !== undefined) {
-            return this.state.dimensions.timestampDim.top(1)[0].timestamp;
-        }
-        return null;
-    },
+    // getStartDate() {
+    //     if (this.state.dimensions.activeDimension && this.state.dimensions.activeDimension.bottom !== undefined) {
+    //         return this.state.dimensions.activeDimension.bottom(1)[0].timestamp;
+    //     }
+    //     return null;
+    // },
+    // getEndDate() {
+    //     if (this.state.dimensions.activeDimension && this.state.dimensions.activeDimension.top !== undefined) {
+    //         return this.state.dimensions.activeDimension.top(1)[0].timestamp;
+    //     }
+    //     return null;
+    // },
 
     closeSideNav() {
         // reset layer
@@ -302,8 +302,6 @@ let App = React.createClass({
                         filterForCleanliness={this.filterForCleanliness}
                         title={this.state.toolbarTitle}
                         numCars={this.state.numCars}
-                        startDate={this.getStartDate()}
-                        endDate={this.getEndDate()}
                     />
                     <SideNav
                       closeSideNav={this.closeSideNav}
