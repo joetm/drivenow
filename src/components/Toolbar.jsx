@@ -4,6 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
@@ -24,11 +25,28 @@ export default class AppToolbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectedView: 'cars',
             modalOpen: false
         };
     }
 
-    // handleChange = (event, index, value) => this.setState({value});
+    handleViewChange = (event, index, value) => {
+        if (this.state.selectedView !== value) {
+            console.log('switch to view', value);
+            this.setState({selectedView: value});
+
+            // execute the view switch
+
+
+
+
+
+
+
+            
+
+        }
+    }
 
     // Modals
     closeModal = (event, index, value) => this.setState({modalOpen:false});
@@ -64,9 +82,18 @@ export default class AppToolbar extends React.Component {
               <ToolbarGroup>
                 <MenuItem
                     primaryText={this.props.title}
+                    disabled={true}
+                    style={{cursor:'default'}}
                 />
                 <ToolbarSeparator
-                    style={{marginLeft:'24px',marginRight:'24px'}}
+                    style={{marginLeft:'24px'}}
+                />
+                <DropDownMenu value={this.state.selectedView} onChange={this.handleViewChange}>
+                    <MenuItem value={'cars'} primaryText="All Cars" />
+                    <MenuItem value={'cleanups'} primaryText="Car Cleanups" />
+                </DropDownMenu>
+                <ToolbarSeparator
+                    style={{marginRight:'24px'}}
                 />
                 <MenuItem
                     secondaryText={this.props.numCars}
