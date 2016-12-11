@@ -88,7 +88,9 @@ let App = React.createClass({
         //
         let _this = this;
 
-        this.serverRequest = fetch('/cars')
+        // this.serverRequest = fetch('/cars')
+        // instead of a request to a node/Express server, use a static pre-saved json file
+        this.serverRequest = fetch('./cars.json')
         .then(function(response) {
             return response.json();
         }).then(function(json) {

@@ -38,6 +38,14 @@ app.get('/cars', function response(req, res) {
 			['timestamp', 'ASC']
 		]
 	}).then(function (carStatii) {
+		// dev - write result into a static file
+		// var fs = require('fs');
+		// fs.writeFile("./cars.json", JSON.stringify(carStatii), function(err) {
+		//     if(err) {
+		//         return console.log(err);
+		//     }
+		//     console.log("File cars.json was saved!");
+		// }); 
 		// return all
 		res.status(200).json(carStatii);
 	});

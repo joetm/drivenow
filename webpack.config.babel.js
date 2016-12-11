@@ -118,6 +118,12 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify({NODE_ENV: ENV})
 		}),
+		new webpack.optimize.UglifyJsPlugin({
+	        mangle: false,
+		    compress: {
+		        warnings: false,
+		    }
+		}),
 		new HtmlWebpackPlugin({
 			template: './src/index.html',
 			minify: {
