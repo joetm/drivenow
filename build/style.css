@@ -9165,6 +9165,9 @@ html, body {
   #legend .chip {
     display: inline-block; }
 
+.dropDownMenu {
+  line-height: 48px; }
+
 #wrap {
   margin: 0;
   padding: 0;

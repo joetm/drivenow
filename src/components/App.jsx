@@ -65,13 +65,13 @@ let App = React.createClass({
             activeDimension: emptyCrossfilter,
             dimensions: {
                 cleanlinessDim: emptyCrossfilter,
-                locationDim: emptyCrossfilter,
+                // locationDim: emptyCrossfilter,
                 timestampDim: emptyCrossfilter,
                 carIdDim: emptyCrossfilter,
                 allDim: emptyCrossfilter
             },
             dimensionGroups: {
-                locationGroup: emptyCrossfilter,
+                // locationGroup: emptyCrossfilter,
                 timestampGroup: emptyCrossfilter,
                 allGroup: emptyCrossfilter
             },
@@ -99,7 +99,7 @@ let App = React.createClass({
             // dimensions
             let dimensions = {
                 cleanlinessDim: cars.dimension(d => d["innerCleanliness"]),
-                locationDim: cars.dimension(d => [d["latitude"], d["longitude"]]),
+                // locationDim: cars.dimension(d => [d["latitude"], d["longitude"]]),
                 timestampDim: cars.dimension(d => d["timestamp"]),
                 carIdDim: cars.dimension(d => d["carId"]),
                 allDim: cars.dimension(d => d)
@@ -107,7 +107,7 @@ let App = React.createClass({
 
             // groupings (clustering) of values
             let dimensionGroups = {
-                locationGroup: dimensions.locationDim.group(location => [ Math.round(location.latitude / 100), Math.round(location.longitude / 1000) ]),
+                // locationGroup: dimensions.locationDim.group(location => [ Math.round(location.latitude / 100), Math.round(location.longitude / 1000) ]),
                 timestampGroup: dimensions.timestampDim.group(timestamp => Math.round(timestamp / 1000)),
                 allGroup: dimensions.allDim.groupAll()
             }
@@ -140,6 +140,35 @@ let App = React.createClass({
         });
     },
 
+    /*
+     * Reset all filters to the original state of the page
+    */
+    initialFilter() {
+        let dimensions = this.state.dimensions;
+
+        let activeTimestamp = dimensions.timestampDim.bottom(1)[0].timestamp;
+        console.log('reset to activeTimestamp', activeTimestamp);
+
+        // reset all filters
+        dimensions.timestampDim.filterAll();
+        dimensions.carIdDim.filterAll();
+        dimensions.cleanlinessDim.filterAll();
+        // dimensions.locationDim.filterAll();
+
+        // add a new filter to show only the first timestamp
+        let activeDim = this.state.dimensions.timestampDim.filter(activeTimestamp);
+
+        // set the new state
+        this.setState({
+            activeDimension: activeDim,
+            numCars: activeDim.bottom(Infinity).length,
+            dimensions,
+            arcs: [],
+            loading: false,
+            toolbarTitle: `Showing: ${this.timestampToDate(activeTimestamp)}`
+        });
+    },
+
     // abort the running request if component is unmounted
     componentWillUnmount() {
         if (this.serverRequest) {
@@ -151,50 +180,61 @@ let App = React.createClass({
         //
         const _this = this;
         //
-        this.setState({
+        // avoid blocking UI
+        setTimeout(this.setState({
             loading: true
-        });
+        }), 10);
+
         // reset filters
         let dimensions = this.state.dimensions;
         dimensions.timestampDim.filterAll();
         dimensions.carIdDim.filterAll();
         dimensions.cleanlinessDim.filterAll();
-        dimensions.locationDim.filterAll();
+        // dimensions.locationDim.filterAll();
 
         // process all cars + draw new arcs
         console.log('# cars:', this.state.cars.size());
 
-        let processedCarIds = [];
+        let carsToShow = [];
         let arcs = [];
         let carIds = [];
+        // get unique carIds
         dimensions.carIdDim.bottom(Infinity).forEach(function(c){
             if (carIds.indexOf(c.carId) === -1) {
                 carIds.push(c.carId);
             }
         });
-        console.log('carIds', carIds);
+        // console.log('carIds', carIds);
 
         carIds.forEach(function (carId) {
-            //
-            processedCarIds.push(carId);
             // filter for this car
             dimensions.carIdDim.filter(carId);
             // process the positions of this car
             _this.state.dimensions.timestampDim.bottom(Infinity).forEach(function(car){
                 //
                 let previousPosition = null;
+                let currentPosition;
                 let previousState = null;
+                let currentState;
+                let arcColor;
                 _this.state.dimensions.timestampDim.bottom(Infinity).forEach(function(car){
                     if (!previousPosition) {
                         // init the previous position once
                         previousPosition = [car.latitude, car.longitude];
                         previousState = Constants.numeric_marker_states[car.innerCleanliness];
                     } else {
-                        let currentPosition = [car.latitude, car.longitude];
-                        let currentState = Constants.numeric_marker_states[car.innerCleanliness];
+                        currentPosition = [car.latitude, car.longitude];
+                        currentState = Constants.numeric_marker_states[car.innerCleanliness];
                         // only record the movements that had an improvement in cleanliness state
-                        if (currentState > previousState && !currentPosition.equals(previousPosition)) {
-                            let arcColor = Constants.marker_colors[car.innerCleanliness];
+                        if (
+                            currentState === 0 // car is now very clean
+                            && previousState >= 2 // car condition was regular or poor
+                            && !currentPosition.equals(previousPosition) // position changed
+                        ) {
+                            //
+                            carsToShow.push(car.carId);
+                            //
+                            arcColor = Constants.numeric_marker_colors[previousState];
                             arcs.push({from:previousPosition, to:currentPosition, color:arcColor});
                         }
                         // update the previous position and state
@@ -204,10 +244,17 @@ let App = React.createClass({
                 });
             });
         });
-        dimensions.carIdDim.filterAll();
 
-        console.log('processedCarIds', processedCarIds);
-        console.log('arcs', arcs);
+        // console.log('carsToShow', carsToShow);
+        // console.log('arcs', arcs);
+
+        // apply a new filter that only shows the car that moved from regular/poor to very_clean state
+        dimensions.carIdDim.filterFunction(function (carId) {
+            if (carsToShow.indexOf(carId) !== -1) {
+                return true;
+            }
+            return false;
+        });
 
         // trigger redraw
         this.setState({
@@ -373,6 +420,7 @@ let App = React.createClass({
                     <Toolbar
                         filterForCleanliness={this.filterForCleanliness}
                         drawCleanupMovements={this.drawCleanupMovements}
+                        initialFilter={this.initialFilter}
                         title={this.state.toolbarTitle}
                         numCars={this.state.numCars}
                     />

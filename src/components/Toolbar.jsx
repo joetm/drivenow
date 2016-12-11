@@ -33,9 +33,17 @@ export default class AppToolbar extends React.Component {
     handleViewChange = (event, index, value) => {
         if (this.state.selectedView !== value) {
             console.log('switch to view', value);
+            // set the selected view to the new value of the dropdown menu
             this.setState({selectedView: value});
             // execute the view switch
-            this.props.drawCleanupMovements();
+            switch (value) {
+                case 'cars':
+                    this.props.initialFilter();
+                break;
+                case 'cleanups':
+                    this.props.drawCleanupMovements();
+                break;
+            }
         }
     }
 
@@ -79,10 +87,21 @@ export default class AppToolbar extends React.Component {
                 <ToolbarSeparator
                     style={{marginLeft:'24px'}}
                 />
-                <DropDownMenu value={this.state.selectedView} onChange={this.handleViewChange}>
-                    <MenuItem value={'cars'} primaryText="All Cars" />
-                    <MenuItem value={'cleanups'} primaryText="Car Cleanups" />
-                </DropDownMenu>
+                <DropDownMenu
+	            	value={this.state.selectedView}
+    	        	onChange={this.handleViewChange}
+                    iconStyle={{color:'#101010', fill: '#101010'}}
+                    style={{lineHeight:'48px'}}
+                    autoWidth={true}
+                    className={'dropDownMenu'}
+        	    >
+                    <MenuItem
+                        value={'cars'} primaryText="All Cars"
+                    />
+	                <MenuItem
+                        value={'cleanups'} primaryText="Car Cleanups"
+                    />
+    	        </DropDownMenu>
                 <ToolbarSeparator
                     style={{marginRight:'24px'}}
                 />
