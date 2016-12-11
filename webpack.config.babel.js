@@ -129,7 +129,10 @@ module.exports = {
 			minify: {
 				collapseWhitespace: true
 			}
-		})
+		}),
+	    new CopyWebpackPlugin([
+	      {from: './worker.js', to: './worker.js'}
+	    ])
 	]).concat(ENV==='production' ? [
 		new webpack.optimize.OccurenceOrderPlugin()
 	] : []),

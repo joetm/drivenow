@@ -182,10 +182,7 @@ let App = React.createClass({
         //
         const _this = this;
         //
-        // avoid blocking UI
-        setTimeout(this.setState({
-            loading: true
-        }), 10);
+        this.setState({loading: true});
 
         // reset filters
         let dimensions = this.state.dimensions;
@@ -258,14 +255,17 @@ let App = React.createClass({
             return false;
         });
 
-        // trigger redraw
-        this.setState({
-            // close sidenav
-            sideNavVisible: false,
-            dimensions,
-            loading: false,
-            arcs
-        });
+        // avoid blocking UI
+        setTimeout(function() {
+            // trigger redraw
+            this.setState({
+                // close sidenav
+                sideNavVisible: false,
+                dimensions,
+                loading: false,
+                arcs
+            });
+        }.bind(this), 10);
     },
 
     updateArcs() {
