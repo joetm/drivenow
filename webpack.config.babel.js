@@ -72,6 +72,10 @@ module.exports = {
 	          	// loader: "style-loader!css-loader"
 	        // },
 			{
+				test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
+				loader: ENV === 'production' ? 'file?name=[path][name]_[hash:base64:5].[ext]' : 'url'
+			},
+			{
 				test: /\.css$/,
 				loader: ExtractTextPlugin.extract("style-loader","css-loader")
 			},
@@ -88,7 +92,7 @@ module.exports = {
 		        test: /\.json5$/,
 		        exclude: /(node_modules|bower_components|projects)/,
 		        loader: 'json5-loader'
-		    },
+		    }
 	        // {
 		       //  test: /\.(ico|jpe?g|png|gif)$/,
 		       //  loader: "file"
@@ -97,10 +101,6 @@ module.exports = {
 			// 	test: /\.(xml|html|txt|md)$/,
 			// 	loader: 'raw'
 			// },
-			{
-				test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
-				loader: ENV === 'production' ? 'file?name=[path][name]_[hash:base64:5].[ext]' : 'url'
-			}
 		]
 	},
 
