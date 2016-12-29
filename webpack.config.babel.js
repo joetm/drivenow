@@ -73,7 +73,8 @@ module.exports = {
 	        // },
 			{
 				test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
-				loader: ENV === 'production' ? 'file?name=[path][name]_[hash:base64:5].[ext]' : 'url'
+				// loader: ENV === 'production' ? 'file?name=[path][name]_[hash:base64:5].[ext]' : 'url'
+				loader: 'file?name=[path][name]_[hash:base64:5].[ext]'
 			},
 			{
 				test: /\.css$/,
@@ -119,7 +120,7 @@ module.exports = {
 			'process.env': JSON.stringify({NODE_ENV: ENV})
 		}),
 		new webpack.optimize.UglifyJsPlugin({
-	        mangle: false,
+	        mangle: true,
 		    compress: {
 		        warnings: false,
 		    }
@@ -148,7 +149,8 @@ module.exports = {
 		setImmediate: false
 	},
 
-	devtool: ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
+	// devtool: ENV === 'production' ? 'source-map' : 'cheap-module-eval-source-map',
+	devtool: 'source-map',
 
 	devServer: {
 		port: process.env.PORT || 8080,
